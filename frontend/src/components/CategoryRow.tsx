@@ -1,0 +1,1 @@
+//linha com titulo (ex: "populares") + lista horizontal

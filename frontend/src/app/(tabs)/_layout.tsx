@@ -1,0 +1,1 @@
+//configura os icones (home, search, wishlist, profile)

@@ -1,0 +1,1 @@
+// O "Cérebro": Gerencia Welcome vs Logado  (controla se usuário está logado)

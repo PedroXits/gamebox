@@ -1,0 +1,1 @@
+//botão roxo arredondado (começar, login, sign up)

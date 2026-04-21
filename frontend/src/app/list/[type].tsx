@@ -1,0 +1,1 @@
+// TELA ÚNICA (Favoritos / Avaliados / Desejos)

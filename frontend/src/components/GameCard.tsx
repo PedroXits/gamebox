@@ -1,0 +1,1 @@
+//card vertical do jogo (home e listas)

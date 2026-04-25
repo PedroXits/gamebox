@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+// Usuario
+
 @Entity
 public class User {
     @Id

@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"})
+)
 public class Review {
 
     @Id

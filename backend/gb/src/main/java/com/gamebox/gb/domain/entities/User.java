@@ -2,11 +2,16 @@ package com.gamebox.gb.domain.entities;
 
 import com.gamebox.gb.domain.enums.Role;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 // Usuario
-
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class User {
     @Id

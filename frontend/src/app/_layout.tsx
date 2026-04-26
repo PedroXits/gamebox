@@ -1,1 +1,7 @@
-// O "Cérebro": Gerencia Welcome vs Logado  (controla se usuário está logado)
+// organiza a navegação
+import React from "react";
+import { Stack } from "expo-router";
+
+export default function Layout() {
+  return <Stack screenOptions={{ headerShown: false }} />;
+}

@@ -12,7 +12,7 @@ export default function Login() {
       </View>
 
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../../assets/images/logo.png")}></Image>
+        <Image style={styles.logo} source={require("../../../assets/images/logo.png")}></Image>
       </View>
 
       <View style={styles.contentContainer}>
@@ -33,13 +33,13 @@ export default function Login() {
           </View>
           <View style={styles.authContainer}>
             <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={require("../../assets/images/googleIcon.png")}></Image>
+              <Image style={styles.icon} source={require("../../../assets/images/googleIcon.png")}></Image>
             </View>
             <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={require("../../assets/images/facebookIcon.png")}></Image>
+              <Image style={styles.icon} source={require("../../../assets/images/facebookIcon.png")}></Image>
             </View>
             <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={require("../../assets/images/appleIcon.png")}></Image>
+              <Image style={styles.icon} source={require("../../../assets/images/appleIcon.png")}></Image>
             </View>
           </View>
           <Text style={styles.signUpContainer}>

@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require("./assets/images/logo.png")}></Image>
+        <Image source={require("../assets/images/logo.png")}></Image>
       </View>
       <View style={styles.actionContainer}>
         <View>
@@ -18,7 +18,7 @@ export default function App() {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Pressable style={styles.button} onPress={() => router.push("/login")}>
+          <Pressable style={styles.button} onPress={() => router.push("/(auth)/login")}>
             <Text style={styles.buttonText}>Começar</Text>
           </Pressable>
         </View>

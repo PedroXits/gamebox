@@ -1,1 +1,1 @@
-// TELA ÚNICA (Favoritos / Avaliados / Desejos)
+// TELA ÚNICA (Favoritos / Jogados / Desejos)

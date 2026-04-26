@@ -7,6 +7,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(
+        indexes = {
+                @Index(name = "idx_game_name", columnList = "name"),
+                @Index(name = "idx_game_genre", columnList = "genre")
+        }
+)
 public class Game {
 
     @Id

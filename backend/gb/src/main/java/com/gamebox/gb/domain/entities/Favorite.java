@@ -5,6 +5,13 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"}),
+        indexes = {
+                @Index(name = "idx_fav_profile", columnList = "profile_id"),
+                @Index(name = "idx_fav_game", columnList = "game_id")
+        }
+)
 public class Favorite {
 
     @Id

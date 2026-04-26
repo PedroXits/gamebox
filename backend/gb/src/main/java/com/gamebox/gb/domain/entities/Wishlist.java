@@ -6,7 +6,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(
-        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"}),
+        indexes = {
+                @Index(name = "idx_wishlist_profile", columnList = "profile_id"),
+                @Index(name = "idx_wishlist_game", columnList = "game_id")
+        }
 )
 public class Wishlist {
 

@@ -2,10 +2,17 @@ package com.gamebox.gb.domain.entities;
 
 import com.gamebox.gb.domain.enums.Genre;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(
         indexes = {

@@ -19,7 +19,7 @@ public class ProfileService {
 
     public Profile findByProfileName(String profileName) {
         return profileRepository.findByProfileName(profileName)
-                .orElseThrow(() -> new RuntimeException("Nome de perfil não encontrado."));
+                .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
     }
 
     public Profile findProfileById(Long id){

@@ -1,10 +1,16 @@
 package com.gamebox.gb.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"})
 )
@@ -15,7 +21,7 @@ public class Review {
     private Long id;
 
     @Column(nullable = false)
-    private Integer rating;
+    private Double rating;
 
     @Column(columnDefinition = "TEXT")
     private String comment;

@@ -25,7 +25,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) {
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
     }
@@ -44,7 +44,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteById(Long id) {
+    public void deleteUserById(Long id) {
         User user = findById(id);
         userRepository.delete(user);
     }

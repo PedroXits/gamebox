@@ -7,8 +7,8 @@ export default function Login() {
   return (
     <View style={styles.page}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Welcome</Text>
-        <Text style={styles.p}>welcome to gameboxd</Text>
+        <Text style={styles.title}>Bem-Vindo</Text>
+        <Text style={styles.p}>Faça parte do Gameboxd</Text>
       </View>
 
       <View style={styles.logoContainer}>
@@ -19,16 +19,16 @@ export default function Login() {
         <View style={styles.mainContent}>
           <Text style={styles.loginText}>Login</Text>
           <View style={styles.inputsContainer}>
-            <TextInput style={styles.input} placeholder="Email"></TextInput>
-            <TextInput style={styles.input} placeholder="Password"></TextInput>
-            <Text style={styles.forgotPass}>Forgot Password</Text>
+            <TextInput style={styles.input} placeholder="E-mail" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
+            <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
+            <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>
           <Pressable style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.loginButtonText}>Entrar</Text>
           </Pressable>
            <View style={styles.olwcontainer}>
             <View style={styles.line} />
-            <Text style={styles.text}>Or login with</Text>
+            <Text style={styles.text}>logar com</Text>
             <View style={styles.line} />
           </View>
           <View style={styles.authContainer}>
@@ -43,7 +43,7 @@ export default function Login() {
             </View>
           </View>
           <Text style={styles.signUpContainer}>
-            Don't have an account? <Link href="/register" style={styles.singUp}>Sing Up</Link>
+            Não tem uma conta? <Link href="/register" style={styles.singUp}>Cadastre-se</Link>
           </Text>
         </View>
       </View>

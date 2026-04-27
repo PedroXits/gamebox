@@ -1,5 +1,6 @@
 import { Colors } from "../../constants/Colors"
 import { StyleSheet } from "react-native";
+import { Fonts } from "@/constants/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -31,13 +32,17 @@ export const styles = StyleSheet.create({
 
   title: {
     color: Colors.primary,
-    fontSize: 53,
-    fontWeight: "bold",
+    fontSize: 58,
+    fontFamily: Fonts.title,
     textTransform: "uppercase"
   },
 
   message: {
-    color: Colors.primary
+    color: Colors.primary,
+    fontFamily: Fonts.body,
+    fontSize: 15,
+    marginTop: -10,
+    marginLeft: 5,
   },
 
   buttonContainer: {

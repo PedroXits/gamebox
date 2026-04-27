@@ -11,9 +11,9 @@ export default function App() {
       </View>
       <View style={styles.actionContainer}>
         <View>
-          <Text style={styles.title}>Bem - vindo</Text>
+          <Text style={styles.title}>Gameboxd</Text>
           <Text style={styles.message}>
-            Loresipum cletare cleosso tranquilo aste lo eilo a vada quedavra
+            Sua vida gamer, catalogada.
           </Text>
         </View>
 

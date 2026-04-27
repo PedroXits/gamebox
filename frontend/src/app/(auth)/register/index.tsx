@@ -7,8 +7,8 @@ export default function Login() {
   return (
     <View style={styles.page}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Welcome</Text>
-        <Text style={styles.p}>welcome to gameboxd</Text>
+        <Text style={styles.title}>Bem-Vindo</Text>
+        <Text style={styles.p}>Faça parte do Gameboxd</Text>
       </View>
 
       <View style={styles.logoContainer}>
@@ -17,19 +17,19 @@ export default function Login() {
 
       <View style={styles.contentContainer}>
         <View style={styles.mainContent}>
-          <Text style={styles.loginText}>Sign Up</Text>
+          <Text style={styles.loginText}>Criar conta</Text>
           <View style={styles.inputsContainer}>
-            <TextInput style={styles.input} placeholder="Username"></TextInput>
-            <TextInput style={styles.input} placeholder="Email"></TextInput>
-            <TextInput style={styles.input} placeholder="Password"></TextInput>
-            <TextInput style={styles.input} placeholder="Confirm Password"></TextInput>
+            <TextInput style={styles.input} placeholder="Username" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
+            <TextInput style={styles.input} placeholder="E-mail" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
+            <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
+            <TextInput style={styles.input} placeholder="Confirmar senha" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
           </View>
           <Pressable style={styles.loginButton}>
-            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.loginButtonText}>Cadastrar</Text>
           </Pressable>
            <View style={styles.olwcontainer}>
             <View style={styles.line} />
-            <Text style={styles.text}>Or login with</Text>
+            <Text style={styles.text}>logar com</Text>
             <View style={styles.line} />
           </View>
           <View style={styles.authContainer}>
@@ -44,7 +44,7 @@ export default function Login() {
             </View>
           </View>
           <Text style={styles.loginContainer}>
-            Already have an account? <Link href="/login" style={styles.login}>Login</Link>
+            Já tem uma conta? <Link href="/login" style={styles.login}>Login</Link>
           </Text>
         </View>
       </View>

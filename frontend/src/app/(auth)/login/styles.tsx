@@ -1,4 +1,5 @@
-import { Colors } from "../../../../constants/Colors"
+import { Colors } from "../../../../constants/Colors";
+import { Fonts } from "@/constants/fonts";
 import { StyleSheet } from "react-native";
 
 const paddingHorizontal = 30
@@ -18,14 +19,16 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 50,
-    fontWeight: "bold",
+    fontSize: 58,
+    fontFamily: Fonts.title,
     color: Colors.white,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
 
   p: {
-    color: Colors.white
+    color: Colors.white,
+    fontFamily: Fonts.body,
+    marginTop: -10,
   },
 
   logoContainer: {

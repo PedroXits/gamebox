@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect }from "react";
 import { ScrollView, View, Image, Text, FlatList, Dimensions } from "react-native";
 
 import { GameList } from "@/components/GameList";
+import { Fonts } from "@/constants/fonts";
 
 export default function Home() {
     const { width } = Dimensions.get("window"); //pega a largura do celular e ocupa a tela inteira
@@ -89,12 +90,12 @@ export default function Home() {
                 <Text
                     style={{
                         position: "absolute",
-                        bottom: 30,
+                        bottom: 20,
                         width: "100%",
                         textAlign: "center",
                         color: "#fff",
-                        fontSize: 16,
-                        fontWeight: "bold",
+                        fontSize: 20,
+                        fontFamily: Fonts.title,
                         textShadowColor: "#000",
                         textShadowOffset: { width: 0, height: 1 },
                         textShadowRadius: 4,

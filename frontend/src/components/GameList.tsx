@@ -1,7 +1,9 @@
 //seção da home, lista horizontal
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
+
 import { GameCard } from "./GameCard";
+import { Fonts } from "@/constants/fonts";
 
 type Game = {
     id: string;
@@ -19,9 +21,9 @@ export function GameList({ title, games }: Props) {
         <View style={{ marginBottom: 24 }}>
             <Text style={{ 
                 color: "#fff", 
-                fontSize: 16, 
-                marginBottom: 10, 
-                fontWeight: "600"
+                fontSize: 16,
+                fontFamily: Fonts.body,
+                marginBottom: 10,
                 }}
             >
                 {title}

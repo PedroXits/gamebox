@@ -29,8 +29,8 @@ export default function Home() {
     // banners / lista de imagens do carrossel
     const banners = [
         "https://s1.pearlcdn.com/cd/brand/metatag/2025/09/25/78b56ee739920250925065827388.jpg",
-        mockGames[0].image,
-        mockGames[1].image,
+        "https://xboxwire.thesourcemediaassets.com/sites/8/2026/01/FH6_Evergreen_KeyArt_Branded-Horizontal_3840x2160-b1d85e76b095948dcc66.jpg",
+        "https://www.capcom-games.com/pragmata/assets/images/share.jpg",
     ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,7 +70,7 @@ export default function Home() {
 
                         onMomentumScrollEnd={(event: any) => {
                             const index = Math.round(
-                                event.nativeEvent.contentOffset.x / (width - 40)
+                                event.nativeEvent.contentOffset.x / width
                             );
                             setCurrentIndex(index);
                         }}
@@ -79,9 +79,10 @@ export default function Home() {
                             <Image
                                 source={{ uri: item }}
                                 style={{ 
-                                    width: width - 40, 
-                                    height: 200,
+                                    width: width, 
+                                    height: 230,
                                 }}
+                                resizeMode="cover"
                             />
                         )}
                     />

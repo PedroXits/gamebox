@@ -1,17 +1,22 @@
 package com.gamebox.gb.services;
 
+import com.gamebox.gb.datasource.repositories.GameRepository;
 import com.gamebox.gb.datasource.repositories.PlayedRepository;
 import com.gamebox.gb.datasource.repositories.ReviewRepository;
 import com.gamebox.gb.domain.entities.Review;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReviewService {
 
+    private final GameRepository gameRepository;
     private final ReviewRepository reviewRepository;
     private final PlayedRepository playedRepository;
 
-    public ReviewService(ReviewRepository reviewRepository, PlayedRepository playedRepository) {
+    public ReviewService(GameRepository gameRepository, ReviewRepository reviewRepository, PlayedRepository playedRepository) {
+        this.gameRepository = gameRepository;
         this.reviewRepository = reviewRepository;
         this.playedRepository = playedRepository;
     }
@@ -37,5 +42,18 @@ public class ReviewService {
 
         return reviewRepository.save(review);
     }
+
+    public List<Review> findReviewByGameId(Long gameId) {
+
+        if (!gameRepository.existsById(gameId)) {
+            throw new RuntimeException("Jogo não encontrado");
+        }
+
+        return reviewRepository.findByGameId(gameId);
+    }
+
+
+
+
 
 }

@@ -33,5 +33,52 @@ public class GameService {
         return gameRepository.findByGenre(genre);
     }
 
+    public List<Game> findGameByName (String name) {
+        if(name == null || name.isBlank()){
+            return List.of();
+        }
+
+        return gameRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    public Game findGameById(Long id) {
+        return gameRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Jogo não encontrado."));
+    }
+
+    public Game updateGame(Long id, Game updatedGame) {
+        Game game = findGameById(id);
+
+        if(updatedGame.getName()!= null) {
+            game.setName(updatedGame.getName());
+        }
+
+        if(updatedGame.getGenre() != null) {
+            game.setGenre(updatedGame.getGenre());
+        }
+
+        if(updatedGame.getDescription() != null) {
+            game.setDescription(updatedGame.getDescription());
+        }
+
+        if(updatedGame.getReleaseDate() != null) {
+            game.setReleaseDate(updatedGame.getReleaseDate());
+        }
+        return gameRepository.save(game);
+    }
+
+    public void deleteGameById(Long id) {
+        Game game = findGameById(id);
+        gameRepository.delete(game);
+    }
+
+
+
+
+
+
+
+
+
 
 }

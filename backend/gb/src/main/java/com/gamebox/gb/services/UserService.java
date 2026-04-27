@@ -4,7 +4,6 @@ import com.gamebox.gb.datasource.repositories.UserRepository;
 import com.gamebox.gb.domain.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import static org.springframework.data.util.ClassUtils.ifPresent;
 
 @Service
 public class UserService {
@@ -30,13 +29,13 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
     }
 
-    public User findById(Long id) {
+    public User findUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado!"));
     }
 
     public User updateUser(Long id, User updatedUser) {
-        User user = findById(id);
+        User user = findUserById(id);
 
         user.setUsername(updatedUser.getUsername());
         user.setEmail(updatedUser.getEmail());
@@ -45,7 +44,7 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        User user = findById(id);
+        User user = findUserById(id);
         userRepository.delete(user);
     }
 }

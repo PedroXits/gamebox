@@ -30,9 +30,17 @@ public class ProfileService {
     public Profile updateProfile(Long id, Profile updatedProfile) {
         Profile profile = findProfileById(id);
 
-        profile.setProfileName(updatedProfile.getProfileName());
-        profile.setPhoto(updatedProfile.getPhoto());
+        if(updatedProfile.getProfileName() != null) {
 
+            if(updatedProfile.getProfileName().isBlank()) {
+                throw new RuntimeException("Nome inválido.");
+            }
+            profile.setProfileName(updatedProfile.getProfileName());
+        }
+
+        if(updatedProfile.getPhoto() != null) {
+            profile.setPhoto(updatedProfile.getPhoto());
+        }
         return profileRepository.save(profile);
     }
 

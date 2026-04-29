@@ -57,9 +57,10 @@ export const styles = StyleSheet.create({
 
   loginText: {
     fontSize: 30,
-    fontWeight: "bold",
+    fontFamily: Fonts.login,
     textTransform: "uppercase",
-    marginBottom: 20
+    marginBottom: 25,
+    marginTop: 10,
   },
 
   inputsContainer: {

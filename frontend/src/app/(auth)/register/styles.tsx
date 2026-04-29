@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
     color: Colors.white,
     textAlign: "center",
     fontSize: 20,
-    fontWeight: "bold"
+    fontFamily: Fonts.login,
   },
 
   olwcontainer: {

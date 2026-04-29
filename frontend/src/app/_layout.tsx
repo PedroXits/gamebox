@@ -7,7 +7,8 @@ export default function Layout() {
   const [fontsLoaded] = useFonts({
     Koulen: require("../assets/fonts/Koulen-Regular.ttf"),
     Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
-    LeagueSpartan: require("../assets/fonts/LeagueSpartan-VariableFont_wght.ttf"),
+    LeagueSpartanBold: require("../assets/fonts/LeagueSpartan-Bold.ttf"),
+    GeistMonoBlackItalic: require("../assets/fonts/GeistMono-BlackItalic.ttf"),
   });
   
   //enquanto carrega

@@ -61,8 +61,8 @@ export const styles = StyleSheet.create({
 
   buttonText: {
     color: Colors.text,
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 22,
+    fontFamily: Fonts.login,
     textAlign: "center"
   }
 })

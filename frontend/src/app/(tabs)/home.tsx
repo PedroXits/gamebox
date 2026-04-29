@@ -143,7 +143,7 @@ export default function Home() {
             <Text
                 style={{
                     color: "#fff",
-                    marginTop: 30,
+                    marginTop: 25,
                     marginBottom: 14,
                     fontFamily: Fonts.body,
                     fontSize: 18,

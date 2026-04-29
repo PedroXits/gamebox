@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         justifyContent: "center",
         alignItems: "center",
-        marginRight: 14,
-        marginBottom: 40,
+        marginRight: 12,
+        marginBottom: 45,
     },
 
     image: {
@@ -47,8 +47,9 @@ const styles = StyleSheet.create({
 
     text: {
         color: "#fff",
-        fontSize: 24,
+        fontSize: 22,
         textAlign: "center",
-        fontFamily: Fonts.body,
+        fontFamily: Fonts.genre,
+        textTransform: "uppercase",
     },
 });

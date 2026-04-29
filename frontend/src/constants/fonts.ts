@@ -1,5 +1,6 @@
 export const Fonts = {
     title: "Koulen",
     body: "Imprima",
-    login: "LeagueSpartan",
+    login: "LeagueSpartanBold",
+    genre: "GeistMonoBlackItalic",
 };

@@ -3,6 +3,7 @@ import { ScrollView, View, Image, Text, FlatList, Dimensions } from "react-nativ
 
 import { GameList } from "@/components/GameList";
 import { Fonts } from "@/constants/fonts";
+import { GenreCard } from "@/components/GenreCard";
 
 export default function Home() {
     const { width } = Dimensions.get("window"); //pega a largura do celular e ocupa a tela inteira
@@ -137,6 +138,51 @@ export default function Home() {
                 <GameList title="Populares" games={mockGames}/>
                 <GameList title="Tiro porrada e bomba" games={mockGames}/>
                 <GameList title="Lançamentos" games={mockGames}/>
+
+            {/* card dos gêneros */}
+            <Text
+                style={{
+                    color: "#fff",
+                    marginTop: 30,
+                    marginBottom: 14,
+                    fontFamily: Fonts.body,
+                    fontSize: 18,
+                }}
+            >
+                Busque por gêneros
+            </Text>
+
+            <View style={{ flexDirection: "row" }}>
+                <GenreCard
+                    title="Ação"
+                    image={require("@/assets/images/genero.png")}
+                />
+
+                <GenreCard
+                    title="Aventura"
+                    image={require("@/assets/images/genero.png")}
+                />
+
+                <GenreCard
+                    title="Corrida"
+                    image={require("@/assets/images/genero.png")}
+                />
+
+                <GenreCard
+                    title="Esporte"
+                    image={require("@/assets/images/genero.png")}
+                />
+
+                <GenreCard
+                    title="Survival Horror"
+                    image={require("@/assets/images/genero.png")}
+                />
+
+                <GenreCard
+                    title="RPG"
+                    image={require("@/assets/images/genero.png")}
+                />
+            </View>
                 
                 <GameList title="Aventura" games={mockGames}/>
                 <GameList title="Esporte" games={mockGames}/>

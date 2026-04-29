@@ -2,6 +2,7 @@ import React from "react";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
 import { Link } from "expo-router";
+import { router } from "expo-router";
 
 export default function Login() {
   return (
@@ -23,7 +24,7 @@ export default function Login() {
             <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>
-          <Pressable style={styles.loginButton}>
+          <Pressable style={styles.loginButton} onPress={() => router.replace("/(tabs)/home")}>
             <Text style={styles.loginButtonText}>Entrar</Text>
           </Pressable>
            <View style={styles.olwcontainer}>

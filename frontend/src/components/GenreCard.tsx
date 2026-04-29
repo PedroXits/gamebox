@@ -24,8 +24,8 @@ export function GenreCard({ title, image }: Props) {
 
 const styles = StyleSheet.create({
     card: {
-        width: 150,
-        height: 140,
+        width: 140,
+        height: 130,
         borderRadius: 14,
         overflow: "hidden",
         justifyContent: "center",
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
     text: {
         color: "#fff",
-        fontSize: 25,
+        fontSize: 24,
         textAlign: "center",
         fontFamily: Fonts.body,
     },

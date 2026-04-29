@@ -152,7 +152,11 @@ export default function Home() {
                 Busque por gêneros
             </Text>
 
-            <View style={{ flexDirection: "row" }}>
+            <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingRight: 20 }}
+            >
                 <GenreCard
                     title="Ação"
                     image={require("@/assets/images/genero.png")}
@@ -182,7 +186,7 @@ export default function Home() {
                     title="RPG"
                     image={require("@/assets/images/genero.png")}
                 />
-            </View>
+            </ScrollView>
                 
                 <GameList title="Aventura" games={mockGames}/>
                 <GameList title="Esporte" games={mockGames}/>

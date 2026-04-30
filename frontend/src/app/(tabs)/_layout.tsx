@@ -22,8 +22,8 @@ export default function Layout() {
       <Tabs.Screen
         name="home"
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={26} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />
           ),
         }}
       />
@@ -31,8 +31,8 @@ export default function Layout() {
       <Tabs.Screen
         name="search"
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search-outline" size={26} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? "search" : "search-outline"} size={26} color={color} />
           ),
         }}
       />
@@ -40,8 +40,8 @@ export default function Layout() {
       <Tabs.Screen
         name="wishlist"
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="bookmark-outline" size={26} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? "bookmark" : "bookmark-outline"} size={26} color={color} />
           ),
         }}
       />
@@ -49,8 +49,8 @@ export default function Layout() {
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" size={26} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons name={focused ? "person" : "person-outline"} size={26} color={color} />
           ),
         }}
       />

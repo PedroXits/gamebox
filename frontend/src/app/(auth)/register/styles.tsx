@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   p: {
     color: Colors.white,
     fontFamily: Fonts.body,
-    marginTop: -10,
+    marginTop: -15,
   },
 
   logoContainer: {
@@ -124,7 +124,9 @@ export const styles = StyleSheet.create({
     height: 60,
     borderWidth: 1,
     borderRadius: 15,
-    borderColor: "#00000051"
+    borderColor: "#00000051",
+    justifyContent: "center",
+    alignItems: "center",
   },
   
   icon: {

@@ -2,6 +2,8 @@ import React from "react";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
 import { Link, router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Login() {
   return (
@@ -33,13 +35,13 @@ export default function Login() {
           </View>
           <View style={styles.authContainer}>
             <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={require("../../../assets/images/googleIcon.png")}></Image>
+              <FontAwesome name="google" size={36} color="#000" />
             </View>
             <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={require("../../../assets/images/facebookIcon.png")}></Image>
+              <FontAwesome name="facebook" size={36} color="#000" />
             </View>
             <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={require("../../../assets/images/appleIcon.png")}></Image>
+              <Ionicons name="logo-apple" size={38} color="#000" />
             </View>
           </View>
           <Text style={styles.signUpContainer}>

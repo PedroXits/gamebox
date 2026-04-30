@@ -1,8 +1,7 @@
 import React from "react";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
-import { Link } from "expo-router";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function Login() {
   return (

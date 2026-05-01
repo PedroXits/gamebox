@@ -1,51 +1,99 @@
 package com.gamebox.gb.services;
 
 import com.gamebox.gb.datasource.repositories.ProfileRepository;
+import com.gamebox.gb.datasource.repositories.UserRepository;
+import com.gamebox.gb.domain.dtos.CreateProfileRequest;
+import com.gamebox.gb.domain.dtos.ProfileResponse;
+import com.gamebox.gb.domain.dtos.UpdateProfileRequest;
 import com.gamebox.gb.domain.entities.Profile;
+import com.gamebox.gb.domain.entities.User;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
+    private final UserRepository userRepository;
 
-    public ProfileService(ProfileRepository profileRepository) {
+    public ProfileService(ProfileRepository profileRepository, UserRepository userRepository) {
         this.profileRepository = profileRepository;
+        this.userRepository = userRepository;
     }
 
-    public Profile createProfile(Profile profile) {
-        return profileRepository.save(profile);
+    public ProfileResponse createProfile(CreateProfileRequest request) {
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if(profileRepository.existsByUserId(request.userId())) {
+            throw new RuntimeException("Usuário já possui perfil.");
+        }
+
+        Profile profile = new Profile();
+
+        profile.setUser(user);
+        profile.setProfileName(request.profileName());
+        profile.setPhoto(request.photo());
+
+        Profile savedProfile = profileRepository.save(profile);
+
+        return new ProfileResponse(
+                savedProfile.getId(),
+                savedProfile.getProfileName(),
+                savedProfile.getPhoto()
+        );
     }
 
-    public Profile findByProfileName(String profileName) {
-        return profileRepository.findByProfileName(profileName)
+    public ProfileResponse findByProfileName(String profileName) {
+        Profile profile = profileRepository.findByProfileName(profileName)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        return new ProfileResponse(
+                profile.getId(),
+                profile.getProfileName(),
+                profile.getPhoto()
+        );
     }
 
-    public Profile findProfileById(Long id){
-        return profileRepository.findById(id)
+    public ProfileResponse findProfileById(Long id){
+        Profile profile = profileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        return new ProfileResponse(
+                profile.getId(),
+                profile.getProfileName(),
+                profile.getPhoto()
+        );
     }
 
-    public Profile updateProfile(Long id, Profile updatedProfile) {
-        Profile profile = findProfileById(id);
+    public ProfileResponse updateProfile(Long id, UpdateProfileRequest request) {
+        Profile profile = profileRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
 
-        if(updatedProfile.getProfileName() != null) {
+        if(request.profileName() != null) {
 
-            if(updatedProfile.getProfileName().isBlank()) {
+            if(request.profileName().isBlank()) {
                 throw new RuntimeException("Nome inválido.");
             }
-            profile.setProfileName(updatedProfile.getProfileName());
+            profile.setProfileName(request.profileName());
         }
 
-        if(updatedProfile.getPhoto() != null) {
-            profile.setPhoto(updatedProfile.getPhoto());
+        if(request.photo() != null) {
+            profile.setPhoto(request.photo());
         }
-        return profileRepository.save(profile);
+
+        Profile updatedProfile = profileRepository.save(profile);
+
+        return new ProfileResponse(
+                updatedProfile.getId(),
+                updatedProfile.getProfileName(),
+                updatedProfile.getPhoto()
+        );
     }
 
     public void deleteProfileById(Long id) {
-        Profile profile = findProfileById(id);
+        Profile profile = profileRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
         profileRepository.delete(profile);
     }
 

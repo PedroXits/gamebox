@@ -9,5 +9,7 @@ import java.util.List;
 public interface PlayedRepository extends JpaRepository<Played, Long> {
     List<Played> findByProfileId(Long profileId);
 
+    boolean existsByProfileIdAndGameId(Long profileId, Long gameId);
+
     Long profile(Profile profile);
 }

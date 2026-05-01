@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
-import { Link, router } from "expo-router";
+import { Link, router } from "expo-router"; //Atalho automático do login para a home apenas para teste, pois ainda não temos a integração. É só clicar no botão de entrar que será direcionado para a home.
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -25,7 +25,7 @@ export default function Login() {
             <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>
-          <Pressable style={styles.loginButton} onPress={() => router.replace("/(tabs)/home")}>
+          <Pressable style={styles.loginButton} onPress={() => router.replace("/(tabs)/home")}> 
             <Text style={styles.loginButtonText}>Entrar</Text>
           </Pressable>
            <View style={styles.olwcontainer}>

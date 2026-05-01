@@ -46,7 +46,7 @@ export default function Login() {
             </View>
           </View>
           <Text style={styles.loginContainer}>
-            Já tem uma conta? <Link href="/login" style={styles.login}>Login</Link>
+            Já tem uma conta? <Link href="/login" style={styles.login}>Entrar</Link>
           </Text>
         </View>
       </View>

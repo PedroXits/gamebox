@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Table(
+        name="reviews",
         uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"})
 )
 public class Review {

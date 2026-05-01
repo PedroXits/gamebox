@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(
+        name="favorites",
         uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"}),
         indexes = {
                 @Index(name = "idx_fav_profile", columnList = "profile_id"),

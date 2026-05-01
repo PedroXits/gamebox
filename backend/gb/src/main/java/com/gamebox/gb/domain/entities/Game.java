@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(
+        name="games",
         indexes = {
                 @Index(name = "idx_game_name", columnList = "name"),
                 @Index(name = "idx_game_genre", columnList = "genre")

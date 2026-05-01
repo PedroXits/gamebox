@@ -1,9 +1,9 @@
 package com.gamebox.gb.services;
 
 import com.gamebox.gb.datasource.repositories.UserRepository;
-import com.gamebox.gb.domain.dtos.CreateUserRequest;
-import com.gamebox.gb.domain.dtos.UpdateUserRequest;
-import com.gamebox.gb.domain.dtos.UserResponse;
+import com.gamebox.gb.domain.dtos.user.CreateUserRequest;
+import com.gamebox.gb.domain.dtos.user.UpdateUserRequest;
+import com.gamebox.gb.domain.dtos.user.UserResponse;
 import com.gamebox.gb.domain.entities.User;
 import com.gamebox.gb.domain.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;

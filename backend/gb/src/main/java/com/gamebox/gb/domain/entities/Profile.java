@@ -18,7 +18,9 @@ public class Profile {
     private Long id;
 
     private String profileName;
-    private String photo;
+
+    @Column(name="profile_photo")
+    private String profilePhoto;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true, nullable = false)

@@ -11,7 +11,10 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     List<Game> findByGenre(Genre genre);
 
-    boolean existsByNameIgnoreCaseAndReleaseDate(String name, LocalDate releaseDate);
+    boolean existsByGameNameIgnoreCaseAndReleaseDate(
+            String gameName,
+            LocalDate releaseDate
+    );
 
-    List<Game> findByNameContainingIgnoreCase(String name);
+    List<Game> findByGameNameContainingIgnoreCase(String gameName);
 }

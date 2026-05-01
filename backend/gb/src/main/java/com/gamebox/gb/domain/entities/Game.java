@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,13 +26,16 @@ public class Game {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String gameName;
 
     @Enumerated(EnumType.STRING)
     private Genre genre;
 
     @Column(columnDefinition = "TEXT")
     private String description;
+
+    @Column(name="game_photo")
+    private String gamePhoto;
 
     @Column(name = "release")
     private LocalDate releaseDate;

@@ -2,9 +2,9 @@ package com.gamebox.gb.services;
 
 import com.gamebox.gb.datasource.repositories.ProfileRepository;
 import com.gamebox.gb.datasource.repositories.UserRepository;
-import com.gamebox.gb.domain.dtos.CreateProfileRequest;
-import com.gamebox.gb.domain.dtos.ProfileResponse;
-import com.gamebox.gb.domain.dtos.UpdateProfileRequest;
+import com.gamebox.gb.domain.dtos.profile.CreateProfileRequest;
+import com.gamebox.gb.domain.dtos.profile.ProfileResponse;
+import com.gamebox.gb.domain.dtos.profile.UpdateProfileRequest;
 import com.gamebox.gb.domain.entities.Profile;
 import com.gamebox.gb.domain.entities.User;
 import org.springframework.stereotype.Service;
@@ -32,14 +32,14 @@ public class ProfileService {
 
         profile.setUser(user);
         profile.setProfileName(request.profileName());
-        profile.setPhoto(request.photo());
+        profile.setProfilePhoto(request.profilePhoto());
 
         Profile savedProfile = profileRepository.save(profile);
 
         return new ProfileResponse(
                 savedProfile.getId(),
                 savedProfile.getProfileName(),
-                savedProfile.getPhoto()
+                savedProfile.getProfilePhoto()
         );
     }
 
@@ -50,7 +50,7 @@ public class ProfileService {
         return new ProfileResponse(
                 profile.getId(),
                 profile.getProfileName(),
-                profile.getPhoto()
+                profile.getProfilePhoto()
         );
     }
 
@@ -61,7 +61,7 @@ public class ProfileService {
         return new ProfileResponse(
                 profile.getId(),
                 profile.getProfileName(),
-                profile.getPhoto()
+                profile.getProfilePhoto()
         );
     }
 
@@ -77,8 +77,8 @@ public class ProfileService {
             profile.setProfileName(request.profileName());
         }
 
-        if(request.photo() != null) {
-            profile.setPhoto(request.photo());
+        if(request.profilePhoto() != null) {
+            profile.setProfilePhoto(request.profilePhoto());
         }
 
         Profile updatedProfile = profileRepository.save(profile);
@@ -86,7 +86,7 @@ public class ProfileService {
         return new ProfileResponse(
                 updatedProfile.getId(),
                 updatedProfile.getProfileName(),
-                updatedProfile.getPhoto()
+                updatedProfile.getProfilePhoto()
         );
     }
 

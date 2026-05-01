@@ -1,9 +1,15 @@
 package com.gamebox.gb.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "game_id"}),

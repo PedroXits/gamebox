@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
     List<Wishlist> findByProfileId(Long profileId);
+
+    boolean existsByProfileIdAndGameId(Long profileId, Long gameId);
 }

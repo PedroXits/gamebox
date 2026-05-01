@@ -5,6 +5,7 @@ import com.gamebox.gb.datasource.repositories.GameRepository;
 import com.gamebox.gb.datasource.repositories.ProfileRepository;
 import com.gamebox.gb.domain.dtos.favorite.CreateFavoriteRequest;
 import com.gamebox.gb.domain.dtos.favorite.FavoriteResponse;
+import com.gamebox.gb.domain.dtos.favorite.FavoriteSearchResponse;
 import com.gamebox.gb.domain.entities.Favorite;
 import com.gamebox.gb.domain.entities.Game;
 import com.gamebox.gb.domain.entities.Profile;
@@ -70,6 +71,21 @@ public class FavoriteService {
                         f.getGame().getId(),
                         f.getGame().getGameName(),
                         f.getCreatedAt()
+                ))
+                .toList();
+    }
+
+    public List<FavoriteSearchResponse> findGamesByProfileId(Long profileId) {
+
+        profileRepository.findById(profileId)
+                .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        List<Favorite> favorites = favoriteRepository.findByProfileId(profileId);
+
+        return favorites.stream()
+                .map(f -> new FavoriteSearchResponse(
+                        f.getGame().getGameName(),
+                        f.getGame().getGamePhoto()
                 ))
                 .toList();
     }

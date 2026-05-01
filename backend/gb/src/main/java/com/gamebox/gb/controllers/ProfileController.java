@@ -1,6 +1,7 @@
 package com.gamebox.gb.controllers;
 
 import com.gamebox.gb.domain.dtos.profile.CreateProfileRequest;
+import com.gamebox.gb.domain.dtos.profile.ProfileDashboardResponse;
 import com.gamebox.gb.domain.dtos.profile.ProfileResponse;
 import com.gamebox.gb.domain.dtos.profile.UpdateProfileRequest;
 import com.gamebox.gb.services.ProfileService;
@@ -32,6 +33,11 @@ public class ProfileController {
     @GetMapping("/name")
     public ResponseEntity<ProfileResponse> findByName(@RequestParam String profileName) {
         return ResponseEntity.ok(profileService.findByProfileName(profileName));
+    }
+
+    @GetMapping("/{id}/dashboard")
+    public ResponseEntity<ProfileDashboardResponse> getDashboard(@PathVariable Long id) {
+        return ResponseEntity.ok(profileService.getDashboard(id));
     }
 
     @PutMapping("/{id}")

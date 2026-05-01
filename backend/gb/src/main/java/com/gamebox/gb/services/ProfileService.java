@@ -1,23 +1,41 @@
 package com.gamebox.gb.services;
 
-import com.gamebox.gb.datasource.repositories.ProfileRepository;
-import com.gamebox.gb.datasource.repositories.UserRepository;
+import com.gamebox.gb.datasource.repositories.*;
+import com.gamebox.gb.domain.dtos.favorite.FavoriteSearchResponse;
+import com.gamebox.gb.domain.dtos.played.PlayedResponse;
 import com.gamebox.gb.domain.dtos.profile.CreateProfileRequest;
+import com.gamebox.gb.domain.dtos.profile.ProfileDashboardResponse;
 import com.gamebox.gb.domain.dtos.profile.ProfileResponse;
 import com.gamebox.gb.domain.dtos.profile.UpdateProfileRequest;
-import com.gamebox.gb.domain.entities.Profile;
-import com.gamebox.gb.domain.entities.User;
+import com.gamebox.gb.domain.dtos.review.ReviewSearchResponse;
+import com.gamebox.gb.domain.dtos.wishlist.WishlistSearchResponse;
+import com.gamebox.gb.domain.entities.*;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProfileService {
 
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
+    private final PlayedRepository playedRepository;
+    private final FavoriteRepository favoriteRepository;
+    private final ReviewRepository reviewRepository;
+    private final WishlistRepository wishlistRepository;
 
-    public ProfileService(ProfileRepository profileRepository, UserRepository userRepository) {
+    public ProfileService(ProfileRepository profileRepository,
+                          UserRepository userRepository,
+                          PlayedRepository playedRepository,
+                          FavoriteRepository favoriteRepository,
+                          WishlistRepository wishlistRepository,
+                          ReviewRepository reviewRepository) {
         this.profileRepository = profileRepository;
         this.userRepository = userRepository;
+        this.playedRepository = playedRepository;
+        this.favoriteRepository = favoriteRepository;
+        this.reviewRepository = reviewRepository;
+        this.wishlistRepository = wishlistRepository;
     }
 
     public ProfileResponse createProfile(CreateProfileRequest request) {
@@ -62,6 +80,58 @@ public class ProfileService {
                 profile.getId(),
                 profile.getProfileName(),
                 profile.getProfilePhoto()
+        );
+    }
+
+    public ProfileDashboardResponse getDashboard(Long profileId) {
+
+        Profile profile = profileRepository.findById(profileId)
+                .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        List<Played> played = playedRepository.findByProfileId(profileId);
+        List<Favorite> favorites = favoriteRepository.findByProfileId(profileId);
+        List<Wishlist> wishlist = wishlistRepository.findByProfileId(profileId);
+        List<Review> reviews = reviewRepository.findByProfileId(profileId);
+
+        return new ProfileDashboardResponse(
+                new ProfileResponse(
+                        profile.getId(),
+                        profile.getProfileName(),
+                        profile.getProfilePhoto()
+                ),
+
+                played.stream()
+                        .map(p -> new PlayedResponse(
+                                p.getId(),
+                                p.getProfile().getId(),
+                                p.getProfile().getProfileName(),
+                                p.getGame().getId(),
+                                p.getGame().getGameName(),
+                                p.getCreatedAt()
+                        ))
+                        .toList(),
+
+                favorites.stream()
+                        .map(f -> new FavoriteSearchResponse(
+                                f.getGame().getGameName(),
+                                f.getGame().getGamePhoto()
+                        ))
+                        .toList(),
+
+                wishlist.stream()
+                        .map(w -> new WishlistSearchResponse(
+                                w.getGame().getGameName(),
+                                w.getGame().getGamePhoto()
+                        ))
+                        .toList(),
+
+                reviews.stream()
+                        .map(r -> new ReviewSearchResponse(
+                                r.getProfile().getProfileName(),
+                                r.getRating(),
+                                r.getComment()
+                        ))
+                        .toList()
         );
     }
 

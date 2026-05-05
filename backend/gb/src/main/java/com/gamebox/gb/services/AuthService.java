@@ -2,6 +2,7 @@ package com.gamebox.gb.services;
 
 import com.gamebox.gb.datasource.repositories.UserRepository;
 import com.gamebox.gb.domain.dtos.auth.AuthResponse;
+import com.gamebox.gb.domain.dtos.auth.LoginRequest;
 import com.gamebox.gb.domain.dtos.auth.RegistrRequest;
 import com.gamebox.gb.domain.entities.User;
 import com.gamebox.gb.domain.enums.Role;
@@ -45,6 +46,29 @@ public class AuthService {
                 savedUser.getId(),
                 savedUser.getEmail(),
                 savedUser.getUsername()
+        );
+    }
+
+    public AuthResponse login(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new RuntimeException("Email ou senha inválidos"));
+
+        if (!user.getPassword().equals(request.password())) {
+            throw new RuntimeException("Email ou senha inválidos");
+        }
+
+        String token = jwtService.generateToken(
+                user.getId(),
+                user.getEmail(),
+                user.getUsername()
+        );
+
+        return new AuthResponse(
+                token,
+                user.getId(),
+                user.getEmail(),
+                user.getUsername()
         );
     }
 

@@ -3,7 +3,7 @@ package com.gamebox.gb.services;
 import com.gamebox.gb.datasource.repositories.UserRepository;
 import com.gamebox.gb.domain.dtos.auth.AuthResponse;
 import com.gamebox.gb.domain.dtos.auth.LoginRequest;
-import com.gamebox.gb.domain.dtos.auth.RegistrRequest;
+import com.gamebox.gb.domain.dtos.auth.RegisterRequest;
 import com.gamebox.gb.domain.entities.User;
 import com.gamebox.gb.domain.enums.Role;
 import com.gamebox.gb.security.JwtService;
@@ -20,7 +20,7 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public AuthResponse register(RegistrRequest request) {
+    public AuthResponse register(RegisterRequest request) {
 
         userRepository.findByEmail(request.email())
                 .ifPresent(user -> {
@@ -71,6 +71,4 @@ public class AuthService {
                 user.getUsername()
         );
     }
-
-
 }

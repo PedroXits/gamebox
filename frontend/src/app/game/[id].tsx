@@ -94,7 +94,8 @@ export default function GameOverview() {
                         color: "#fff",
                         fontSize: 36,
                         fontFamily: Fonts.title,
-                        marginBottom: 8,
+                        lineHeight: 44,
+                        marginBottom: 18,
                     }}
                 >
                     {game.title}

@@ -54,7 +54,7 @@ export default function Home() {
     }, [currentIndex]);
 
     return(
-        <ScrollView style={{ flex: 1, backgroundColor: "#1E0F3A"}}>
+        <ScrollView style={{ flex: 1, backgroundColor: "#1F103C"}}>
 
             {/* banner do topo */}
             <View style={{ paddingBottom: 20 }}>

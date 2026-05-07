@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, Image, Pressable, ScrollView, } from "react-native";
 
 import { router, useLocalSearchParams } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Feather, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 
 export default function GameOverview() {
@@ -15,7 +15,7 @@ export default function GameOverview() {
             year: "2020",
             genres: "Ação, Survival Horror",
             image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2531310/header.jpg?t=1750959180",
-            description: "é um jogo de ação e aventura focado em narrativa, ambientado cinco anos após o original. A história acompanha Ellie em uma jornada brutal de vingança em um Estados Unidos pós-apocalíptico, explorando as consequências emocionais e físicas de seus atos, além de apresentar Abby, uma segunda protagonista jogável.",
+            description: "Um jogo de ação e aventura focado em narrativa, ambientado cinco anos após o original. A história acompanha Ellie em uma jornada brutal de vingança em um Estados Unidos pós-apocalíptico, explorando as consequências emocionais e físicas de seus atos, além de apresentar Abby, uma segunda protagonista jogável.",
         },
 
         gow: {
@@ -37,7 +37,7 @@ export default function GameOverview() {
                     flex: 1,
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#1E0F3A",
+                    backgroundColor: "#1F103C",
                 }}
             >
                 <Text style={{ color: "#fff" }}>
@@ -48,10 +48,10 @@ export default function GameOverview() {
     }
 
     return (
-        <View
+        <ScrollView
             style={{
                 flex: 1,
-                backgroundColor: "#1E0F3A",
+                backgroundColor: "#1F103C",
             }}
         >
             {/* banner */}
@@ -82,11 +82,13 @@ export default function GameOverview() {
                 </Pressable>
             </View>
 
+            {/* conteúdo */}
             <View
                 style={{
                     padding: 20,
                 }}
             >
+                {/* título */}
                 <Text
                     style={{
                         color: "#fff",
@@ -97,6 +99,44 @@ export default function GameOverview() {
                 >
                     {game.title}
                 </Text>
+
+                {/* card estrelas */}
+                <View
+                    style={{
+                        backgroundColor: "#321961",
+                        borderRadius: 13,
+                        borderWidth: 1,
+                        borderColor: "rgba(255,255,255,0.15)",
+                        paddingVertical: 18,
+                        marginBottom: 18,
+
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 4,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 8,
+                        elevation: 8,
+                    }}
+                >
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            gap: 10,
+                        }}
+                    >
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <FontAwesome
+                                key={star}
+                                name="star-o"
+                                size={38}
+                                color="#fff"
+                            />      
+                        ))}
+                    </View>
+                </View>
 
                 <Text
                     style={{
@@ -118,7 +158,7 @@ export default function GameOverview() {
                     {game.description}
                 </Text>
             </View>
-        </View>
+        </ScrollView>
         
     );
 }

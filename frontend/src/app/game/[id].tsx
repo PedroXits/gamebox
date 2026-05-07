@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, Image, Pressable, ScrollView, } from "react-native";
 
 import { router, useLocalSearchParams } from "expo-router";
-import { Ionicons, Feather, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 
 export default function GameOverview() {
@@ -108,7 +108,7 @@ export default function GameOverview() {
                         borderWidth: 1,
                         borderColor: "rgba(255,255,255,0.15)",
                         paddingVertical: 18,
-                        marginBottom: 18,
+                        marginBottom: 12,
 
                         shadowColor: "#000",
                         shadowOffset: {
@@ -135,6 +135,102 @@ export default function GameOverview() {
                                 color="#fff"
                             />      
                         ))}
+                    </View>
+                </View>
+
+                {/* card dos botões */}
+                <View
+                    style={{
+                        flexDirection: "row",
+                        gap: 12,
+                        marginBottom: 35,
+                    }}
+                >
+                    {/* controle */}
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: "#321961",
+                            height: 70,
+                            borderRadius: 13,
+                            borderWidth: 1,
+                            borderColor: "rgba(255,255,255,0.15)",
+                            justifyContent: "center",
+                            alignItems: "center",
+
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 4,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 8,
+                            elevation: 8,
+                        }}
+                    >
+                        <Ionicons
+                            name="game-controller-outline"
+                            size={38}
+                            color="#fff"
+                        />
+                    </View>
+
+                    {/* coração */}
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: "#321961",
+                            height: 70,
+                            borderRadius: 13,
+                            borderWidth: 1,
+                            borderColor: "rgba(255,255,255,0.15)",
+                            justifyContent: "center",
+                            alignItems: "center",
+
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 4,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 8,
+                            elevation: 8,
+                        }}
+                    >
+                        <FontAwesome
+                            name="heart-o"
+                            size={38}
+                            color="#fff"
+                        />
+                    </View>
+
+                    {/* bookmark */}
+                    <View
+                        style={{
+                            flex: 1,
+                            backgroundColor: "#321961",
+                            height: 70,
+                            borderRadius: 13,
+                            borderWidth: 1,
+                            borderColor: "rgba(255,255,255,0.15)",
+                            justifyContent: "center",
+                            alignItems: "center",
+
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 4,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 8,
+                            elevation: 8,
+                        }}
+                    >
+                        <FontAwesome
+                            name="bookmark-o"
+                            size={38}
+                            color="#fff"
+                        />
                     </View>
                 </View>
 

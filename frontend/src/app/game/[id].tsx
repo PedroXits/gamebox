@@ -96,6 +96,7 @@ export default function GameOverview() {
                         fontFamily: Fonts.title,
                         lineHeight: 44,
                         marginBottom: 18,
+                        paddingTop: 18,
                     }}
                 >
                     {game.title}

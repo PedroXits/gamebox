@@ -234,27 +234,64 @@ export default function GameOverview() {
                     </View>
                 </View>
 
-                <Text
-                    style={{
-                        color: "#aaa",
-                        marginBottom: 10,
-                        fontFamily: Fonts.body,
-                    }}
-                >
-                    {game.year} • {game.genres}
-                </Text>
-
+                {/* título informações */}
                 <Text
                     style={{
                         color: "#fff",
-                        lineHeight: 24,
+                        fontSize: 23,
                         fontFamily: Fonts.body,
+                        marginBottom: 16,
                     }}
                 >
-                    {game.description}
+                    Informações
                 </Text>
+
+                {/* card informações */}
+                <View
+                    style={{
+                        backgroundColor: "#321961",
+                        borderRadius: 13,
+                        padding: 22,
+                        borderWidth: 1,
+                        borderColor: "rgba(255,255,255,0.15)",
+
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 4,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 8,
+                        elevation: 8,
+                    }}
+                >
+                    {/* ano e gênero */}
+                    <Text
+                        style={{
+                            color: "#B8A9D6",
+                            marginBottom: 22,
+                            fontSize: 14,
+                            fontFamily: Fonts.body,
+                        }}
+                    >
+                        {game.year} • {game.genres}
+                    </Text>
+
+                    {/* descrição */}
+                    <Text
+                        style={{
+                            color: "#fff",
+                            lineHeight: 28,
+                            fontSize: 16,
+                            fontFamily: Fonts.body,
+                            textAlign: "justify",
+                        }}
+                    >
+                        {game.description}
+                    </Text>
+                </View>
+
             </View>
         </ScrollView>
-        
     );
 }

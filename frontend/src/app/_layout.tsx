@@ -2,6 +2,7 @@
 import React from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { GamesProvider } from "@/context/GamesContext";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -16,5 +17,9 @@ export default function Layout() {
     return null;
   }
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <GamesProvider>
+      <Stack screenOptions={{ headerShown: false }} />;
+    </GamesProvider>
+  );
 }

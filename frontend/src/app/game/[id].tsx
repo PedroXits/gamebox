@@ -5,6 +5,7 @@ import { View, Text, Image, Pressable, ScrollView, } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
+import { useGames } from "@/context/GamesContext";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
@@ -29,6 +30,9 @@ export default function GameOverview() {
 
     // games.tlou 
     const game = games[id as keyof typeof games];
+
+    const { favoriteGames, toggleFavorite } = useGames();
+    const isFavorite = favoriteGames.includes(id as string);
 
     if (!game) {
         return (
@@ -199,11 +203,14 @@ export default function GameOverview() {
                             elevation: 8,
                         }}
                     >
-                        <FontAwesome
-                            name="heart-o"
-                            size={38}
-                            color="#fff"
-                        />
+                        {/* coração preenche ao clicar e adiciona em favoriteGames, clicando novamente remove e despreenche */}
+                        <Pressable onPress={() => toggleFavorite(id as string)}>
+                            <FontAwesome
+                                name={isFavorite ? "heart" : "heart-o"}
+                                size={38}
+                                color="#fff"
+                            />
+                        </Pressable>
                     </View>
 
                     {/* bookmark */}

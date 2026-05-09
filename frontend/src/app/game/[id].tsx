@@ -140,14 +140,24 @@ export default function GameOverview() {
                             gap: 10,
                         }}
                     >
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <FontAwesome
-                                key={star}
-                                name="star-o"
-                                size={38}
-                                color="#fff"
-                            />      
-                        ))}
+                        {[1, 2, 3, 4, 5].map((star) => {
+                            let iconName: "star" | "star-half-empty" | "star-o" = "star-o";
+                            
+                            if (rating >= star) {
+                                iconName = "star";
+                            } else if (rating >= star - 0.5) {
+                                iconName = "star-half-empty";
+                            }
+
+                            return (
+                                <FontAwesome
+                                    key={star}
+                                    name={iconName}
+                                    size={38}
+                                    color="#fff"
+                                />
+                            );
+                        })}
                     </View>
                 </Pressable>
 

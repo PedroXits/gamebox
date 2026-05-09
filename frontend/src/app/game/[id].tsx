@@ -1,5 +1,5 @@
 //game overview dinâmico
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Image, Pressable, ScrollView, } from "react-native";
 
 import { router, useLocalSearchParams } from "expo-router";
@@ -31,8 +31,10 @@ export default function GameOverview() {
     // games.tlou 
     const game = games[id as keyof typeof games];
 
-    const { favoriteGames, toggleFavorite } = useGames();
+    const { playedGames, favoriteGames, wishlistGames, togglePlayed, toggleFavorite, toggleWishlist } = useGames();
+    const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
+    const isInWishlist = wishlistGames.includes(id as string);
 
     if (!game) {
         return (
@@ -174,11 +176,13 @@ export default function GameOverview() {
                             elevation: 8,
                         }}
                     >
-                        <Ionicons
-                            name="game-controller-outline"
-                            size={38}
-                            color="#fff"
-                        />
+                        <Pressable onPress={() => togglePlayed(id as string)}>
+                            <Ionicons
+                                name={isPlayed ? "game-controller" : "game-controller-outline"}
+                                size={38}
+                                color="#fff"
+                            />
+                        </Pressable>
                     </View>
 
                     {/* coração */}
@@ -235,11 +239,13 @@ export default function GameOverview() {
                             elevation: 8,
                         }}
                     >
-                        <FontAwesome
-                            name="bookmark-o"
-                            size={38}
-                            color="#fff"
-                        />
+                        <Pressable onPress={() => toggleWishlist(id as string)}>
+                            <FontAwesome
+                                name={isInWishlist ? "bookmark" : "bookmark-o"}
+                                size={38}
+                                color="#fff"
+                            />
+                        </Pressable>
                     </View>
                 </View>
 

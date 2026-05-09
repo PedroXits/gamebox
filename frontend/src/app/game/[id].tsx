@@ -6,6 +6,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 import { useGames } from "@/context/GamesContext";
+import ReviewModal from "@/components/ReviewModal";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
@@ -35,6 +36,10 @@ export default function GameOverview() {
     const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
     const isInWishlist = wishlistGames.includes(id as string);
+
+    const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
+    const [rating, setRating] = useState<number>(0);
+    const [review, setReview] = useState("");
 
     if (!game) {
         return (
@@ -109,7 +114,7 @@ export default function GameOverview() {
                 </Text>
 
                 {/* card estrelas */}
-                <View
+                <Pressable onPress={() => setIsReviewModalVisible(true)}
                     style={{
                         backgroundColor: "#321961",
                         borderRadius: 13,
@@ -144,7 +149,7 @@ export default function GameOverview() {
                             />      
                         ))}
                     </View>
-                </View>
+                </Pressable>
 
                 {/* card dos botões */}
                 <View
@@ -307,6 +312,17 @@ export default function GameOverview() {
                 </View>
 
             </View>
+
+            <ReviewModal
+                visible={isReviewModalVisible}
+                rating={rating}
+                review={review}
+                onClose={() => setIsReviewModalVisible(false)}
+                onChangeRating={setRating}
+                onChangeReview={setReview}
+                onSubmit={() => { setIsReviewModalVisible(false)}}
+            />
+            
         </ScrollView>
     );
 }

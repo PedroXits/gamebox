@@ -101,11 +101,21 @@ export default function ReviewModal({
                         style={{
                             flexDirection: "row",
                             justifyContent: "center",
+                            backgroundColor: "#321961",
                             borderRadius: 13,
                             marginBottom: 14,
                             paddingVertical: 16,
                             borderWidth: 1,
                             borderColor: "rgba(255,255,255,0.15)",
+
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 4,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 8,
+                            elevation: 8,
                         }}
                     >
                         {[1, 2, 3, 4, 5].map(renderStar)}
@@ -134,7 +144,7 @@ export default function ReviewModal({
                         style={{
                             minHeight: 160,
                             maxHeight:  200,
-                            backgroundColor: "#291253",
+                            backgroundColor: "#321961",
                             borderRadius: 13,
                             padding: 16,
                             color: "#fff",
@@ -143,6 +153,15 @@ export default function ReviewModal({
                             marginBottom: 24,
                             borderWidth: 1,
                             borderColor: "rgba(255,255,255,0.15)",
+
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 4,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 8,
+                            elevation: 8,
                         }}
                     />
 

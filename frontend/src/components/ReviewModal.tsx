@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, View, Text, Pressable, ScrollView, TextInput } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 
 type ReviewModalProps = {
@@ -44,8 +44,8 @@ export default function ReviewModal({
                     }
                 }}
             >
-                <Ionicons
-                    name={iconName}
+                <FontAwesome
+                    name={ iconName === "star" ? "star" : iconName === "star-half" ? "star-half-empty" : "star-o" }
                     size={42}
                     color="#fff"
                     style={{ marginHorizontal: 4 }}

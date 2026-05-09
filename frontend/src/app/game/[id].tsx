@@ -327,7 +327,11 @@ export default function GameOverview() {
                 visible={isReviewModalVisible}
                 rating={rating}
                 review={review}
-                onClose={() => setIsReviewModalVisible(false)}
+                onClose={() => { 
+                    setRating(0); 
+                    setReview(""); 
+                    setIsReviewModalVisible(false);
+                }}
                 onChangeRating={setRating}
                 onChangeReview={setReview}
                 onSubmit={() => { setIsReviewModalVisible(false)}}

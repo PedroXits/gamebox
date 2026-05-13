@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, View, Text, Pressable, ScrollView, TextInput } from "react-native";
+import { Modal, View, Text, Pressable, TextInput } from "react-native";
 
 import { FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";

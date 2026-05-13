@@ -1,9 +1,11 @@
 // organiza a navegação
-import React from "react";
-import { Stack } from "expo-router";
+import React, { useContext } from "react";
+import { Stack, Redirect } from "expo-router";
 import { useFonts } from "expo-font";
+
 import { GamesProvider } from "@/context/GamesContext";
 import { AdminGamesProvider } from "@/context/AdminGamesContext";
+import { AuthContext } from "@/contexts/AuthContext";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -12,16 +14,26 @@ export default function Layout() {
     LeagueSpartanBold: require("../assets/fonts/LeagueSpartan-Bold.ttf"),
     GeistMonoBlackItalic: require("../assets/fonts/GeistMono-BlackItalic.ttf"),
   });
-  
-  //enquanto carrega
-  if (!fontsLoaded) {
+
+  // pega estado de autenticação global
+  const { signed, loading } = useContext(AuthContext);
+
+  // enquanto carrega fontes ou auth
+  if (!fontsLoaded || loading) {
     return null;
   }
 
   return (
     <AdminGamesProvider>
       <GamesProvider>
-        <Stack screenOptions={{ headerShown: false }} />
+
+        {/* controla acesso geral do app */}
+        {signed ? (
+          <Stack screenOptions={{ headerShown: false }} />
+        ) : (
+          <Redirect href="/(auth)/login" />
+        )}
+
       </GamesProvider>
     </AdminGamesProvider>
   );

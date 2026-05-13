@@ -8,6 +8,9 @@ import com.gamebox.gb.domain.dtos.played.PlayedResponse;
 import com.gamebox.gb.domain.entities.Game;
 import com.gamebox.gb.domain.entities.Played;
 import com.gamebox.gb.domain.entities.Profile;
+import com.gamebox.gb.domain.entities.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +37,14 @@ public class PlayedService {
 
         Profile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if(!profile.getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
 
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado."));
@@ -82,6 +93,14 @@ public class PlayedService {
 
         Played played = playedRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Registro não encontrado."));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if(!played.getProfile().getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
 
         playedRepository.delete(played);
     }

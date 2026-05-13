@@ -11,6 +11,9 @@ import com.gamebox.gb.domain.dtos.review.UpdateReviewRequest;
 import com.gamebox.gb.domain.entities.Game;
 import com.gamebox.gb.domain.entities.Profile;
 import com.gamebox.gb.domain.entities.Review;
+import com.gamebox.gb.domain.entities.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +40,14 @@ public class ReviewService {
 
         Profile profile = profileRepository.findById(profileId)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if (!profile.getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
 
         Game game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado."));
@@ -114,6 +125,14 @@ public class ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review não encontrada."));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if (!review.getProfile().getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
+
         if (request.rating() != null) {
             if (request.rating() < 0.5 || request.rating() > 5) {
                 throw new RuntimeException("Nota inválida.");
@@ -143,17 +162,15 @@ public class ReviewService {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review não encontrada."));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if (!review.getProfile().getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
+
         reviewRepository.delete(review);
     }
-
-
-
-
-
-
-
-
-
-
 
 }

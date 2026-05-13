@@ -9,6 +9,9 @@ import com.gamebox.gb.domain.dtos.favorite.FavoriteSearchResponse;
 import com.gamebox.gb.domain.entities.Favorite;
 import com.gamebox.gb.domain.entities.Game;
 import com.gamebox.gb.domain.entities.Profile;
+import com.gamebox.gb.domain.entities.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +35,14 @@ public class FavoriteService {
 
         Profile profile = profileRepository.findById(request.profileId())
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if (!profile.getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
 
         Game game = gameRepository.findById(request.gameId())
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado."));
@@ -94,6 +105,14 @@ public class FavoriteService {
 
         Favorite favorite = favoriteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Favorito não encontrado."));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if(!favorite.getProfile().getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
 
         favoriteRepository.delete(favorite);
     }

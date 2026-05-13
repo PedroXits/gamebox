@@ -10,6 +10,8 @@ import com.gamebox.gb.domain.dtos.profile.UpdateProfileRequest;
 import com.gamebox.gb.domain.dtos.review.ReviewSearchResponse;
 import com.gamebox.gb.domain.dtos.wishlist.WishlistSearchResponse;
 import com.gamebox.gb.domain.entities.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -139,6 +141,14 @@ public class ProfileService {
         Profile profile = profileRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if(!profile.getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
+
         if(request.profileName() != null) {
 
             if(request.profileName().isBlank()) {
@@ -163,6 +173,14 @@ public class ProfileService {
     public void deleteProfileById(Long id) {
         Profile profile = profileRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Perfil não encontrado."));
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User loggedUser = (User) authentication.getPrincipal();
+
+        if(!profile.getUser().getId().equals(loggedUser.getId())) {
+            throw new RuntimeException("Acesso negado.");
+        }
 
         profileRepository.delete(profile);
     }

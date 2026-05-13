@@ -7,6 +7,7 @@ import com.gamebox.gb.domain.dtos.auth.RegisterRequest;
 import com.gamebox.gb.domain.entities.User;
 import com.gamebox.gb.domain.enums.Role;
 import com.gamebox.gb.security.JwtService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,14 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, JwtService jwtService) {
+    public AuthService(UserRepository userRepository,
+                       JwtService jwtService,
+                       BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -29,7 +34,7 @@ public class AuthService {
 
         User user = new User();
         user.setEmail(request.email());
-        user.setPassword(request.password());
+        user.setPassword(passwordEncoder.encode(request.password()));
         user.setUsername(request.username());
         user.setRole(Role.USER);
 
@@ -54,7 +59,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new RuntimeException("Email ou senha inválidos"));
 
-        if (!user.getPassword().equals(request.password())) {
+        if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new RuntimeException("Email ou senha inválidos");
         }
 

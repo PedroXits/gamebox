@@ -78,7 +78,7 @@ export default function ReviewModal({
                         backgroundColor: "#381D6C",
                         borderRadius: 20,
                         borderWidth: 1,
-                        borderColor: "rgba(255,255,255,0.15)",
+                        borderColor: "#6F57D2",
                         padding: 24,
                     }}
                 >
@@ -106,7 +106,7 @@ export default function ReviewModal({
                             marginBottom: 14,
                             paddingVertical: 16,
                             borderWidth: 1,
-                            borderColor: "rgba(255,255,255,0.15)",
+                            borderColor: "#6F57D2",
 
                             shadowColor: "#000",
                             shadowOffset: {
@@ -152,7 +152,7 @@ export default function ReviewModal({
                             fontFamily: Fonts.body,
                             marginBottom: 24,
                             borderWidth: 1,
-                            borderColor: "rgba(255,255,255,0.15)",
+                            borderColor: "#6F57D2",
 
                             shadowColor: "#000",
                             shadowOffset: {
@@ -181,7 +181,7 @@ export default function ReviewModal({
                                 alignItems: "center",
                                 borderRadius: 100,
                                 borderWidth: 1,
-                                borderColor: "rgba(255,255,255,0.15)",
+                                borderColor: "#6F57D2",
                             }}
                         >
                             <Text
@@ -204,7 +204,7 @@ export default function ReviewModal({
                                 alignItems: "center",
                                 borderRadius: 100,
                                 borderWidth: 1,
-                                borderColor: "rgba(255,255,255,0.15)",
+                                borderColor: "#6F57D2",
                             }}
                         >
                             <Text

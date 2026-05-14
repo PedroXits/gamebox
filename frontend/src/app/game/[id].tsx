@@ -119,7 +119,7 @@ export default function GameOverview() {
                         backgroundColor: "#321961",
                         borderRadius: 13,
                         borderWidth: 1,
-                        borderColor: "rgba(255,255,255,0.15)",
+                        borderColor: "#6F57D2",
                         paddingVertical: 18,
                         marginBottom: 12,
 
@@ -177,7 +177,7 @@ export default function GameOverview() {
                             height: 70,
                             borderRadius: 13,
                             borderWidth: 1,
-                            borderColor: "rgba(255,255,255,0.15)",
+                            borderColor: "#6F57D2",
                             justifyContent: "center",
                             alignItems: "center",
 
@@ -208,7 +208,7 @@ export default function GameOverview() {
                             height: 70,
                             borderRadius: 13,
                             borderWidth: 1,
-                            borderColor: "rgba(255,255,255,0.15)",
+                            borderColor: "#6F57D2",
                             justifyContent: "center",
                             alignItems: "center",
 
@@ -240,7 +240,7 @@ export default function GameOverview() {
                             height: 70,
                             borderRadius: 13,
                             borderWidth: 1,
-                            borderColor: "rgba(255,255,255,0.15)",
+                            borderColor: "#6F57D2",
                             justifyContent: "center",
                             alignItems: "center",
 
@@ -283,7 +283,7 @@ export default function GameOverview() {
                         borderRadius: 13,
                         padding: 22,
                         borderWidth: 1,
-                        borderColor: "rgba(255,255,255,0.15)",
+                        borderColor: "#6F57D2",
 
                         shadowColor: "#000",
                         shadowOffset: {

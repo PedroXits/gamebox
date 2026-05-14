@@ -3,7 +3,7 @@ import { View, Text, TextInput, Pressable, ScrollView, Image } from "react-nativ
 
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
-import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { useAdminGames } from "@/context/AdminGamesContext";
 
 export default function Admin() {

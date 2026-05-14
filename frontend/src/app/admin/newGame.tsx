@@ -57,6 +57,15 @@ export default function NewGame() {
             return;
         }
 
+        addGame({
+            id: Date.now().toString(),
+            title,
+            year,
+            genres,
+            image,
+            description,
+        });
         
+        router.back();
     }
 }

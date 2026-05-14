@@ -41,5 +41,22 @@ export default function NewGame() {
         }
     }
 
+    //adiciona o jogo ao AdminGamesContext.tsx, quando usuário clica no botão "adicionar"
+    function handleAddGame() {
+        if (
+            !title ||
+            !year ||
+            !genres ||
+            !description ||
+            !image
+        ) {
+            Alert.alert(
+                "Campos obrigatórios",
+                "Preencha todos os campos."
+            );
+            return;
+        }
 
+        
+    }
 }

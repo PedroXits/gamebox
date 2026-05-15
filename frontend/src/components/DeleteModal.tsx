@@ -97,7 +97,77 @@ export default function DeleteModal({
                         ?
                     </Text>
 
-                    
+                    {/* botões */}
+                    <View
+                        style={{
+                            gap: 14,
+                        }}
+                    >
+                        {/* excluir */}
+                        <Pressable onPress={onConfirm}
+                            style={{
+                                backgroundColor: "#381D6C",
+                                borderRadius: 13,
+                                borderWidth: 1,
+                                borderColor: "#6F57D2",
+                                alignItems: "center",
+                                paddingVertical: 16,
+                                
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 4,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 8,
+                                elevation: 8,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 16,
+                                    textTransform: "uppercase",
+                                }}
+                            >
+                                Excluir
+                            </Text>
+                        </Pressable>
+
+                        {/* cancelar */}
+                        <Pressable onPress={onClose}
+                            style={{
+                                backgroundColor: "#381D6C",
+                                borderRadius: 13,
+                                borderWidth: 1,
+                                borderColor: "#6F57D2",
+                                alignItems: "center",
+                                paddingVertical: 16,
+                                
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 4,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 8,
+                                elevation: 8,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 16,
+                                    textTransform: "uppercase",
+                                }}
+                            >
+                                Cancelar
+                            </Text>
+                        </Pressable>
+                        
+                    </View>
                 </View>
             </View>
         </Modal>

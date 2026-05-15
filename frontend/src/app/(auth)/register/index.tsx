@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
 import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { AuthContext } from "@/context/AuthContext";
 
-export default function Login() {
+export default function Register() {
+
+  const { register } = useContext(AuthContext);
+
+  const [username, setUsername] = useState("");
+
+  const [email, setEmail] = useState("");
+  
+  const [ password, setPassword ] = useState(""); 
+
+  
+
   return (
     <View style={styles.page}>
       <View style={styles.textContainer}>

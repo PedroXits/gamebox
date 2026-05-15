@@ -18,7 +18,7 @@ export default function Login() {
   async function handleLogin() {
     
     try {
-      await login(email, password);
+      await login({email, password});
     } catch (error) {
       console.log(error);
     }

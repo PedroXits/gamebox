@@ -1,12 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import {
   login as loginService,
+  register as registerService,
   logout as logoutService
 } from "@/services/AuthService";
-
 import { AuthResponse } from "@/models/auth/AuthResponse";
+import { RegisterRequest } from "@/models/auth/RegisterRequest";
+import { LoginRequest } from "@/models/auth/LoginRequest";
 
 type AuthContextData = {
   signed: boolean;
@@ -15,9 +16,12 @@ type AuthContextData = {
   // usuário autenticado
   user: AuthResponse | null;
 
+  register: (
+    data: RegisterRequest
+  ) => Promise<void>;
+
   login: (
-    email: string,
-    password: string
+    data: LoginRequest
   ) => Promise<void>;
 
   logout: () => Promise<void>;
@@ -63,15 +67,9 @@ export function AuthProvider({ children }: any) {
 
   }, []);
 
-  async function login(
-    email: string,
-    password: string
-  ) {
+  async function login(data: LoginRequest) {
 
-    const response = await loginService({
-      email,
-      password
-    });
+    const response = await loginService(data);
 
     if (response.token) {
 
@@ -79,6 +77,22 @@ export function AuthProvider({ children }: any) {
       setUser(response);
 
       // salva o usuário no storage
+      await AsyncStorage.setItem(
+        "user",
+        JSON.stringify(response)
+      );
+
+      setSigned(true);
+    }
+  }
+
+  async function register(data: RegisterRequest) {
+    
+    const response = await registerService(data);
+
+    if(response.token) {
+      setUser(response);
+
       await AsyncStorage.setItem(
         "user",
         JSON.stringify(response)
@@ -103,6 +117,7 @@ export function AuthProvider({ children }: any) {
         loading,
         user,
         login,
+        register,
         logout
       }}
     >

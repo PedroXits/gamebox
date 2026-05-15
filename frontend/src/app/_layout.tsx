@@ -1,21 +1,11 @@
 // organiza a navegação
 
 import React, { useContext } from "react";
-
 import { Stack } from "expo-router";
-
 import { useFonts } from "expo-font";
-
-import { GamesProvider }
-  from "@/context/GamesContext";
-
-import { AdminGamesProvider }
-  from "@/context/AdminGamesContext";
-
-import {
-  AuthContext,
-  AuthProvider
-} from "@/context/AuthContext";
+import { GamesProvider } from "@/context/GamesContext";
+import { AdminGamesProvider } from "@/context/AdminGamesContext";
+import { AuthContext, AuthProvider } from "@/context/AuthContext";
 
 function Routes() {
 
@@ -67,7 +57,6 @@ export default function Layout() {
   }
 
   return (
-
     <AuthProvider>
       <AdminGamesProvider>
         <GamesProvider>

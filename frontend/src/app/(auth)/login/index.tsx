@@ -4,6 +4,8 @@ import { styles } from "./styles";
 import { Link, router } from "expo-router"; //Atalho automático do login para a home apenas para teste, pois ainda não temos a integração. É só clicar no botão de entrar que será direcionado para a home.
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
   return (

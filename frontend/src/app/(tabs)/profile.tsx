@@ -1,12 +1,51 @@
 //perfil
-import React from "react";
-import { View, Text, Pressable, } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Pressable, Image, Alert, Linking, } from "react-native";
 
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Profile() {
+    //imagem de perfil selecionada pelo usuário
+    const [profileImage, setProfileImage] = useState("");
+
+    //abre a galeria para selecionar uma foto de perfil
+    async function pickImage() {
+        const permission =
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+        if (!permission.granted) {
+            Alert.alert(
+                "Permissão necessária",
+                "É preciso permitir acesso às fotos.",
+                [
+                    {
+                        text: "Cancelar",
+                        style: "cancel",
+                    },
+                    {
+                        text: "Abrir Ajustes",
+                        onPress: () => Linking.openSettings(),
+                    },
+                ]
+            );
+            return;
+        }
+        
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images"],
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setProfileImage(result.assets[0].uri);
+        }
+    }
+
     return (
         <View
             style={{
@@ -40,23 +79,36 @@ export default function Profile() {
                 }}
             >
                 {/* avatar */}
-                <View
+                <Pressable
+                    onPress={pickImage}
                     style={{
-                        width: 120,
-                        height: 120,
-                        borderRadius: 80,
+                        width: 110,
+                        height: 110,
+                        borderRadius: 70,
                         backgroundColor: "#fff",
                         justifyContent: "center",
                         alignItems: "center",
                         marginBottom: 16,
+                        overflow: "hidden",
                     }}
                 >
-                    <Ionicons
-                        name="person-outline"
-                        size={56}
-                        color="#000"
-                    />
-                </View>
+                    {profileImage ? (
+                        <Image
+                            source={{ uri: profileImage }}
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                            }}
+                            resizeMode="cover"
+                        />
+                    ) : (
+                        <Ionicons
+                            name="person-outline"
+                            size={56}
+                            color="#000"
+                        />
+                    )}
+                </Pressable>
 
                 {/* nome */}
                 <Text

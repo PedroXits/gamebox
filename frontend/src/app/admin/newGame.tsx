@@ -1,6 +1,6 @@
 //cadastro de um novo jogo
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Image, Alert } from "react-native";
+import { View, Text, TextInput, Pressable, Image, Alert, Linking } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -23,10 +23,21 @@ export default function NewGame() {
     async function pickImage() {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
+        //se o usuário negou o acesso
         if (!permission.granted) {
             Alert.alert(
                 "Permissão necessária",
-                "É preciso permitir acesso às fotos."
+                "É preciso permitir acesso às fotos.",
+                [
+                    { 
+                        text: "Cancelar", 
+                        style: "cancel", 
+                    }, 
+                    { 
+                        text: "Abrir Ajustes", 
+                        onPress: () => Linking.openSettings(), 
+                    },
+                ]
             );
             return;
         }

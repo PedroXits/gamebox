@@ -171,17 +171,35 @@ export default function EditGame() {
                     overflow: "hidden",
                     borderWidth: 1,
                     borderColor: "#6F57D2",
+                    position: "relative",
                 }}
             >
-                {image ? (
+                {image ? ( <>
                     <Image
                         source={{ uri: image }}
                         style={{
                             width: "100%",
                             height: "100%",
+                            opacity: 0.3,
                         }}
                         resizeMode="cover"
                     />
+
+                    {/* ícone centralizado sobre a imagem */}
+                    <View
+                        style={{
+                            position: "absolute",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Feather
+                            name="plus-circle"
+                            size={32}
+                            color="rgba(255,255,255,0.75)"
+                        />
+                    </View>
+                    </>
                 ) : (
                     <Feather
                         name="plus-circle"

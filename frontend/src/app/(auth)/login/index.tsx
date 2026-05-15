@@ -1,13 +1,29 @@
 import React from "react";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
-import { Link, router } from "expo-router"; //Atalho automático do login para a home apenas para teste, pois ainda não temos a integração. É só clicar no botão de entrar que será direcionado para a home.
+import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
+
+  const { login } = useContext(AuthContext);
+
+  const [email, setEmail] = useState("");
+
+  const [ password, setPassword ] = useState("");
+
+  async function handleLogin() {
+    
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <View style={styles.page}>
       <View style={styles.textContainer}>
@@ -23,11 +39,26 @@ export default function Login() {
         <View style={styles.mainContent}>
           <Text style={styles.loginText}>Login</Text>
           <View style={styles.inputsContainer}>
-            <TextInput style={styles.input} placeholder="E-mail" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
-            <TextInput style={styles.input} placeholder="Senha" placeholderTextColor="rgba(128, 128, 128, 0.7)"></TextInput>
+            <TextInput 
+              style={styles.input} 
+              placeholder="E-mail" 
+              placeholderTextColor="rgba(128, 128, 128, 0.7)"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <TextInput 
+              style={styles.input} 
+              placeholder="Senha" 
+              placeholderTextColor="rgba(128, 128, 128, 0.7)"
+              secureTextEntry
+              value={password}
+              onChangeText={setPassword}
+            />
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>
-          <Pressable style={styles.loginButton} onPress={() => router.replace("/(tabs)/home")}> 
+          <Pressable style={styles.loginButton} onPress={handleLogin}> 
             <Text style={styles.loginButtonText}>Entrar</Text>
           </Pressable>
            <View style={styles.olwcontainer}>

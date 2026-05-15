@@ -1,1 +1,1 @@
-// TELA ÚNICA (Favoritos / Jogados / Desejos)
+//tela única (wishlist, played, favorite)

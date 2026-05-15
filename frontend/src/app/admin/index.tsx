@@ -5,16 +5,29 @@ import { View, Text, TextInput, Pressable, ScrollView, Image } from "react-nativ
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
-import { useAdminGames } from "@/context/AdminGamesContext";
+import { Game, useAdminGames } from "@/context/AdminGamesContext";
+import DeleteModal from "@/components/DeleteModal";
 
 export default function Admin() {
     const [search, setSearch] = useState("");
-    const { games } = useAdminGames(); //pega os jogos de AdminGamesContext.tsx
+    const { games, deleteGame } = useAdminGames(); //pega os jogos de AdminGamesContext.tsx
+    const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+    const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
 
     //cria a lista filtrada, faz busca em tempo real
     const filteredGames = games.filter((game) =>
         game.title.toLowerCase().includes(search.toLowerCase())
     );
+
+    function handleDeleteGame() {
+        if (!selectedGame) {
+            return;
+        }
+
+        deleteGame(selectedGame.id);
+        setSelectedGame(null);
+        setIsDeleteModalVisible(false);
+    }
 
     return (
         <View
@@ -207,7 +220,8 @@ export default function Admin() {
 
                             {/* excluir */}
                             <Pressable onPress={() => {
-                                    //modal
+                                    setSelectedGame(game);
+                                    setIsDeleteModalVisible(true);
                                 }}
                             >
                                 <Feather
@@ -220,6 +234,17 @@ export default function Admin() {
                     </View>
                 ))}
             </ScrollView>
+
+            <DeleteModal
+                visible={isDeleteModalVisible}
+                game={selectedGame}
+                onClose={() => {
+                    setSelectedGame(null);
+                    setIsDeleteModalVisible(false);
+                }}
+                onConfirm={handleDeleteGame}
+            />
+            
         </View>
     );
 }

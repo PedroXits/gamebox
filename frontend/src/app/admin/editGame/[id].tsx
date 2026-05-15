@@ -20,7 +20,7 @@ export default function EditGame() {
     //se o jogo não for encontrado, volta para a tela anterior
     if (!game) {
         router.back();
-        return undefined;
+        return null;
     }
 
     //estados iniciados com os dados já existentes

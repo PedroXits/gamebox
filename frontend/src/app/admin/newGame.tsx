@@ -77,7 +77,7 @@ export default function NewGame() {
             }}
             contentContainerStyle={{
                 paddingHorizontal: 20,
-                paddingTop: 70,
+                paddingTop: 55,
                 paddingBottom: 40,
             }}
             showsVerticalScrollIndicator={false}
@@ -87,7 +87,7 @@ export default function NewGame() {
                 style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    marginBottom: 36,
+                    marginBottom: 30,
                 }}
             >
                 {/* menu */}
@@ -125,8 +125,8 @@ export default function NewGame() {
                     color: "#fff",
                     fontFamily: Fonts.body,
                     fontSize: 16,
-                    marginBottom: 12,
-                    marginLeft: 10,
+                    marginBottom: 14,
+                    marginLeft: 8,
                 }}
             >
                 Selecionar imagem
@@ -139,8 +139,8 @@ export default function NewGame() {
                     borderRadius: 8,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginHorizontal: 38,
-                    marginBottom: 28,
+                    marginHorizontal: 36,
+                    marginBottom: 30,
                     overflow: "hidden",
                     borderWidth: 1,
                     borderColor: "#6F57D2",
@@ -164,7 +164,135 @@ export default function NewGame() {
                 )}
             </Pressable>
 
+            {/* campo título do jogo */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    marginBottom: 8,
+                }}
+            >
+                Título do jogo
+            </Text>
+
+            <TextInput
+                value={title}
+                onChangeText={setTitle}
+                placeholder="Ex: Life is Strange"
+                placeholderTextColor="rgba(255,255,255,0.45)"
+                style={{
+                    backgroundColor: "#381D6C",
+                    borderRadius: 13,
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    paddingHorizontal: 16,
+                    paddingVertical: 14,
+                    marginBottom: 20,
+                }}
+            />
+
+            {/* campo ano de lançamento */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    marginBottom: 8,
+                }}
+            >
+                Ano de lançamento
+            </Text>
+
+            <TextInput
+                value={year}
+                onChangeText={setYear}
+                placeholder="Ex: 2015"
+                placeholderTextColor="rgba(255,255,255,0.45)"
+                keyboardType="numeric"
+                style={{
+                    backgroundColor: "#381D6C",
+                    borderRadius: 13,
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    paddingHorizontal: 16,
+                    paddingVertical: 14,
+                    marginBottom: 20,
+                }}
+            />
+
+            {/* campo gênero do jogo */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    marginBottom: 8,
+                }}
+            >
+                Gêneros
+            </Text>
+
+            <TextInput
+                value={genres}
+                onChangeText={setGenres}
+                placeholder="Ex: Ação, Aventura"
+                placeholderTextColor="rgba(255,255,255,0.45)"
+                style={{
+                    backgroundColor: "#381D6C",
+                    borderRadius: 13,
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    paddingHorizontal: 16,
+                    paddingVertical: 14,
+                    marginBottom: 20,
+                }}
+            />
+
+            {/* campo descrição */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    marginBottom: 8,
+                }}
+            >
+                Descrição
+            </Text>
+
+            <TextInput
+                value={description}
+                onChangeText={setDescription}
+                placeholder="Fale sobre o jogo..."
+                placeholderTextColor="rgba(255,255,255,0.45)"
+                multiline
+                textAlignVertical="top"
+                style={{
+                    backgroundColor: "#381D6C",
+                    borderRadius: 13,
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 16,
+                    paddingHorizontal: 16,
+                    paddingVertical: 14,
+                    minHeight: 100,
+                    marginBottom: 30,
+                }}
+            />
             
+                            
         </ScrollView>
     );
 }

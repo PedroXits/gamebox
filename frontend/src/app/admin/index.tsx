@@ -214,7 +214,7 @@ export default function Admin() {
                                 <Feather
                                     name="edit"
                                     size={26}
-                                    color="#fff"
+                                    color="#ba6cfa"
                                 />
                             </Pressable>
 
@@ -227,7 +227,7 @@ export default function Admin() {
                                 <Feather
                                     name="trash-2"
                                     size={26}
-                                    color="#fff"
+                                    color="#FF2C2C"
                                 />
                             </Pressable>
                         </View>

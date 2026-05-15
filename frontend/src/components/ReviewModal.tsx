@@ -71,6 +71,7 @@ export default function ReviewModal({
                     padding: 20,
                 }}
             >
+                {/* caixa do modal */}
                 <View
                     style={{
                         width: "100%",
@@ -107,15 +108,6 @@ export default function ReviewModal({
                             paddingVertical: 16,
                             borderWidth: 1,
                             borderColor: "#6F57D2",
-
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 4,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 8,
-                            elevation: 8,
                         }}
                     >
                         {[1, 2, 3, 4, 5].map(renderStar)}
@@ -153,15 +145,6 @@ export default function ReviewModal({
                             marginBottom: 24,
                             borderWidth: 1,
                             borderColor: "#6F57D2",
-
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 4,
-                            },
-                            shadowOpacity: 0.25,
-                            shadowRadius: 8,
-                            elevation: 8,
                         }}
                     />
 
@@ -179,9 +162,19 @@ export default function ReviewModal({
                                 flex: 1,
                                 paddingVertical: 14,
                                 alignItems: "center",
+                                backgroundColor: "#381D6C",
                                 borderRadius: 100,
                                 borderWidth: 1,
                                 borderColor: "#6F57D2",
+
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 4,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 8,
+                                elevation: 8,
                             }}
                         >
                             <Text
@@ -202,9 +195,19 @@ export default function ReviewModal({
                                 flex: 1,
                                 paddingVertical: 14,
                                 alignItems: "center",
+                                backgroundColor: "#381D6C",
                                 borderRadius: 100,
                                 borderWidth: 1,
                                 borderColor: "#6F57D2",
+
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 4,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 8,
+                                elevation: 8,
                             }}
                         >
                             <Text

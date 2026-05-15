@@ -1,6 +1,8 @@
 //cadastro de um novo jogo
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Image, ScrollView, Alert, } from "react-native";
+import { View, Text, TextInput, Pressable, Image, Alert } from "react-native";
+
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
@@ -70,7 +72,7 @@ export default function NewGame() {
     }
 
     return (
-        <ScrollView
+        <KeyboardAwareScrollView
             style={{
                 flex: 1,
                 backgroundColor: "#1F103C",
@@ -81,6 +83,9 @@ export default function NewGame() {
                 paddingBottom: 40,
             }}
             showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+            enableOnAndroid={true}
+            extraScrollHeight={60}
         >
             {/* cabeçalho */}
             <View
@@ -291,8 +296,8 @@ export default function NewGame() {
                     marginBottom: 30,
                 }}
             />
+
             
-                            
-        </ScrollView>
+        </KeyboardAwareScrollView>
     );
 }

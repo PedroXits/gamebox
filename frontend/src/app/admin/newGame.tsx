@@ -54,7 +54,7 @@ export default function NewGame() {
         }
     }
 
-    //adiciona o jogo ao AdminGamesContext.tsx, quando usuário clica no botão "adicionar"
+    //adiciona o jogo ao AdminGamesContext, quando usuário clica no botão "adicionar"
     function handleAddGame() {
         if (
             !title ||
@@ -106,7 +106,7 @@ export default function NewGame() {
                     marginBottom: 30,
                 }}
             >
-                {/* menu */}
+                {/* voltar */}
                 <Pressable onPress={() => router.back()} 
                     style={{ 
                         marginRight: 48,
@@ -306,6 +306,8 @@ export default function NewGame() {
                     paddingVertical: 14,
                     minHeight: 100,
                     marginBottom: 30,
+                    lineHeight: 20,
+                    textAlign: "justify",
                 }}
             />
 

@@ -1,3 +1,4 @@
+//painel administrativo (dashboard)
 import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, ScrollView, Image } from "react-native";
 

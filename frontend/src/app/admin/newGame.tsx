@@ -281,6 +281,7 @@ export default function NewGame() {
                 placeholder="Fale sobre o jogo..."
                 placeholderTextColor="rgba(255,255,255,0.45)"
                 multiline
+                scrollEnabled={false}
                 textAlignVertical="top"
                 style={{
                     backgroundColor: "#381D6C",

@@ -106,7 +106,7 @@ export default function NewGame() {
                     marginBottom: 30,
                 }}
             >
-                {/* voltar */}
+                {/* botão voltar */}
                 <Pressable onPress={() => router.back()} 
                     style={{ 
                         marginRight: 48,

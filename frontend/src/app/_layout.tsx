@@ -1,5 +1,4 @@
 // organiza a navegação
-
 import React, { useContext } from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
@@ -8,22 +7,16 @@ import { AdminGamesProvider } from "@/context/AdminGamesContext";
 import { AuthContext, AuthProvider } from "@/context/AuthContext";
 
 function Routes() {
+  const { signed, loading } = useContext(AuthContext);
 
-  const {
-    signed,
-    loading
-  } = useContext(AuthContext);
-
-  // enquanto carrega auth
+  // enquanto carrega o auth
   if (loading) {
     return null;
   }
 
   return (
-
     <Stack screenOptions={{ headerShown: false }}>
-      {
-        signed ? (
+      { signed ? (
           // usuário logado
           <Stack.Screen name="(tabs)" />
         ) : (
@@ -36,19 +29,11 @@ function Routes() {
 }
 
 export default function Layout() {
-
   const [fontsLoaded] = useFonts({
-    Koulen:
-      require("../assets/fonts/Koulen-Regular.ttf"),
-
-    Imprima:
-      require("../assets/fonts/Imprima-Regular.ttf"),
-
-    LeagueSpartanBold:
-      require("../assets/fonts/LeagueSpartan-Bold.ttf"),
-
-    GeistMonoBlackItalic:
-      require("../assets/fonts/GeistMono-BlackItalic.ttf"),
+    Koulen: require("../assets/fonts/Koulen-Regular.ttf"),
+    Imprima: require("../assets/fonts/Imprima-Regular.ttf"),
+    LeagueSpartanBold: require("../assets/fonts/LeagueSpartan-Bold.ttf"),
+    GeistMonoBlackItalic: require("../assets/fonts/GeistMono-BlackItalic.ttf"),
   });
 
   // enquanto carrega fontes

@@ -20,7 +20,7 @@ export default function Admin() {
             style={{ 
                 flex: 1, 
                 backgroundColor: "#1F103C", 
-                paddingHorizontal: 24, 
+                paddingHorizontal: 22, 
                 paddingTop: 70,
             }}
         >

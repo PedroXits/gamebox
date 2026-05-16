@@ -238,6 +238,85 @@ export default function Profile() {
                     backgroundColor: "rgba(255,255,255,0.25)",
                 }}
             />
+
+            {/* seção Jogados */}
+            <View
+                style={{
+                    marginTop: 30,
+                }}
+            >
+                {/* título */}
+                <Text
+                    style={{
+                        color: "#fff",
+                        fontFamily: Fonts.body,
+                        fontSize: 18,
+                        marginBottom: 12,
+                    }}
+                >
+                    Jogados
+                </Text>
+
+                {/* sem jogos jogados */}
+                {playedGames.length === 0 ? (
+                    <Text
+                        style={{
+                            color: "#726292",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                        }}
+                    >
+                        Nenhum jogo ainda
+                    </Text>
+                ) : (
+                    <>
+                        {/* cards */}
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginBottom: 8,
+                                gap: 9,
+                                marginLeft: -5,
+                            }}
+                        >
+                            {/* com jogos jogados */}
+                            {playedGames.slice(0, 4).map((game) => (
+                                <Image
+                                    key={game.id}
+                                    source={{ uri: game.image }}
+                                    style={{
+                                        width: 87,
+                                        height: 128,
+                                        borderRadius: 8,
+                                    }}
+                                    resizeMode="cover"
+                                />
+                            ))}
+                        </View>
+
+                        {/* botão Ver mais */}
+                        <Pressable
+                            onPress={() => router.push("/list/played")}
+                            style={{
+                                alignSelf: "flex-end",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 15,
+                                }}
+                            >
+                                Ver mais
+                            </Text>
+                        </Pressable>
+                    </>
+                )}
+            </View>
+
+
         </View>
     );
 }

@@ -242,7 +242,7 @@ export default function Profile() {
             {/* seção Jogados */}
             <View
                 style={{
-                    marginTop: 30,
+                    marginTop: 40,
                 }}
             >
                 {/* título */}
@@ -270,7 +270,7 @@ export default function Profile() {
                     </Text>
                 ) : (
                     <>
-                        {/* cards */}
+                        {/* cards jogos */}
                         <View
                             style={{
                                 flexDirection: "row",
@@ -316,6 +316,82 @@ export default function Profile() {
                 )}
             </View>
 
+            {/* seção Favoritos */}
+            <View
+                style={{
+                    marginTop: 30,
+                }}
+            >
+                {/* título */}
+                <Text
+                    style={{
+                        color: "#fff",
+                        fontFamily: Fonts.body,
+                        fontSize: 18,
+                        marginBottom: 12,
+                    }}
+                >
+                    Favoritos
+                </Text>
+
+                {/* sem jogos favoritados */}
+                {favoriteGames.length === 0 ? (
+                    <Text
+                        style={{
+                            color: "#726292",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                        }}
+                    >
+                        Nenhum jogo ainda
+                    </Text>
+                ) : (
+                    <>
+                        {/* cards jogos */}
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginBottom: 8,
+                                gap: 9,
+                                marginLeft: -5,
+                            }}
+                        >
+                            {/* com jogos favoritados */}
+                            {favoriteGames.slice(0, 4).map((game) => (
+                                <Image
+                                    key={game.id}
+                                    source={{ uri: game.image }}
+                                    style={{
+                                        width: 87,
+                                        height: 128,
+                                        borderRadius: 8,
+                                    }}
+                                    resizeMode="cover"
+                                />
+                            ))}
+                        </View>
+
+                        {/* botão Ver mais */}
+                        <Pressable
+                            onPress={() => router.push("/list/favorites")}
+                            style={{
+                                alignSelf: "flex-end",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 15,
+                                }}
+                            >
+                                Ver mais
+                            </Text>
+                        </Pressable>
+                    </>
+                )}
+            </View>
 
         </View>
     );

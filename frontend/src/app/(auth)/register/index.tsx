@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Pressable, Text, TextInput, View, Image, ScrollView } from "react-native";
+import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
 import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -34,11 +34,7 @@ export default function Register() {
   }
 
   return (
-    <ScrollView
-      style={styles.page}
-      contentContainerStyle={{ flexGrow: 1 }}
-      showsVerticalScrollIndicator={false}
-    >
+    <View style={styles.page}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>Bem-Vindo</Text>
         <Text style={styles.p}>Faça parte do Gameboxd</Text>
@@ -116,6 +112,6 @@ export default function Register() {
           </Text>
         </View>
       </View>
-    </ScrollView>
+    </View>
   );
 }

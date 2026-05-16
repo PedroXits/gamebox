@@ -395,8 +395,8 @@ export default function Profile() {
                 profileName={profileName}
                 onClose={() => setIsEditProfileModalVisible(false)}
                 onPickImage={pickImage}
-                onEditName={() => {
-
+                onEditName={(newName) => {
+                    setProfileName(newName);
                 }}
             />
             

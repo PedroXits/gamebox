@@ -190,7 +190,7 @@ export default function EditProfileModal({
 
                         {/* confirmar */}
                         <Pressable
-                            onPress={onClose}
+                            onPress={handleConfirm}
                             style={{
                                 flex: 1,
                                 paddingVertical: 14,

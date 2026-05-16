@@ -223,172 +223,183 @@ export default function Profile() {
                         Editar perfil
                     </Text>
                 </Pressable>
-
-                {/* linha divisória */}
-                <View
-                    style={{
-                        width: "100%",
-                        height: 1,
-                        backgroundColor: "rgba(255,255,255,0.2)",
-                        marginTop: 16
-                    }}
-                />
-                
-                {/* seção Jogados */}
-                <View
-                    style={{
-                        marginTop: 40,
-                    }}
-                >
-                    {/* título */}
-                    <Text
-                        style={{
-                            color: "#fff",
-                            fontFamily: Fonts.body,
-                            fontSize: 18,
-                            marginBottom: 12,
-                        }}
-                    >
-                        Jogados
-                    </Text>
-
-                    {/* sem jogos jogados */}
-                    {playedGames.length === 0 ? (
-                        <Text
-                            style={{
-                                color: "#726292",
-                                fontFamily: Fonts.body,
-                                fontSize: 16,
-                            }}
-                        >
-                            Nenhum jogo ainda
-                        </Text>
-                    ) : (
-                        <>
-                            {/* cards jogos */}
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    marginBottom: 8,
-                                    gap: 9,
-                                    marginLeft: -5,
-                                }}
-                            >
-                                {/* com jogos jogados */}
-                                {playedGames.slice(0, 4).map((game) => (
-                                    <Image
-                                        key={game.id}
-                                        source={{ uri: game.image }}
-                                        style={{
-                                            width: 87,
-                                            height: 128,
-                                            borderRadius: 8,
-                                        }}
-                                        resizeMode="cover"
-                                    />
-                                ))}
-                            </View>
-
-                            {/* botão Ver mais */}
-                            <Pressable
-                                onPress={() => router.push("/list/played")}
-                                style={{
-                                    alignSelf: "flex-end",
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        color: "#fff",
-                                        fontFamily: Fonts.body,
-                                        fontSize: 15,
-                                    }}
-                                >
-                                    Ver mais
-                                </Text>
-                            </Pressable>
-                        </>
-                    )}
-                </View>
-
-                {/* seção Favoritos */}
-                <View
-                    style={{
-                        marginTop: 30,
-                    }}
-                >
-                    {/* título */}
-                    <Text
-                        style={{
-                            color: "#fff",
-                            fontFamily: Fonts.body,
-                            fontSize: 18,
-                            marginBottom: 12,
-                        }}
-                    >
-                        Favoritos
-                    </Text>
-
-                    {/* sem jogos favoritados */}
-                    {favoriteGames.length === 0 ? (
-                        <Text
-                            style={{
-                                color: "#726292",
-                                fontFamily: Fonts.body,
-                                fontSize: 16,
-                            }}
-                        >
-                            Nenhum jogo ainda
-                        </Text>
-                    ) : (
-                        <>
-                            {/* cards jogos */}
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    marginBottom: 8,
-                                    gap: 9,
-                                    marginLeft: -5,
-                                }}
-                            >
-                                {/* com jogos favoritados */}
-                                {favoriteGames.slice(0, 4).map((game) => (
-                                    <Image
-                                        key={game.id}
-                                        source={{ uri: game.image }}
-                                        style={{
-                                            width: 87,
-                                            height: 128,
-                                            borderRadius: 8,
-                                        }}
-                                        resizeMode="cover"
-                                    />
-                                ))}
-                            </View>
-
-                            {/* botão Ver mais */}
-                            <Pressable
-                                onPress={() => router.push("/list/favorites")}
-                                style={{
-                                    alignSelf: "flex-end",
-                                }}
-                            >
-                                <Text
-                                    style={{
-                                        color: "#fff",
-                                        fontFamily: Fonts.body,
-                                        fontSize: 15,
-                                    }}
-                                >
-                                    Ver mais
-                                </Text>
-                            </Pressable>
-                        </>
-                    )}
-                </View>
             </View>
 
+            {/* linha divisória */}
+            <View
+                style={{
+                    width: "100%",
+                    height: 1,
+                    backgroundColor: "rgba(255,255,255,0.2)",
+                    marginTop: -24,
+                }}
+            />
+            
+            {/* seção Jogados */}
+            <View
+                style={{
+                    marginTop: 36,
+                }}
+            >
+                {/* título */}
+                <Text
+                    style={{
+                        color: "#fff",
+                        fontFamily: Fonts.body,
+                        fontSize: 18,
+                        marginBottom: 12,
+                    }}
+                >
+                    Jogados
+                </Text>
+
+                {/* sem jogos jogados */}
+                {playedGames.length === 0 ? (
+                    <Text
+                        style={{
+                            color: "#726292",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                        }}
+                    >
+                        Nenhum jogo ainda
+                    </Text>
+                ) : (
+                    <>
+                        {/* cards jogos */}
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginBottom: 8,
+                                gap: 9,
+                                marginLeft: -5,
+                            }}
+                        >
+                            {/* com jogos jogados */}
+                            {playedGames.slice(0, 4).map((game) => (
+                                <Image
+                                    key={game.id}
+                                    source={{ uri: game.image }}
+                                    style={{
+                                        width: 87,
+                                        height: 128,
+                                        borderRadius: 8,
+                                    }}
+                                    resizeMode="cover"
+                                />
+                            ))}
+                        </View>
+
+                        {/* botão Ver mais */}
+                        <Pressable
+                            onPress={() => router.push("/list/played")}
+                            style={{
+                                alignSelf: "flex-end",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 15,
+                                }}
+                            >
+                                Ver mais
+                            </Text>
+                        </Pressable>
+                    </>
+                )}
+            </View>
+
+            {/* seção Favoritos */}
+            <View
+                style={{
+                    marginTop: 30,
+                }}
+            >
+                {/* título */}
+                <Text
+                    style={{
+                        color: "#fff",
+                        fontFamily: Fonts.body,
+                        fontSize: 18,
+                        marginBottom: 12,
+                    }}
+                >
+                    Favoritos
+                </Text>
+
+                {/* sem jogos favoritados */}
+                {favoriteGames.length === 0 ? (
+                    <Text
+                        style={{
+                            color: "#726292",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                        }}
+                    >
+                        Nenhum jogo ainda
+                    </Text>
+                ) : (
+                    <>
+                        {/* cards jogos */}
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                marginBottom: 8,
+                                gap: 9,
+                                marginLeft: -5,
+                            }}
+                        >
+                            {/* com jogos favoritados */}
+                            {favoriteGames.slice(0, 4).map((game) => (
+                                <Image
+                                    key={game.id}
+                                    source={{ uri: game.image }}
+                                    style={{
+                                        width: 87,
+                                        height: 128,
+                                        borderRadius: 8,
+                                    }}
+                                    resizeMode="cover"
+                                />
+                            ))}
+                        </View>
+
+                        {/* botão Ver mais */}
+                        <Pressable
+                            onPress={() => router.push("/list/favorites")}
+                            style={{
+                                alignSelf: "flex-end",
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 15,
+                                }}
+                            >
+                                Ver mais
+                            </Text>
+                        </Pressable>
+                    </>
+                )}
+            </View>
+
+            <EditProfileModal
+                visible={isEditProfileModalVisible}
+                profileImage={profileImage}
+                profileName={profileName}
+                onClose={() => setIsEditProfileModalVisible(false)}
+                onPickImage={pickImage}
+                onEditName={() => {
+
+                }}
+            />
+            
         </View>
     );
 }

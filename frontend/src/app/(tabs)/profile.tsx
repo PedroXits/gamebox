@@ -49,6 +49,61 @@ export default function Profile() {
         }
     }
 
+    //mock de jogos
+    const playedGames = [
+        {
+            id: "1",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobg1j.jpg",
+        },
+        {
+            id: "2",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaarl.jpg",
+        },
+        {
+            id: "3",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobebu.jpg",
+        },
+        {
+            id: "4",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9dh.jpg",
+        },
+        {
+            id: "5",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.jpg",
+        },
+        {
+            id: "6",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co62ao.jpg",
+        },
+    ];
+
+    const favoriteGames = [
+        {
+            id: "1",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1rbu.jpg",
+        },
+        {
+            id: "2",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg",
+        },
+        {
+            id: "3",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1ir3.jpg",
+        },
+        {
+            id: "4",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaih8.jpg",
+        },
+        {
+            id: "5",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co9gam.jpg",
+        },
+        {
+            id: "6",
+            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1q1f.jpg",
+        },
+    ];
+
     return (
         <View
             style={{
@@ -113,7 +168,7 @@ export default function Profile() {
                     )}
                 </Pressable>
 
-                {/* nome */}
+                {/* nome do perfil */}
                 <View
                     style={{
                         flexDirection: "row",

@@ -27,6 +27,8 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
 
+        System.out.println("ENTROU NO REGISTER");
+
         userRepository.findByEmail(request.email())
                 .ifPresent(user -> {
                     throw new RuntimeException("Email já está cadastrado.");

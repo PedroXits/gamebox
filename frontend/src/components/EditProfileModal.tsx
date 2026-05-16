@@ -1,6 +1,6 @@
 //pop-up para editar perfil
 import React, { useState, useEffect } from "react";
-import { Modal, View, Text, TextInput, Pressable, Image, } from "react-native";
+import { Modal, View, Text, TextInput, Pressable, Image, KeyboardAvoidingView, Platform, } from "react-native";
 
 import { Fonts } from "@/constants/fonts";
 import { Feather } from "@expo/vector-icons";
@@ -45,8 +45,9 @@ export default function EditProfileModal({
             animationType="fade"
             onRequestClose={onClose}
         >
-            {/* fundo do pop-up */}
-            <View
+            {/* fundo do pop-up + ajuste modal ao clicar no TextInput */}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
                 style={{
                     flex: 1,
                     backgroundColor: "rgba(0, 0, 0, 0.7)",
@@ -223,7 +224,7 @@ export default function EditProfileModal({
                         </Pressable>
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </Modal>
     )
 }

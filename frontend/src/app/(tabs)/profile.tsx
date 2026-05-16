@@ -1,15 +1,18 @@
 //perfil
 import React, { useState } from "react";
-import { View, Text, Pressable, Image, Alert, Linking, } from "react-native";
+import { View, Text, TextInput, Pressable, Image, Alert, Linking, } from "react-native";
 
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
-import { Ionicons } from "@expo/vector-icons";
+import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 export default function Profile() {
     //imagem de perfil selecionada pelo usuário
     const [profileImage, setProfileImage] = useState("");
+    const [profileName, setProfileName] = useState("user1234");
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [username] = useState("ddlovato");
 
     //abre a galeria para selecionar uma foto de perfil
     async function pickImage() {
@@ -111,16 +114,55 @@ export default function Profile() {
                 </Pressable>
 
                 {/* nome */}
-                <Text
+                <View
                     style={{
-                        color: "#fff",
-                        fontFamily: Fonts.body,
-                        fontSize: 21,
+                        flexDirection: "row",
+                        alignItems: "center",
                         marginBottom: 4,
                     }}
                 >
-                    Demi Lovato
-                </Text>
+                    {isEditingName ? (
+                        <TextInput
+                            value={profileName}
+                            onChangeText={setProfileName}
+                            onBlur={() => setIsEditingName(false)}
+                            autoFocus
+                            maxLength={20}
+                            style={{
+                                color: "#fff",
+                                fontFamily: Fonts.body,
+                                fontSize: 21,
+                                borderBottomWidth: 1,
+                                borderBottomColor: "#6F57D2",
+                                paddingBottom: 2,
+                                minWidth: 100,
+                                textAlign: "center",
+                            }}
+                        />
+                    ) : ( <>
+                        <Text
+                            style={{
+                                color: "#fff",
+                                fontFamily: Fonts.body,
+                                fontSize: 21,
+                                marginRight: 8,
+                            }}
+                        >
+                            {profileName}
+                        </Text>
+
+                        <Pressable
+                            onPress={() => setIsEditingName(true)}
+                        >
+                            <Feather
+                                name="edit-2"
+                                size={18}
+                                color="#fff"
+                            />
+                        </Pressable>
+                        </>
+                    )}
+                </View>
 
                 {/* username */}
                 <Text

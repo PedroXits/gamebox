@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   container: {
     display:"flex",
     flexDirection: "column",
-    gap: 80,
+    // gap: 80,
     paddingVertical: 60,
     paddingHorizontal: 30,
     backgroundColor: Colors.white 

@@ -142,10 +142,86 @@ export default function EditProfileModal({
                             // textAlign: "center",
                             paddingVertical: 14,
                             paddingHorizontal: 20,
-                            marginBottom: 28,
+                            marginBottom: 20,
                         }}
                     />
 
+                    {/* botões */}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            gap: 16,
+                        }}
+                    >
+                        {/* cancelar */}
+                        <Pressable
+                            onPress={onClose}
+                            style={{
+                                flex: 1,
+                                paddingVertical: 14,
+                                alignItems: "center",
+                                backgroundColor: "#381D6C",
+                                borderRadius: 13,
+                                borderWidth: 1,
+                                borderColor: "#6F57D2",
+
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 4,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 8,
+                                elevation: 8,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 16,
+                                    textAlign: "center",
+                                }}
+                            >
+                                Cancelar
+                            </Text>
+                        </Pressable>
+
+                        {/* confirmar */}
+                        <Pressable
+                            onPress={onClose}
+                            style={{
+                                flex: 1,
+                                paddingVertical: 14,
+                                alignItems: "center",
+                                backgroundColor: "#381D6C",
+                                borderRadius: 13,
+                                borderWidth: 1,
+                                borderColor: "#6F57D2",
+
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 4,
+                                },
+                                shadowOpacity: 0.25,
+                                shadowRadius: 8,
+                                elevation: 8,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 16,
+                                    textAlign: "center",
+                                }}
+                            >
+                                Confirmar
+                            </Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
         </Modal>

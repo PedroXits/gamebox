@@ -1,9 +1,11 @@
 package com.gamebox.gb.services;
 
+import com.gamebox.gb.datasource.repositories.ProfileRepository;
 import com.gamebox.gb.datasource.repositories.UserRepository;
 import com.gamebox.gb.domain.dtos.auth.AuthResponse;
 import com.gamebox.gb.domain.dtos.auth.LoginRequest;
 import com.gamebox.gb.domain.dtos.auth.RegisterRequest;
+import com.gamebox.gb.domain.entities.Profile;
 import com.gamebox.gb.domain.entities.User;
 import com.gamebox.gb.domain.enums.Role;
 import com.gamebox.gb.security.JwtService;
@@ -16,13 +18,16 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ProfileRepository profileRepository;
 
     public AuthService(UserRepository userRepository,
                        JwtService jwtService,
-                       BCryptPasswordEncoder passwordEncoder) {
+                       BCryptPasswordEncoder passwordEncoder,
+                       ProfileRepository profileRepository) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
+        this.profileRepository = profileRepository;
     }
 
     public AuthResponse register(RegisterRequest request) {
@@ -41,6 +46,20 @@ public class AuthService {
         user.setRole(Role.USER);
 
         User savedUser = userRepository.save(user);
+
+        Profile profile = new Profile();
+
+        String profileName;
+
+        do {
+            int randomNumber = (int) (Math.random() * 9000) + 1000;
+            profileName = "User" + randomNumber;
+        } while (profileRepository.findByProfileName(profileName).isPresent());
+
+        profile.setProfileName(profileName);
+        profile.setUser(savedUser);
+
+        profileRepository.save(profile);
 
         String token = jwtService.generateToken(
                 savedUser.getId(),

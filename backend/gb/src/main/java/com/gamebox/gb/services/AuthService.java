@@ -58,6 +58,8 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request) {
 
+        System.out.println("ENTROU NO LOGIN");
+
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new RuntimeException("Email ou senha inválidos"));
 

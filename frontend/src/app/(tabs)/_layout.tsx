@@ -22,6 +22,8 @@ export default function Layout() {
       <Tabs.Screen
         name="home"
         options={{
+          title: "Home",
+          href: "/home",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />
           ),

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
+import { Link, router } from "expo-router";
 import { Pressable, Text, TextInput, View, Image } from "react-native";
 import { styles } from "./styles";
-import { Link } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AuthContext } from "@/context/AuthContext";
@@ -28,6 +28,8 @@ export default function Register() {
 
     try {
       await register({username, email, password});
+
+      router.replace("/(tabs)/home");
     } catch (error) {
       console.log(error);
     }

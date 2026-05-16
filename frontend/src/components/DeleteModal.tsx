@@ -171,5 +171,5 @@ export default function DeleteModal({
                 </View>
             </View>
         </Modal>
-    )
+    );
 }

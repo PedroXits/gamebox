@@ -59,7 +59,7 @@ public class AuthService {
         profile.setProfileName(profileName);
         profile.setUser(savedUser);
 
-        profileRepository.save(profile);
+        Profile savedProfile = profileRepository.save(profile);
 
         String token = jwtService.generateToken(
                 savedUser.getId(),
@@ -71,7 +71,8 @@ public class AuthService {
                 token,
                 savedUser.getId(),
                 savedUser.getEmail(),
-                savedUser.getUsername()
+                savedUser.getUsername(),
+                savedProfile.getId()
         );
     }
 
@@ -86,6 +87,8 @@ public class AuthService {
             throw new RuntimeException("Email ou senha inválidos");
         }
 
+        Profile profile = user.getProfile();
+
         String token = jwtService.generateToken(
                 user.getId(),
                 user.getEmail(),
@@ -96,7 +99,8 @@ public class AuthService {
                 token,
                 user.getId(),
                 user.getEmail(),
-                user.getUsername()
+                user.getUsername(),
+                profile.getId()
         );
     }
 }

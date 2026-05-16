@@ -3,4 +3,5 @@ export interface AuthResponse {
     userId: number;
     email: string;
     username: string;
+    profileId: number;
 }

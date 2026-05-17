@@ -98,5 +98,103 @@ export default function GameList() {
         },
     ];
 
+    //define qual lista será exibida
+    const games =
+        type === "played"
+            ? playedGames
+            : type === "favorites"
+            ? favoriteGames
+            : [];
+
+    return (
+        <View
+            style={{
+                flex: 1,
+                backgroundColor: "#1F103C",
+                paddingTop: 90,
+                paddingHorizontal: 24,
+            }}
+        >
+            {/* botão voltar */}
+            <Pressable
+                onPress={() => router.back()}
+                style={{
+                    position: "absolute",
+                    top: 60,
+                    left: 20,
+                }}
+            >
+                <Ionicons
+                    name="chevron-back"
+                    size={28}
+                    color="#fff"
+                />
+            </Pressable>
+
+            {/* título */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 32,
+                    textAlign: "center",
+                    marginBottom: 35,
+                }}
+            >
+                {title}
+            </Text>
+
+            {/* lista */}
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    paddingBottom: 40,
+                }}
+            >
+                <View
+                    style={{
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                        justifyContent: "space-between",
+                        rowGap: 24,
+                    }}
+                >
+                    {games.map((game) => (
+                        <View
+                            key={game.id}
+                            style={{
+                                width: "48%",
+                            }}
+                        >
+                            {/* imagem horizontal */}
+                            <Image
+                                source={{ uri: game.image }}
+                                style={{
+                                    width: "100%",
+                                    height: 103,
+                                    borderRadius: 8,
+                                    marginBottom: 6,
+                                }}
+                                resizeMode="cover"
+                            />
+
+                            {/* nome do jogo */}
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 14,
+                                    marginBottom: 2,
+                                }}
+                                numberOfLines={1}
+                            >
+                                {game.title}
+                            </Text>
+                        </View>
+                    ))}
+                </View>
+            </ScrollView>
+        </View>
+    )
     
 }

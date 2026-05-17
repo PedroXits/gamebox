@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, Pressable, Image, ScrollView, } from "react-native";
 
 import { router, useLocalSearchParams } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 
 export default function GameList() {
@@ -42,7 +42,7 @@ export default function GameList() {
             id: "4",
             title: "Celeste",
             image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9dh.jpg",
-            rating: 3,
+            rating: 3.5,
         },
         {
             id: "5",
@@ -54,7 +54,7 @@ export default function GameList() {
             id: "6",
             title: "Cuphead",
             image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co62ao.jpg",
-            rating: 4,
+            rating: 0,
         },
     ]
 
@@ -190,11 +190,61 @@ export default function GameList() {
                             >
                                 {game.title}
                             </Text>
+
+                            {/* estrelas (se houver avaliação) */}
+                            {game.rating > 0 && (
+                                <View
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        gap: 2,
+                                    }}
+                                >
+                                    {Array.from({ length: 5 }).map((_, index) => {
+                                        //posição da estrela (1 a 5)
+                                        const starNumber = index + 1;
+
+                                        //estrela cheia
+                                        if (game.rating >= starNumber) {
+                                            return (
+                                                <FontAwesome
+                                                    key={index}
+                                                    name="star"
+                                                    size={11}
+                                                    color="#fff"
+                                                />
+                                            );
+                                        }
+
+                                        //meia estrela
+                                        if (game.rating >= starNumber - 0.5) {
+                                            return (
+                                                <FontAwesome
+                                                    key={index}
+                                                    name="star-half-full"
+                                                    size={11}
+                                                    color="#fff"
+                                                />
+                                            );
+                                        }
+
+                                        //estrela vazia
+                                        return (
+                                            <FontAwesome
+                                                key={index}
+                                                name="star-o"
+                                                size={11}
+                                                color="#fff"
+                                            />
+                                        );
+                                    })}
+                                </View>
+                            )}
+                            
                         </View>
                     ))}
                 </View>
             </ScrollView>
         </View>
-    )
-    
+    );
 }

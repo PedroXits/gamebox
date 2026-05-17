@@ -16,7 +16,7 @@ export default function GameList() {
             ? "Jogados"
             : type === "favorites"
             ? "Favoritos"
-            : "Lista;"
+            : "Lista";
     
     //mock de jogos jogados
     const playedGames = [

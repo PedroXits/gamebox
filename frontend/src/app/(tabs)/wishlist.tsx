@@ -1,11 +1,10 @@
 //lista de desejos
-import React, { useEffect } from "react";
-import { router } from "expo-router";
+import { View, Text } from "react-native";
 
 export default function Wishlist() {
-    useEffect(() => {
-        router.replace("/list/wishlist");
-    }, []);
-
-    return null;
+    return (
+        <View>
+            <Text>Whishlist</Text>
+        </View>
+    );
 }

@@ -16,7 +16,9 @@ export default function GameList() {
             ? "Jogados"
             : type === "favorites"
             ? "Favoritos"
-            : "Lista;"
+            : type === "wishlist"
+            ? "Lista de Desejos"
+            : "Lista";
     
     //mock de jogos jogados
     const playedGames = [
@@ -56,7 +58,7 @@ export default function GameList() {
             image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co62ao.jpg",
             rating: 0,
         },
-    ]
+    ];
 
     //mock jogos favoritos
     const favoriteGames = [
@@ -98,12 +100,54 @@ export default function GameList() {
         },
     ];
 
+    //mock lista de desejos
+    const wishlistGames = [
+        {
+            id: "1",
+            title: "Mixtape",
+            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2582320/95bbf1097b6f66f39b56f6388250c97a2f43b59e/header.jpg?t=1778541597",
+            rating: 0,
+        },
+        {
+            id: "2",
+            title: "Pragmata",
+            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3357650/e32e168b25ed68a0cf6264c220c07e96c2abfb56/header.jpg?t=1777351016",
+            rating: 0,
+        },
+        {
+            id: "3",
+            title: "Forza Horizon 6",
+            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2483190/27abb1584a118d50d0e3950fd48d557c51981db7/header.jpg?t=1778870245",
+            rating: 0,
+        },
+        {
+            id: "4",
+            title: "Subnautica 2",
+            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1962700/header.jpg?t=1778777511",
+            rating: 0,
+        },
+        {
+            id: "5",
+            title: "Dead as Disco",
+            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3404260/ae0f4b71735adf4f2494ecb7914fcbafee215277/header.jpg?t=1778694984",
+            rating: 0,
+        },
+        {
+            id: "6",
+            title: "Retro Rewind - Video Store Simulator",
+            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3552140/5be699540829c76a0d5f7ac5db4bbaf23fa76013/header.jpg?t=1777437290",
+            rating: 0,
+        },
+    ]
+
     //define qual lista será exibida
     const games =
         type === "played"
             ? playedGames
             : type === "favorites"
             ? favoriteGames
+            : type === "wishlist"
+            ? wishlistGames
             : [];
 
     return (

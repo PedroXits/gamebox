@@ -1,6 +1,6 @@
 //painel administrativo (dashboard)
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, ScrollView, Image } from "react-native";
+import { View, Text, TextInput, Pressable, ScrollView, Image, Modal } from "react-native";
 
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
@@ -10,6 +10,7 @@ import DeleteModal from "@/components/DeleteModal";
 
 export default function Admin() {
     const [search, setSearch] = useState("");
+    const [isMenuVisible, setIsMenuVisible] = useState(false); //abre menu admin para sair (modal)
     const { games, deleteGame } = useAdminGames(); //pega os jogos de AdminGamesContext.tsx
     const [selectedGame, setSelectedGame] = useState<Game | null>(null);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
@@ -47,7 +48,7 @@ export default function Admin() {
                 }}
             >
                 {/* ícone menu */}
-                <Pressable onPress={() => router.replace("/")} 
+                <Pressable onPress={() => setIsMenuVisible(true)} 
                     style={{ 
                         marginRight: 48,
                     }}
@@ -235,6 +236,7 @@ export default function Admin() {
                 ))}
             </ScrollView>
 
+            {/* pop-up excluir jogo */}
             <DeleteModal
                 visible={isDeleteModalVisible}
                 game={selectedGame}
@@ -244,6 +246,89 @@ export default function Admin() {
                 }}
                 onConfirm={handleDeleteGame}
             />
+
+            {/* menu lateral */}
+            <Modal
+                visible={isMenuVisible}
+                transparent
+                animationType="fade"
+                onRequestClose={() => setIsMenuVisible(false)}
+            >
+                {/* overlay escuro */}
+                <Pressable 
+                    onPress={() => setIsMenuVisible(false)}
+                    style={{
+                        flex: 1,
+                        backgroundColor: "rgba(0,0,0,0.45)",
+                    }}
+                >
+                    {/* menu */}
+                    <Pressable 
+                        onPress={(event) => event.stopPropagation()}
+                        style={{
+                            width: "68%",
+                            height: "100%",
+                            backgroundColor: "#321961",
+                            paddingTop: 70,
+                            paddingHorizontal: 24,
+                            borderRightWidth: 1,
+                            borderRightColor: "#6F57D2",
+                        }}
+                    >
+                        {/* título */}
+                        <Text
+                            style={{
+                                color: "#fff",
+                                fontFamily: Fonts.title,
+                                fontSize: 32,
+                                textTransform: "uppercase",
+                                marginBottom: 18,
+                            }}
+                        >
+                            Gameboxd
+                        </Text>
+
+                        {/* linha divisória */}
+                        <View
+                            style={{
+                                height: 1,
+                                backgroundColor: "rgba(255,255,255,0.2)",
+                                marginBottom: 24,
+                            }}
+                        />
+
+                        {/* botão sair */}
+                        <Pressable 
+                            onPress={() => {
+                                setIsMenuVisible(false);
+                                router.replace("/");
+                            }}
+                            style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                gap: 12,
+                                paddingVertical: 14,
+                            }}
+                        >
+                            <Feather
+                                name="log-out"
+                                size={22}
+                                color="#fff"
+                            />
+
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 18,
+                                }}
+                            >
+                                Sair
+                            </Text>
+                        </Pressable>
+                    </Pressable>
+                </Pressable>
+            </Modal>
             
         </View>
     );

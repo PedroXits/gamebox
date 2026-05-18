@@ -35,10 +35,21 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/games/**").authenticated()
+
+                        // ADMIN cria, atualiza e deleta jogos
+                        .requestMatchers(HttpMethod.POST, "/games/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/games/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/games/**").hasRole("ADMIN")
+
+                        // USERS logados podem ver jogos
+                        .requestMatchers(HttpMethod.GET, "/games/**").authenticated()
+
                         .requestMatchers("/profile/**").authenticated()
+                        .requestMatchers("/profiles/**").authenticated()
                         .requestMatchers("/reviews/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
 

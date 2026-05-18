@@ -1,21 +1,36 @@
 //painel administrativo (dashboard)
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, ScrollView, Image, Modal } from "react-native";
-
+import { deleteGame, findAllGames } from "@/services/GameService";
+import { GameSearchResponse } from "@/models/game/GameSearchResponse";
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
-import { Game, useAdminGames } from "@/context/AdminGamesContext";
 import DeleteModal from "@/components/DeleteModal";
 import { AuthContext } from "@/context/AuthContext";
 
 export default function Admin() {
     const [search, setSearch] = useState("");
-    const [isMenuVisible, setIsMenuVisible] = useState(false); //abre menu admin para sair (modal)
-    const { games, deleteGame } = useAdminGames(); //pega os jogos de AdminGamesContext.tsx
-    const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+    const [isMenuVisible, setIsMenuVisible] = useState(false); //abre menu admin para sair (modal) 
+    const [selectedGame, setSelectedGame] = useState<GameSearchResponse | null>(null);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
     const { user } = useContext(AuthContext);
+    const [games, setGames] = useState<GameSearchResponse[]>([]);
+
+    useEffect(() => {
+        loadGames();
+    }, []);
+
+    async function loadGames() {
+        try {
+            const response = await findAllGames();;
+
+            setGames(response);
+
+        } catch (error) {
+            console.log(error);
+        }       
+    }
 
     useEffect(() => {
         if (user && user.role !== "ADMIN") {
@@ -29,15 +44,16 @@ export default function Admin() {
 
     //cria a lista filtrada, faz busca em tempo real
     const filteredGames = games.filter((game) =>
-        game.title.toLowerCase().includes(search.toLowerCase())
+        game.gameName.toLowerCase().includes(search.toLowerCase())
     );
 
-    function handleDeleteGame() {
+    async function handleDeleteGame() {
         if (!selectedGame) {
             return;
         }
 
-        deleteGame(selectedGame.id);
+        await deleteGame(selectedGame.id);
+        await loadGames();
         setSelectedGame(null);
         setIsDeleteModalVisible(false);
     }
@@ -182,7 +198,7 @@ export default function Admin() {
                     >
                         {/* imagem */}
                         <Image
-                            source={{ uri: game.image }}
+                            source={{ uri: game.gamePhoto }}
                             style={{
                                 width: 94,
                                 height: 94,
@@ -206,7 +222,7 @@ export default function Admin() {
                                 }}
                                 numberOfLines={2}
                             >
-                                {game.title}
+                                {game.gameName}
                             </Text>
                         </View>
 

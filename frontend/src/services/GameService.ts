@@ -24,6 +24,12 @@ export async function findGameByName(name:string): Promise<GameSearchResponse[]>
     return response.data;
 }
 
+export async function findAllGames(): Promise<GameSearchResponse[]> {
+    const response = await api.get("/games");
+
+    return response.data;
+}
+
 export async function findByGameGenre(genre:string): Promise<GameSearchResponse[]> {
     const response = await api.get(`/games/genre`, {params: { genre }});
     return response.data;

@@ -82,6 +82,20 @@ public class GameService {
                 .toList();
     }
 
+    public List<GameSearchResponse> findAllGames() {
+
+        List<Game> games = gameRepository.findAll();
+
+        return games.stream()
+                .map(game -> new GameSearchResponse(
+                        game.getId(),
+                        game.getGameName(),
+                        game.getGenre(),
+                        game.getGamePhoto()
+                ))
+                .toList();
+    }
+
     public GameResponse findGameById(Long id) {
         Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado."));

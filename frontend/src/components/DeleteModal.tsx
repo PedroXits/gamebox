@@ -3,12 +3,12 @@ import React from "react";
 import { Modal, View, Text, Pressable, } from "react-native";
 
 import { Fonts } from "@/constants/fonts";
-import { Game } from "@/context/AdminGamesContext";
+import { GameSearchResponse } from "@/models/game/GameSearchResponse";
 import { Feather, EvilIcons } from "@expo/vector-icons";
 
 type DeleteModalProps = {
     visible: boolean;
-    game: Game | null;
+    game: GameSearchResponse | null;
     onClose: () => void;
     onConfirm: () => void;
 };
@@ -92,7 +92,7 @@ export default function DeleteModal({
                                 color: "#FF2C2C",
                             }}
                         >
-                            "{game?.title}"
+                            "{game?.gameName}"
                         </Text>
                         ?
                     </Text>

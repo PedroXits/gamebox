@@ -43,6 +43,11 @@ public class GameController {
         return ResponseEntity.ok(gameService.findGameByName(name));
     }
 
+    @GetMapping
+    public ResponseEntity<List<GameSearchResponse>> findAllGames() {
+        return ResponseEntity.ok(gameService.findAllGames());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<GameResponse> updateGame(
             @PathVariable Long id,

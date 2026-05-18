@@ -1,14 +1,22 @@
 //guarda favoritos, jogados e wishlist com funções de add/remover e verificar se o jogo existe
 import React, { createContext, useContext, useState, } from "react";
 
+type GameReview = {
+    rating: number;
+    review: string;
+};
+
 type GamesContextType = {
     playedGames: string[];
     favoriteGames: string[];
     wishlistGames: string[];
+    reviews: Record<string, GameReview>;
 
     togglePlayed: (id:string) => void;
     toggleFavorite: (id:string) => void;
     toggleWishlist: (id:string) => void;
+    saveReview: (id: string, rating: number, review: string) => void;
+    getReview: (id: string) => GameReview | undefined;
 };
 
 const GamesContext = createContext({} as GamesContextType);
@@ -18,6 +26,7 @@ export function GamesProvider({ children, }: { children: React.ReactNode }) {
     const [playedGames, setPlayedGames] = useState<string[]>([]);
     const [favoriteGames, setFavoriteGames] = useState<string[]>([]);
     const [wishlistGames, setWishlistGames] = useState<string[]>([]);
+    const [reviews, setReviews] = useState<Record<string, GameReview>>({});
 
     function togglePlayed(id: string) {
         if (playedGames.includes(id)) {
@@ -49,12 +58,29 @@ export function GamesProvider({ children, }: { children: React.ReactNode }) {
         }
     }
 
+    function saveReview(id: string, rating: number, review: string) {
+        setReviews((prevReviews) => ({
+            ...prevReviews,
+            [id]: {
+                rating,
+                review,
+            },
+        }));
+    }
+
+    function getReview(id: string) {
+        return reviews[id];
+    }
+
     return (
         <GamesContext.Provider
             value={{
                 playedGames,
                 favoriteGames,
                 wishlistGames,
+                reviews,
+                saveReview,
+                getReview,
 
                 togglePlayed,
                 toggleFavorite,

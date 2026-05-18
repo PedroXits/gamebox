@@ -32,14 +32,17 @@ export default function GameOverview() {
     // games.tlou 
     const game = games[id as keyof typeof games];
 
-    const { playedGames, favoriteGames, wishlistGames, togglePlayed, toggleFavorite, toggleWishlist } = useGames();
+    const { playedGames, favoriteGames, wishlistGames, togglePlayed, toggleFavorite, toggleWishlist, saveReview, getReview } = useGames();
     const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
     const isInWishlist = wishlistGames.includes(id as string);
+    const savedReview = getReview(id as string);
+    const rating = savedReview?.rating ?? 0;
+    const review = savedReview?.review ?? "";
 
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
-    const [rating, setRating] = useState<number>(0);
-    const [review, setReview] = useState("");
+    const [tempRating, setTempRating] = useState<number>(0);
+    const [tempReview, setTempReview] = useState("");
 
     if (!game) {
         return (
@@ -114,7 +117,12 @@ export default function GameOverview() {
                 </Text>
 
                 {/* card estrelas */}
-                <Pressable onPress={() => setIsReviewModalVisible(true)}
+                <Pressable 
+                    onPress={() => {
+                        setTempRating(rating);
+                        setTempReview(review);
+                        setIsReviewModalVisible(true);
+                    }}
                     style={{
                         backgroundColor: "#321961",
                         borderRadius: 13,
@@ -325,16 +333,19 @@ export default function GameOverview() {
 
             <ReviewModal
                 visible={isReviewModalVisible}
-                rating={rating}
-                review={review}
+                rating={tempRating}
+                review={tempReview}
                 onClose={() => { 
-                    setRating(0); 
-                    setReview(""); 
+                    setTempRating(rating); 
+                    setTempReview(review); 
                     setIsReviewModalVisible(false);
                 }}
-                onChangeRating={setRating}
-                onChangeReview={setReview}
-                onSubmit={() => { setIsReviewModalVisible(false)}}
+                onChangeRating={setTempRating}
+                onChangeReview={setTempReview}
+                onSubmit={() => {
+                    saveReview(id as string, tempRating, tempReview);
+                    setIsReviewModalVisible(false);
+                }}
             />
             
         </ScrollView>

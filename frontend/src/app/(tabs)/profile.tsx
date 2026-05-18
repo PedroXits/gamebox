@@ -1,7 +1,9 @@
 //perfil
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, Image, Alert, Linking, } from "react-native";
-
+import { AuthContext } from "@/context/AuthContext";
+import { getProfileById } from "@/services/ProfileService";
+import { ProfileResponse } from "@/models/profile/ProfileResponse";
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
@@ -10,10 +12,36 @@ import EditProfileModal from "@/components/EditProfileModal";
 
 export default function Profile() {
     //imagem de perfil selecionada pelo usuário
+
+    const { user } = useContext(AuthContext);
+
+    const [profile, setProfile] = useState<ProfileResponse | null>(null);
     const [profileImage, setProfileImage] = useState("");
-    const [profileName, setProfileName] = useState("user1234");
-    const [username] = useState("ddlovato");
+    const [profileName, setProfileName] = useState("");
     const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
+
+    useEffect(() => {
+        async function loadProfile() {
+            if(!user?.profileId) return;
+
+            try {
+                const data = await getProfileById(user.profileId);
+
+                setProfile(data);
+                setProfileName(data.profileName);
+                setProfileImage(data.profilePhoto ?? "");
+
+                console.log("PROFILE DATA:", data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        loadProfile();
+    }, [user]);
+
+    
+
 
     //abre a galeria para selecionar uma foto de perfil
     async function pickImage() {
@@ -188,7 +216,7 @@ export default function Profile() {
                         fontSize: 17,                        
                     }}
                 >
-                    @username
+                    @{user?.username}
                 </Text>
 
                 {/* botão editar perfil */}

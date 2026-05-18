@@ -4,7 +4,7 @@ import { ProfileResponse } from "@/models/profile/ProfileResponse";
 export async function getProfileById(
   profileId: number
 ): Promise<ProfileResponse> {
-  const response = await api.get(`/profile/${profileId}`);
+  const response = await api.get(`/profiles/${profileId}`);
 
   return response.data;
 }

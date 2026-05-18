@@ -91,6 +91,28 @@ export default function Search() {
                 />
             </View>
 
+            {/* logo de fundo (somente quando nada foi digitado) */}
+            {search.trim() === "" && (
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: -80,
+                    }}
+                >
+                    <Image
+                        source={require("../../assets/images/logo.png")}
+                        style={{
+                            width: 300,
+                            height: 300,
+                            opacity: 0.20,
+                        }}
+                        resizeMode="contain"
+                    />
+                </View>
+            )}
+
         </View>
-    )
+    );
 }

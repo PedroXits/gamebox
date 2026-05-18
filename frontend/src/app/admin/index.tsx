@@ -1,5 +1,5 @@
 //painel administrativo (dashboard)
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, ScrollView, Image, Modal } from "react-native";
 
 import { router } from "expo-router";
@@ -7,6 +7,7 @@ import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { Game, useAdminGames } from "@/context/AdminGamesContext";
 import DeleteModal from "@/components/DeleteModal";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Admin() {
     const [search, setSearch] = useState("");
@@ -14,6 +15,17 @@ export default function Admin() {
     const { games, deleteGame } = useAdminGames(); //pega os jogos de AdminGamesContext.tsx
     const [selectedGame, setSelectedGame] = useState<Game | null>(null);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+    const { user } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (user && user.role !== "ADMIN") {
+            router.replace("/(tabs)/home");
+        }
+    }, [user]);
+
+    if (!user || user.role !== "ADMIN") {
+        return null;    
+    }
 
     //cria a lista filtrada, faz busca em tempo real
     const filteredGames = games.filter((game) =>

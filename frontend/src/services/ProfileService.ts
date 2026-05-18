@@ -1,10 +1,6 @@
 import { api } from "@/services/api";
 import { ProfileResponse } from "@/models/profile/ProfileResponse";
-
-type UpdateProfileRequest = {
-  profileName?: string;
-  profilePhoto?: string | null;
-};
+import { UpdateProfileRequest } from "@/models/profile/UpdateProfileRequest";
 
 export async function getProfileById(
   profileId: number

@@ -2,7 +2,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, Image, Alert, Linking, } from "react-native";
 import { AuthContext } from "@/context/AuthContext";
-import { getProfileById } from "@/services/ProfileService";
+import { getProfileById, updateProfile } from "@/services/ProfileService";
 import { ProfileResponse } from "@/models/profile/ProfileResponse";
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
@@ -39,8 +39,6 @@ export default function Profile() {
 
         loadProfile();
     }, [user]);
-
-    
 
 
     //abre a galeria para selecionar uma foto de perfil
@@ -423,8 +421,22 @@ export default function Profile() {
                 profileName={profileName}
                 onClose={() => setIsEditProfileModalVisible(false)}
                 onPickImage={pickImage}
-                onEditName={(newName) => {
-                    setProfileName(newName);
+                onEditName={async (newName) => {
+                    if (!user?.profileId) return;
+
+                    try {
+                        const updatedProfile = await updateProfile(user.profileId, {
+                        profileName: newName,
+                        profilePhoto: profileImage || null,
+                        });
+
+                        setProfileName(updatedProfile.profileName);
+                        setProfileImage(updatedProfile.profilePhoto ?? "");
+                        setProfile(updatedProfile);
+                        setIsEditProfileModalVisible(false);
+                    } catch (error) {
+                        console.log(error);
+                    }
                 }}
             />
             

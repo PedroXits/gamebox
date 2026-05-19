@@ -1,13 +1,20 @@
 //busca de jogos
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, TextInput, Pressable, Image, ScrollView } from "react-native";
 
 import { Fonts } from "@/constants/fonts";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 
 export default function Search() {
     const [search, setSearch] = useState("");
+
+    //limpa a pesquisa ao retornar para a tela search
+    useFocusEffect(
+        useCallback(() => {
+            setSearch("");
+        }, [])
+    );
 
     //mock de jogos
     const games = [

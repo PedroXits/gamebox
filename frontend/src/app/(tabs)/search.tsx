@@ -147,17 +147,36 @@ export default function Search() {
                                         paddingHorizontal: 6,
                                     }}
                                 >
-                                    {/* capa */}
-                                    <Image
-                                        source={{ uri: game.image}}
+                                    {/* sombra da capa do jogo */}
+                                    <View
                                         style={{
-                                            width: 70,
-                                            height: 95,
-                                            borderRadius: 8,
                                             marginRight: 14,
+                                            borderRadius: 8,
+
+                                            //sombra iOS
+                                            shadowColor: "#000",
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 4,
+                                            },
+                                            shadowOpacity: 0.25,
+                                            shadowRadius: 8,
+
+                                            //sombra Android
+                                            elevation: 8,
                                         }}
-                                        resizeMode="cover"
-                                    />
+                                    >
+                                        {/* capa */}
+                                        <Image
+                                            source={{ uri: game.image}}
+                                            style={{
+                                                width: 70,
+                                                height: 95,
+                                                borderRadius: 8,
+                                            }}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
 
                                     {/* título */}
                                     <Text
@@ -170,8 +189,7 @@ export default function Search() {
                                     >
                                         {game.title}
                                     </Text>
-                                </Pressable>
-                                
+                                </Pressable>                                
                             </View>
                         ))
                     )}

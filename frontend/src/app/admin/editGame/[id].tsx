@@ -1,34 +1,51 @@
 //edição de um jogo existente
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, Image, Alert, Linking, } from "react-native";
-
+import { getGameById, updateGame } from "@/services/GameService";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { genreMap } from "@/constants/genres";
 import { router, useLocalSearchParams } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { useAdminGames } from "@/context/AdminGamesContext";
 
 export default function EditGame() {
     const { id } = useLocalSearchParams();
-    const { games, updateGame } = useAdminGames();
 
-    //localiza o jogo pelo id recebido na rota
-    const game = games.find((game) => game.id === String(id));
+    //estados iniciados com os dados já existentes
+    const [title, setTitle] = useState("");
+    const [year, setYear] = useState("");
+    const [genres, setGenres] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState("");
+    const [loading, setLoading] = useState(true);
 
-    //se o jogo não for encontrado, volta para a tela anterior
-    if (!game) {
-        router.back();
+    useEffect(() => {
+        async function loadGame() {
+            try {
+                const data = await getGameById(Number(id));
+
+                setTitle(data.gameName);
+                setYear(data.releaseDate.substring(0, 4));
+                setGenres(data.genres.join(", "));
+                setDescription(data.description);
+                setImage(data.gamePhoto);
+            } catch (error) {
+                console.log(error);
+                Alert.alert("Erro", "Não foi possível carregar o jogo.");
+                router.back();
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadGame();
+    }, [id]);
+
+    if (loading) {
         return null;
     }
 
-    //estados iniciados com os dados já existentes
-    const [title, setTitle] = useState(game.title);
-    const [year, setYear] = useState(game.year);
-    const [genres, setGenres] = useState(game.genres);
-    const [description, setDescription] = useState(game.description);
-    const [image, setImage] = useState(game.image);
 
     //abre a galeria para selecionar uma imagem
     async function pickImage() {
@@ -65,32 +82,39 @@ export default function EditGame() {
         }
     }
 
-    //atualiza o jogo no AdminGamesContext
-    function handleUpdateGame() {
-        if (
-            !title ||
-            !year ||
-            !genres ||
-            !description ||
-            !image
-        ) {
-            Alert.alert(
-                "Campos obrigatórios",
-                "Preencha todos os campos."
-            );
+    // atualiza o jogo no backend
+    async function handleUpdateGame() {
+        if (!title || !year || !genres || !description || !image) {
+            Alert.alert("Campos obrigatórios", "Preencha todos os campos.");
             return;
         }
 
-        updateGame({
-            id: String(id),
-            title,
-            year,
-            genres,
-            image,
-            description,
-        });
+        const normalizedGenres = genres
+            .split(",")
+            .map((genre) => genreMap[genre.trim().toLowerCase()])
+            .filter(Boolean);
+
+        if (normalizedGenres.length === 0) {
+            Alert.alert("Gênero inválido", "Digite gêneros válidos.");
+            return;
+        }
+
+        try {
+            await updateGame(Number(id), {
+                gameName: title,
+                genres: normalizedGenres,
+                description,
+                gamePhoto: image,
+                releaseDate: `${year}-01-01`,
+            });
         
-        router.back();;
+            router.replace("/admin");
+          } catch (error) {
+            console.log(error);
+            Alert.alert("Erro", "Não foi possível atualizar o jogo.");
+        }
+
+
     }
 
     return (

@@ -2,7 +2,7 @@ export type GameResponse = {
   id: number;
   gameName: string;
   gamePhoto: string;
-  genre: string;
+  genres: string[];
   description: string;
   releaseDate: string;
 };

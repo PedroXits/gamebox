@@ -35,7 +35,7 @@ public class GameService {
         Game game = new Game();
 
         game.setGameName(request.gameName());
-        game.setGenre(request.genre());
+        game.setGenres(request.genres());
         game.setDescription(request.description());
         game.setGamePhoto(request.gamePhoto());
         game.setReleaseDate(request.releaseDate());
@@ -46,20 +46,20 @@ public class GameService {
                 savedGame.getId(),
                 savedGame.getGameName(),
                 savedGame.getGamePhoto(),
-                savedGame.getGenre(),
+                savedGame.getGenres(),
                 savedGame.getDescription(),
                 savedGame.getReleaseDate()
         );
     }
 
     public List<GameSearchResponse> findByGameGenre(Genre genre) {
-        List<Game> games = gameRepository.findByGenre(genre);
+        List<Game> games = gameRepository.findByGenresContaining(genre);
 
         return games.stream()
                 .map(game -> new GameSearchResponse(
                         game.getId(),
                         game.getGameName(),
-                        game.getGenre(),
+                        game.getGenres(),
                         game.getGamePhoto()
                 ))
                 .toList();
@@ -76,7 +76,7 @@ public class GameService {
                 .map(game -> new GameSearchResponse(
                         game.getId(),
                         game.getGameName(),
-                        game.getGenre(),
+                        game.getGenres(),
                         game.getGamePhoto()
                 ))
                 .toList();
@@ -90,7 +90,7 @@ public class GameService {
                 .map(game -> new GameSearchResponse(
                         game.getId(),
                         game.getGameName(),
-                        game.getGenre(),
+                        game.getGenres(),
                         game.getGamePhoto()
                 ))
                 .toList();
@@ -104,7 +104,7 @@ public class GameService {
                 game.getId(),
                 game.getGameName(),
                 game.getGamePhoto(),
-                game.getGenre(),
+                game.getGenres(),
                 game.getDescription(),
                 game.getReleaseDate()
         );
@@ -118,8 +118,8 @@ public class GameService {
             game.setGameName(request.gameName());
         }
 
-        if(request.genre() != null) {
-            game.setGenre(request.genre());
+        if(request.genres() != null) {
+            game.setGenres(request.genres());
         }
 
         if(request.description() != null  && !request.description().isBlank()) {
@@ -140,7 +140,7 @@ public class GameService {
                 updatedGame.getId(),
                 updatedGame.getGameName(),
                 updatedGame.getGamePhoto(),
-                updatedGame.getGenre(),
+                updatedGame.getGenres(),
                 updatedGame.getDescription(),
                 updatedGame.getReleaseDate()
         );

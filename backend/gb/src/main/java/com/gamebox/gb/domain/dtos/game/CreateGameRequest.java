@@ -3,11 +3,12 @@ package com.gamebox.gb.domain.dtos.game;
 import com.gamebox.gb.domain.enums.Genre;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record CreateGameRequest(
         String gameName,
         String gamePhoto,
-        Genre genre,
+        List<Genre> genres,
         String description,
         LocalDate releaseDate
 ) {

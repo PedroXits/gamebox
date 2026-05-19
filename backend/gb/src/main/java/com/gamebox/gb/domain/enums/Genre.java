@@ -4,5 +4,12 @@ public enum Genre {
     RPG,
     ACTION,
     ADVENTURE,
-    STRATEGY
+    STRATEGY,
+    SPORTS,
+    HORROR,
+    FIGHTING,
+    RACING,
+    CASUAL,
+    SURVIVAL,
+    FAMILY
 }

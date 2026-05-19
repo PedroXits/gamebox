@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface GameRepository extends JpaRepository<Game, Long> {
 
-    List<Game> findByGenre(Genre genre);
+    List<Game> findByGenresContaining(Genre genre);
 
     boolean existsByGameNameIgnoreCaseAndReleaseDate(
             String gameName,

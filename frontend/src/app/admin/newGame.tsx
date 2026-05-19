@@ -3,15 +3,14 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Pressable, Image, Alert, Linking } from "react-native";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import { genreMap } from "@/constants/genres";
 import { router } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { useAdminGames } from "@/context/AdminGamesContext";
+import { createGame } from "@/services/GameService";
 
 export default function NewGame() {
-    const { addGame } = useAdminGames();
 
     const [title, setTitle] = useState("");
     const [year, setYear] = useState("");
@@ -54,8 +53,8 @@ export default function NewGame() {
         }
     }
 
-    //adiciona o jogo ao AdminGamesContext, quando usuário clica no botão "adicionar"
-    function handleAddGame() {
+    async function handleAddGame() {
+
         if (
             !title ||
             !year ||
@@ -70,16 +69,42 @@ export default function NewGame() {
             return;
         }
 
-        addGame({
-            id: Date.now().toString(),
-            title,
-            year,
-            genres,
-            image,
-            description,
-        });
-        
-        router.back();
+        const normalizedGenres = genres
+            .split(",")
+            .map((genre) =>
+                genreMap[genre.trim().toLowerCase()]
+            )
+            .filter(Boolean);
+
+        if (normalizedGenres.length === 0) {
+            Alert.alert(
+                "Gênero inválido",
+                "Digite gêneros válidos."
+            );
+            return;
+        }
+
+        try {
+
+            await createGame({
+                gameName: title,
+                genres: normalizedGenres,
+                description,
+                gamePhoto: image,
+                releaseDate: `${year}-01-01`,
+            });
+
+            router.replace("/admin");
+
+        } catch (error) {
+
+            console.log(error);
+
+            Alert.alert(
+                "Erro",
+                "Não foi possível cadastrar o jogo."
+            );
+        }
     }
 
     return (

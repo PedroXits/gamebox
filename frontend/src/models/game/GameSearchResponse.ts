@@ -1,6 +1,6 @@
 export type GameSearchResponse = {
   id: number;
   gameName: string;
-  genre: string;
+  genres: string[];
   gamePhoto: string;
 };

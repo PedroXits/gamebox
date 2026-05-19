@@ -1,6 +1,6 @@
 export type CreateGameRequest = {
   gameName: string;
-  genre: string;
+  genres: string[];
   description: string;
   gamePhoto: string;
   releaseDate: string;

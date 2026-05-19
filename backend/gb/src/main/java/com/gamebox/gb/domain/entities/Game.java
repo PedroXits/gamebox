@@ -13,13 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(
-        name="games",
-        indexes = {
-                @Index(name = "idx_game_name", columnList = "name"),
-                @Index(name = "idx_game_genre", columnList = "genre")
-        }
-)
+@Table(name="games")
 public class Game {
 
     @Id
@@ -29,8 +23,14 @@ public class Game {
     @Column(nullable = false)
     private String gameName;
 
+    @ElementCollection(targetClass = Genre.class)
     @Enumerated(EnumType.STRING)
-    private Genre genre;
+    @CollectionTable(
+            name = "game_genres",
+            joinColumns = @JoinColumn(name = "game_id")
+    )
+    @Column(name = "genre")
+    private List<Genre> genres;
 
     @Column(columnDefinition = "TEXT")
     private String description;

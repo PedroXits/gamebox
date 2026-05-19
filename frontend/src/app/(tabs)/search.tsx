@@ -189,7 +189,19 @@ export default function Search() {
                                     >
                                         {game.title}
                                     </Text>
-                                </Pressable>                                
+                                </Pressable>
+
+                                {/* linha divisória */}
+                                {index < filteredGames.length -  1 && (
+                                    <View
+                                        style={{
+                                            height: 1,
+                                            backgroundColor: "rgba(255,255,255,0.08)",
+                                            marginBottom: 14,
+                                            marginHorizontal: 6,
+                                        }}
+                                    />
+                                )}
                             </View>
                         ))
                     )}

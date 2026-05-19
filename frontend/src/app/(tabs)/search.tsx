@@ -1,9 +1,10 @@
 //busca de jogos
 import React, { useState } from "react";
-import { View, TextInput, Image, } from "react-native";
+import { View, Text, TextInput, Pressable, Image, ScrollView } from "react-native";
 
 import { Fonts } from "@/constants/fonts";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function Search() {
     const [search, setSearch] = useState("");
@@ -112,7 +113,70 @@ export default function Search() {
                     />
                 </View>
             )}
+            
+            {/* resultados (somente após digitar algo) */}
+            {search.trim() !== "" && (
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{
+                        paddingBottom:  40,
+                    }}
+                >
+                    {filteredGames.length  === 0 ? (
+                        <Text
+                            style={{
+                                color: "#726292",
+                                fontFamily: Fonts.body,
+                                fontSize: 16,
+                                textAlign: "center",
+                                marginTop: 20,
+                            }}
+                        >
+                            Nenhum jogo encontrado
+                        </Text>
+                    ) : (
+                        filteredGames.map((game, index) => (
+                            <View key={game.id}>
+                                {/* botão que direciona para a tela game overview */}
+                                <Pressable
+                                    onPress={() => router.push("/game/[id].tsx")}
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        marginBottom: 14,
+                                        paddingHorizontal: 6,
+                                    }}
+                                >
+                                    {/* capa */}
+                                    <Image
+                                        source={{ uri: game.image}}
+                                        style={{
+                                            width: 70,
+                                            height: 95,
+                                            borderRadius: 8,
+                                            marginRight: 14,
+                                        }}
+                                        resizeMode="cover"
+                                    />
 
+                                    {/* título */}
+                                    <Text
+                                        style={{
+                                            flex: 1,
+                                            color: "#fff",
+                                            fontFamily: Fonts.body,
+                                            fontSize: 16,
+                                        }}
+                                    >
+                                        {game.title}
+                                    </Text>
+                                </Pressable>
+                                
+                            </View>
+                        ))
+                    )}
+                </ScrollView>
+            )}
         </View>
     );
 }

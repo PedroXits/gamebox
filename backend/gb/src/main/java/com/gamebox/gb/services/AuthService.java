@@ -43,7 +43,12 @@ public class AuthService {
         user.setEmail(request.email());
         user.setPassword(passwordEncoder.encode(request.password()));
         user.setUsername(request.username());
-        user.setRole(Role.USER);
+
+        if (request.email().equalsIgnoreCase("admin@admin.com")) {
+            user.setRole(Role.ADMIN);
+        } else {
+            user.setRole(Role.USER);
+        }
 
         User savedUser = userRepository.save(user);
 

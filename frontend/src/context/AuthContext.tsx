@@ -18,11 +18,11 @@ type AuthContextData = {
 
   register: (
     data: RegisterRequest
-  ) => Promise<void>;
+  ) => Promise<AuthResponse>;
 
   login: (
     data: LoginRequest
-  ) => Promise<void>;
+  ) => Promise<AuthResponse>;
 
   logout: () => Promise<void>;
 };
@@ -67,16 +67,12 @@ export function AuthProvider({ children }: any) {
 
   }, []);
 
-  async function login(data: LoginRequest) {
-
+  async function login(data: LoginRequest): Promise<AuthResponse> {
     const response = await loginService(data);
 
     if (response.token) {
-
-      // salva o usuário no state
       setUser(response);
 
-      // salva o usuário no storage
       await AsyncStorage.setItem(
         "user",
         JSON.stringify(response)
@@ -84,13 +80,15 @@ export function AuthProvider({ children }: any) {
 
       setSigned(true);
     }
+
+    return response;
   }
 
-  async function register(data: RegisterRequest) {
-    
+  async function register(data: RegisterRequest): Promise<AuthResponse> {
     const response = await registerService(data);
 
     if(response.token) {
+
       setUser(response);
 
       await AsyncStorage.setItem(
@@ -100,6 +98,8 @@ export function AuthProvider({ children }: any) {
 
       setSigned(true);
     }
+
+    return response;
   }
 
   async function logout() {

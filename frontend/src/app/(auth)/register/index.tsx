@@ -27,9 +27,17 @@ export default function Register() {
     }
 
     try {
-      await register({username, email, password});
+      const response = await register({
+        username,
+        email,
+        password
+      });
 
-      router.replace("/(tabs)/home");
+      if (response.role === "ADMIN") {
+        router.replace("/admin");
+      } else {
+        router.replace("/(tabs)/home");
+      }
     } catch (error) {
       console.log(error);
     }

@@ -18,9 +18,13 @@ export default function Login() {
   async function handleLogin() {
     
     try {
-      await login({email, password});
+      const response = await login({ email, password });
 
-      router.replace("/(tabs)/home");
+      if (response.role === "ADMIN") {
+        router.replace("/admin");
+      } else {
+        router.replace("/(tabs)/home");
+      }
     } catch (error) {
       console.log(error);
     }

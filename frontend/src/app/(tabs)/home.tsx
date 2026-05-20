@@ -1,31 +1,69 @@
 import React, { useRef, useState, useEffect }from "react";
 import { ScrollView, View, Image, Text, FlatList, Dimensions } from "react-native";
-
 import { GameList } from "@/components/GameList";
 import { Fonts } from "@/constants/fonts";
 import { GenreCard } from "@/components/GenreCard";
+import { findAllGames } from "@/services/GameService";
+import { GameSearchResponse } from "@/models/game/GameSearchResponse";
 
 export default function Home() {
     const { width } = Dimensions.get("window"); //pega a largura do celular e ocupa a tela inteira
 
-    const mockGames = [
-        { 
-            id: "tlou",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg",
-        },
-        {
-            id: "gow",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobkt6.jpg",
-        },
-        {
-            id: "silksong",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobebu.jpg",
-        },
-        {
-            id: "rdr2",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1q1f.jpg",
-        },
-    ];
+    const [games, setGames] = useState<GameSearchResponse[]>([]);
+
+    useEffect(() => {
+        async function loadGames() {
+            try {
+                const response = await findAllGames();
+                setGames(response);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadGames();
+    }, []);
+
+    const homeGames = games.map((game) => ({
+        id: String(game.id),
+        image: game.gamePhoto,
+    }));
+
+    const actionGames = games
+        .filter((game) =>
+            game.genres.includes("ACTION")
+        )
+        .map((game) => ({
+            id: String(game.id),
+            image: game.gamePhoto,
+        }));
+
+    const adventureGames = games
+        .filter((game) =>
+            game.genres.includes("ADVENTURE")
+        )
+        .map((game) => ({
+            id: String(game.id),
+            image: game.gamePhoto,
+        }));
+
+    const sportsGames = games
+        .filter((game) =>
+            game.genres.includes("SPORTS")
+        )
+        .map((game) => ({
+            id: String(game.id),
+            image: game.gamePhoto,
+        }));
+
+    const horrorGames = games
+        .filter((game) =>
+            game.genres.includes("HORROR")
+        )
+        .map((game) => ({
+            id: String(game.id),
+            image: game.gamePhoto,
+        }));
 
     // banners / lista de imagens do carrossel
     const banners = [
@@ -135,9 +173,9 @@ export default function Home() {
             
             {/* listas dos jogos */}
             <View style={{ paddingHorizontal: 20 }}>
-                <GameList title="Populares" games={mockGames}/>
-                <GameList title="Tiro porrada e bomba" games={mockGames}/>
-                <GameList title="Lançamentos" games={mockGames}/>
+                <GameList title="Populares" games={homeGames}/>
+                <GameList title="Tiro porrada e bomba" games={actionGames}/>
+                <GameList title="Lançamentos" games={homeGames}/>
 
             {/* card dos gêneros */}
             <Text
@@ -188,8 +226,8 @@ export default function Home() {
                 />
             </ScrollView>
                 
-                <GameList title="Aventura" games={mockGames}/>
-                <GameList title="Esporte" games={mockGames}/>
+                <GameList title="Aventura" games={adventureGames}/>
+                <GameList title="Esporte" games={sportsGames}/>
             </View>
             
         </ScrollView>

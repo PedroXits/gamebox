@@ -76,11 +76,14 @@ export default function Home() {
         }));
 
     // banners / lista de imagens do carrossel
-    const banners = [
-        "https://s1.pearlcdn.com/cd/brand/metatag/2025/09/25/78b56ee739920250925065827388.jpg",
-        "https://xboxwire.thesourcemediaassets.com/sites/8/2026/01/FH6_Evergreen_KeyArt_Branded-Horizontal_3840x2160-b1d85e76b095948dcc66.jpg",
-        "https://www.capcom-games.com/pragmata/assets/images/share.jpg",
-    ];
+    const banners = 
+        recentGames.length > 0
+            ? recentGames
+                .slice(0, 3)
+                .map((game) => game.gamePhoto)
+            :[
+                "https://via.placeholder.com/800x400"
+            ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef<FlatList<string>>(null);

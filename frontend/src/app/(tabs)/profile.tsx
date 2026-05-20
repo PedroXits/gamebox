@@ -1,6 +1,6 @@
 //perfil
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, TextInput, Pressable, Image, Alert, Linking, } from "react-native";
+import { View, Text, ScrollView, Pressable, Image, Alert, Linking, } from "react-native";
 import { AuthContext } from "@/context/AuthContext";
 import { getProfileById, updateProfile } from "@/services/ProfileService";
 import { ProfileResponse } from "@/models/profile/ProfileResponse";
@@ -13,7 +13,7 @@ import EditProfileModal from "@/components/EditProfileModal";
 export default function Profile() {
     //imagem de perfil selecionada pelo usuário
 
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     const [profile, setProfile] = useState<ProfileResponse | null>(null);
     const [profileImage, setProfileImage] = useState("");
@@ -132,13 +132,17 @@ export default function Profile() {
     ];
 
     return (
-        <View
+        <ScrollView
             style={{
                 flex: 1,
                 backgroundColor: "#1F103C",
+            }}
+            contentContainerStyle={{
                 paddingHorizontal: 24,
                 paddingTop: 90,
+                paddingBottom: 40,
             }}
+            showsVerticalScrollIndicator={false}
         >
             {/* botão voltar */}
             <Pressable
@@ -415,6 +419,39 @@ export default function Profile() {
                 )}
             </View>
 
+            {/* botão sair do perfil */}
+            <Pressable
+                onPress={logout}
+                style={{
+                    backgroundColor: "#321961",
+                    borderRadius: 13,
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                    marginTop: 36,
+                    paddingHorizontal: 140,
+                    paddingVertical: 8,
+
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 4,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 8,
+                    elevation: 8,
+                }}
+            >
+                <Text
+                    style={{
+                        color: "#fff",
+                        fontFamily: Fonts.body,
+                        fontSize: 15,
+                    }}
+                >
+                    Sair do perfil
+                </Text>
+            </Pressable>
+
             <EditProfileModal
                 visible={isEditProfileModalVisible}
                 profileImage={profileImage}
@@ -440,6 +477,6 @@ export default function Profile() {
                 }}
             />
             
-        </View>
+        </ScrollView>
     );
 }

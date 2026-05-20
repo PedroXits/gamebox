@@ -43,6 +43,11 @@ public class GameController {
         return ResponseEntity.ok(gameService.findGameByName(name));
     }
 
+    @GetMapping("/recent")
+    public ResponseEntity<List<GameSearchResponse>> findRecentGames() {
+        return ResponseEntity.ok(gameService.findRecentGames());
+    }
+
     @GetMapping
     public ResponseEntity<List<GameSearchResponse>> findAllGames() {
         return ResponseEntity.ok(gameService.findAllGames());

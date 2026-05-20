@@ -17,4 +17,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     );
 
     List<Game> findByGameNameContainingIgnoreCase(String gameName);
+
+    List<Game> findAllByOrderByReleaseDateDesc();
 }

@@ -110,6 +110,19 @@ public class GameService {
         );
     }
 
+    public List<GameSearchResponse> findRecentGames() {
+        List<Game> games = gameRepository.findAllByOrderByReleaseDateDesc();
+
+        return games.stream()
+                .map(game -> new GameSearchResponse(
+                        game.getId(),
+                        game.getGameName(),
+                        game.getGenres(),
+                        game.getGamePhoto()
+                ))
+                .toList();
+    }
+
     public GameResponse updateGame(Long id, UpdateGameRequest request) {
         Game game = gameRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Jogo não encontrado."));

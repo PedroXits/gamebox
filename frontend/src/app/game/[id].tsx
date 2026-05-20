@@ -1,7 +1,8 @@
 //game overview dinâmico
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, Pressable, ScrollView, } from "react-native";
-
+import { getGameById } from "@/services/GameService";
+import { GameResponse } from "@/models/game/GameResponse";
 import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
@@ -10,28 +11,9 @@ import ReviewModal from "@/components/ReviewModal";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
-
-    const games = {
-        tlou: {
-            title: "The Last of Us Part II Remastered",
-            year: "2020",
-            genres: "Ação, Survival Horror",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2531310/header.jpg?t=1750959180",
-            description: "Um jogo de ação e aventura focado em narrativa, ambientado cinco anos após o original. A história acompanha Ellie em uma jornada brutal de vingança em um Estados Unidos pós-apocalíptico, explorando as consequências emocionais e físicas de seus atos, além de apresentar Abby, uma segunda protagonista jogável.",
-        },
-
-        gow: {
-            title: "God of War",
-            year: "2018",
-            genres: "Ação, Aventura",
-            image: "https://cdn1.epicgames.com/offer/3ddd6a590da64e3686042d108968a6b2/EGS_GodofWar_SantaMonicaStudio_S1_2560x1440-5d74d9b240bba8f2c40920dcde7c5c67_2560x1440-5d74d9b240bba8f2c40920dcde7c5c67",
-            description: "Ambientado na mitologia nórdica, o espartano vive como um mortal em Midgard e deve proteger seu filho, Atreus, enquanto enfrentam deuses e monstros nórdicos.",
-        },
-    };
-
-    // games.tlou 
-    const game = games[id as keyof typeof games];
-
+    
+    const [game, setGame] = useState<GameResponse | null>(null);
+    const [loading, setLoading] = useState(true);
     const { playedGames, favoriteGames, wishlistGames, togglePlayed, toggleFavorite, toggleWishlist, saveReview, getReview } = useGames();
     const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
@@ -43,6 +25,30 @@ export default function GameOverview() {
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
     const [tempRating, setTempRating] = useState<number>(0);
     const [tempReview, setTempReview] = useState("");
+
+    useEffect(() => {
+        async function loadGame() {
+            try {
+                console.log("ID DA ROTA:", id);
+
+                const data = await getGameById(Number(id));
+
+                console.log("GAME CARREGADO:", data);
+
+                setGame(data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadGame();
+    }, [id]);
+
+    if (loading) {
+        return null;
+    }
 
     if (!game) {
         return (
@@ -71,7 +77,7 @@ export default function GameOverview() {
             {/* banner */}
             <View>
                 <Image
-                    source={{ uri: game.image }}
+                    source={{ uri: game.bannerPhoto }}
                     style={{
                         width: "100%",
                         height: 250,
@@ -113,7 +119,7 @@ export default function GameOverview() {
                         paddingTop: 18,
                     }}
                 >
-                    {game.title}
+                    {game.gameName}
                 </Text>
 
                 {/* card estrelas */}
@@ -312,7 +318,7 @@ export default function GameOverview() {
                             fontFamily: Fonts.body,
                         }}
                     >
-                        {game.year} • {game.genres}
+                        {game.releaseDate.substring(0, 4)} • {game.genres.join(", ")}
                     </Text>
 
                     {/* descrição */}

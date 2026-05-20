@@ -186,7 +186,7 @@ public class DataSeeder implements CommandLineRunner {
                         List.of(Genre.SPORTS),
                         "Simulador moderno de futebol.",
                         "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2669320/library_600x900.jpg",
-                        LocalDate.of(2025, 9, 26)
+                        LocalDate.of(2024, 9, 20)
                 )
         ));
     }

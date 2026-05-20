@@ -3,19 +3,23 @@ import { ScrollView, View, Image, Text, FlatList, Dimensions } from "react-nativ
 import { GameList } from "@/components/GameList";
 import { Fonts } from "@/constants/fonts";
 import { GenreCard } from "@/components/GenreCard";
-import { findAllGames } from "@/services/GameService";
+import { findAllGames, findRecentGames } from "@/services/GameService";
 import { GameSearchResponse } from "@/models/game/GameSearchResponse";
 
 export default function Home() {
     const { width } = Dimensions.get("window"); //pega a largura do celular e ocupa a tela inteira
 
     const [games, setGames] = useState<GameSearchResponse[]>([]);
+    const [recentGames, setRecentGames] = useState<GameSearchResponse[]>([]);
 
     useEffect(() => {
         async function loadGames() {
             try {
                 const response = await findAllGames();
                 setGames(response);
+
+                const recent = await findRecentGames();
+                setRecentGames(recent);
             } catch (error) {
                 console.log(error);
             }
@@ -60,6 +64,12 @@ export default function Home() {
         .filter((game) =>
             game.genres.includes("HORROR")
         )
+        .map((game) => ({
+            id: String(game.id),
+            image: game.gamePhoto,
+        }));
+
+    const recentHomeGames = recentGames
         .map((game) => ({
             id: String(game.id),
             image: game.gamePhoto,
@@ -175,7 +185,7 @@ export default function Home() {
             <View style={{ paddingHorizontal: 20 }}>
                 <GameList title="Populares" games={homeGames}/>
                 <GameList title="Tiro porrada e bomba" games={actionGames}/>
-                <GameList title="Lançamentos" games={homeGames}/>
+                <GameList title="Lançamentos" games={recentHomeGames}/>
 
             {/* card dos gêneros */}
             <Text

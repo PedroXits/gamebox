@@ -3,4 +3,5 @@ export type GameSearchResponse = {
   gameName: string;
   genres: string[];
   gamePhoto: string;
+  bannerPhoto: string;
 };

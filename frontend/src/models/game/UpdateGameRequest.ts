@@ -3,5 +3,6 @@ export type UpdateGameRequest = {
   genres?: string[];
   description?: string;
   gamePhoto?: string;
+  bannerPhoto?: string;
   releaseDate?: string;
 };

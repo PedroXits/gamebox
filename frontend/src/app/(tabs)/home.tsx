@@ -80,8 +80,8 @@ export default function Home() {
         recentGames.length > 0
             ? recentGames
                 .slice(0, 3)
-                .map((game) => game.gamePhoto)
-            :[
+                .map((game) => game.bannerPhoto)
+            : [
                 "https://via.placeholder.com/800x400"
             ];
 
@@ -102,7 +102,7 @@ export default function Home() {
         }, 4000);
 
         return () => clearInterval(interval);
-    }, [currentIndex]);
+    }, [currentIndex, banners.length]);
 
     return(
         <ScrollView style={{ flex: 1, backgroundColor: "#1F103C"}}>
@@ -119,6 +119,11 @@ export default function Home() {
                         pagingEnabled
                         showsHorizontalScrollIndicator={false}
                         keyExtractor={(_, index) => index.toString()}
+                        getItemLayout={(_, index) => ({
+                            length: width,
+                            offset: width * index,
+                            index,
+                        })}
 
                         onMomentumScrollEnd={(event: any) => {
                             const index = Math.round(
@@ -128,14 +133,22 @@ export default function Home() {
                         }}
 
                         renderItem={({ item }) => (
-                            <Image
-                                source={{ uri: item }}
-                                style={{ 
-                                    width: width, 
-                                    height: 230,
+                            <View
+                                style={{
+                                    width,
+                                    height: Math.min(width * 0.5, 260),
+                                    backgroundColor: "#000",
                                 }}
-                                resizeMode="cover"
-                            />
+                                >
+                                <Image
+                                    source={{ uri: item }}
+                                    style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    }}
+                                    resizeMode="cover"
+                                />
+                            </View>
                         )}
                     />
 

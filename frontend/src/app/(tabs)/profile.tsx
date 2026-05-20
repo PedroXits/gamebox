@@ -261,7 +261,7 @@ export default function Profile() {
                     width: "100%",
                     height: 1,
                     backgroundColor: "rgba(255,255,255,0.2)",
-                    marginTop: -24,
+                    marginTop: -25,
                 }}
             />
             
@@ -419,15 +419,25 @@ export default function Profile() {
                 )}
             </View>
 
+            {/* linha divisória */}
+            <View
+                style={{
+                    width: "100%",
+                    height: 1,
+                    backgroundColor: "rgba(255,255,255,0.2)",
+                    marginTop: 36,
+                }}
+            />
+
             {/* botão sair do perfil */}
             <Pressable
                 onPress={logout}
                 style={{
-                    backgroundColor: "#321961",
+                    backgroundColor: "#8f1b1b",
                     borderRadius: 13,
                     borderWidth: 1,
-                    borderColor: "#6F57D2",
-                    marginTop: 36,
+                    borderColor: "#e68181",
+                    marginTop: 15,
                     paddingHorizontal: 140,
                     paddingVertical: 8,
 

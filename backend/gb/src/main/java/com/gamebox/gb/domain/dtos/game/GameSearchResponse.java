@@ -8,6 +8,7 @@ public record GameSearchResponse(
         Long id,
         String gameName,
         List<Genre> genres,
-        String gamePhoto
+        String gamePhoto,
+        String bannerPhoto
 ) {
 }

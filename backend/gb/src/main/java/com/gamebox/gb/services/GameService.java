@@ -38,6 +38,7 @@ public class GameService {
         game.setGenres(request.genres());
         game.setDescription(request.description());
         game.setGamePhoto(request.gamePhoto());
+        game.setBannerPhoto(request.bannerPhoto());
         game.setReleaseDate(request.releaseDate());
 
         Game savedGame = gameRepository.save(game);
@@ -46,6 +47,7 @@ public class GameService {
                 savedGame.getId(),
                 savedGame.getGameName(),
                 savedGame.getGamePhoto(),
+                savedGame.getBannerPhoto(),
                 savedGame.getGenres(),
                 savedGame.getDescription(),
                 savedGame.getReleaseDate()
@@ -60,7 +62,8 @@ public class GameService {
                         game.getId(),
                         game.getGameName(),
                         game.getGenres(),
-                        game.getGamePhoto()
+                        game.getGamePhoto(),
+                        game.getBannerPhoto()
                 ))
                 .toList();
     }
@@ -77,7 +80,8 @@ public class GameService {
                         game.getId(),
                         game.getGameName(),
                         game.getGenres(),
-                        game.getGamePhoto()
+                        game.getGamePhoto(),
+                        game.getBannerPhoto()
                 ))
                 .toList();
     }
@@ -91,7 +95,8 @@ public class GameService {
                         game.getId(),
                         game.getGameName(),
                         game.getGenres(),
-                        game.getGamePhoto()
+                        game.getGamePhoto(),
+                        game.getBannerPhoto()
                 ))
                 .toList();
     }
@@ -104,6 +109,7 @@ public class GameService {
                 game.getId(),
                 game.getGameName(),
                 game.getGamePhoto(),
+                game.getBannerPhoto(),
                 game.getGenres(),
                 game.getDescription(),
                 game.getReleaseDate()
@@ -118,7 +124,8 @@ public class GameService {
                         game.getId(),
                         game.getGameName(),
                         game.getGenres(),
-                        game.getGamePhoto()
+                        game.getGamePhoto(),
+                        game.getBannerPhoto()
                 ))
                 .toList();
     }
@@ -147,12 +154,17 @@ public class GameService {
             game.setGamePhoto(request.gamePhoto());
         }
 
+        if(request.bannerPhoto() != null && !request.bannerPhoto().isBlank()) {
+            game.setBannerPhoto(request.bannerPhoto());
+        }
+
         Game updatedGame = gameRepository.save(game);
 
         return new GameResponse(
                 updatedGame.getId(),
                 updatedGame.getGameName(),
                 updatedGame.getGamePhoto(),
+                updatedGame.getBannerPhoto(),
                 updatedGame.getGenres(),
                 updatedGame.getDescription(),
                 updatedGame.getReleaseDate()

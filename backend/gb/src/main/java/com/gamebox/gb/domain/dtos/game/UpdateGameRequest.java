@@ -10,6 +10,7 @@ public record UpdateGameRequest(
         List<Genre> genres,
         String description,
         String gamePhoto,
+        String bannerPhoto,
         LocalDate releaseDate
 ) {
 }

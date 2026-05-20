@@ -8,6 +8,7 @@ import java.util.List;
 public record CreateGameRequest(
         String gameName,
         String gamePhoto,
+        String bannerPhoto,
         List<Genre> genres,
         String description,
         LocalDate releaseDate

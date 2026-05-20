@@ -38,6 +38,9 @@ public class Game {
     @Column(name="game_photo")
     private String gamePhoto;
 
+    @Column(name = "banner_photo")
+    private String bannerPhoto;
+
     @Column(name = "release")
     private LocalDate releaseDate;
 

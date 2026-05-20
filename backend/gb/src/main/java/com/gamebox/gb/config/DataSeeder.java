@@ -201,10 +201,16 @@ public class DataSeeder implements CommandLineRunner {
 
         Game game = new Game();
 
+        String bannerPhoto = photo.replace(
+                "library_600x900.jpg",
+                "header.jpg"
+        );
+
         game.setGameName(name);
         game.setGenres(genres);
         game.setDescription(description);
         game.setGamePhoto(photo);
+        game.setBannerPhoto(bannerPhoto);
         game.setReleaseDate(releaseDate);
 
         return game;

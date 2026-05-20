@@ -90,19 +90,27 @@ export default function Home() {
 
     //autoplay
     useEffect(() => {
-        const interval = setInterval(() => {
-            const nextIndex = (currentIndex + 1) % banners.length; //loop infinito
+        if (banners.length <= 1) return;
 
-            flatListRef.current?.scrollToIndex({
-                index: nextIndex,
+        const interval = setInterval(() => {
+
+            const nextIndex =
+                currentIndex === banners.length - 1
+                    ? 0
+                    : currentIndex + 1;
+
+            flatListRef.current?.scrollToOffset({
+                offset: nextIndex * width,
                 animated: true,
             });
 
             setCurrentIndex(nextIndex);
+
         }, 4000);
 
         return () => clearInterval(interval);
-    }, [currentIndex, banners.length]);
+
+    }, [currentIndex, banners.length, width]);
 
     return(
         <ScrollView style={{ flex: 1, backgroundColor: "#1F103C"}}>
@@ -125,10 +133,13 @@ export default function Home() {
                             index,
                         })}
 
-                        onMomentumScrollEnd={(event: any) => {
+                        onScrollToIndexFailed={() => {}}
+                        scrollEventThrottle={16}
+                        onMomentumScrollEnd={(event) => {
                             const index = Math.round(
                                 event.nativeEvent.contentOffset.x / width
                             );
+
                             setCurrentIndex(index);
                         }}
 

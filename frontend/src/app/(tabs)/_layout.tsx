@@ -8,6 +8,9 @@ export default function Layout() {
       screenOptions={{ 
         headerShown: false,
 
+        //tira o nome da barra
+        // tabBarShowLabel: false,
+
         tabBarStyle: {
           backgroundColor: "#000",
           borderTopWidth: 0,
@@ -33,6 +36,7 @@ export default function Layout() {
       <Tabs.Screen
         name="search"
         options={{
+          title: "Search",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "search" : "search-outline"} size={26} color={color} />
           ),
@@ -42,6 +46,7 @@ export default function Layout() {
       <Tabs.Screen
         name="wishlist"
         options={{
+          title: "Wishlist",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "bookmark" : "bookmark-outline"} size={26} color={color} />
           ),
@@ -51,6 +56,7 @@ export default function Layout() {
       <Tabs.Screen
         name="profile"
         options={{
+          title: "Profile",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name={focused ? "person" : "person-outline"} size={26} color={color} />
           ),

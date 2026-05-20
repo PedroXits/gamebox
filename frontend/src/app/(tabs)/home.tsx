@@ -111,7 +111,7 @@ export default function Home() {
             <View style={{ paddingBottom: 20 }}>
                 <View>
 
-                    {/* carrossel */}
+                    {/* carrossel - banners*/}
                     <FlatList
                         ref={flatListRef}
                         data={banners}

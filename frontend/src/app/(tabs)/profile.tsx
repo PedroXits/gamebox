@@ -438,7 +438,7 @@ export default function Profile() {
                     borderWidth: 1,
                     borderColor: "#e68181",
                     marginTop: 15,
-                    paddingHorizontal: 140,
+                    paddingHorizontal: 130,
                     paddingVertical: 8,
 
                     shadowColor: "#000",

@@ -23,15 +23,6 @@ export default function App() {
             <Text style={styles.buttonText}>Começar</Text>
           </Pressable>
 
-          {/* acesso temporário à home */}
-          <Pressable style={[styles.button, { marginTop: 12, opacity: 0.8 }]} onPress={() => router.push("/home")}>
-            <Text style={styles.buttonText}>Home (teste)</Text>
-          </Pressable>
-
-          {/* painel administrativo temporário */}
-          <Pressable style={[styles.button, { marginTop: 12, opacity: 0.8 }]} onPress={() => router.push("/admin")}>
-            <Text style={styles.buttonText}>Admin</Text>
-          </Pressable>
         </View>
       </View>
     </View>

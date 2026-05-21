@@ -76,6 +76,8 @@ public class WishlistService {
 
         return wishlist.stream()
                 .map(w -> new WishlistSearchResponse(
+                        w.getId(),
+                        w.getGame().getId(),
                         w.getGame().getGameName(),
                         w.getGame().getGamePhoto()
                 ))

@@ -80,7 +80,8 @@ export default function GameOverview() {
                 <View
                     style={{
                         width: "100%",
-                        height: Math.min(width * 0.55, 300),
+                        height: Math.min(width * 0.48, 250),
+                        overflow: "hidden",
                         backgroundColor: "#000",
                     }}
                 >

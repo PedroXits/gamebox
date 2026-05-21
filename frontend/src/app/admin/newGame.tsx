@@ -16,10 +16,11 @@ export default function NewGame() {
     const [year, setYear] = useState("");
     const [genres, setGenres] = useState("");
     const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
+    const [gamePhoto, setGamePhoto] = useState("");
+    const [bannerPhoto, setBannerPhoto] = useState("");
 
-    //abre a galeria para selecionar uma imagem
-    async function pickImage() {
+    //abre a galeria para selecionar uma imagem da capa e do banner
+    async function pickImage(type: "cover" | "banner") {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         //se o usuário negou o acesso
@@ -49,7 +50,11 @@ export default function NewGame() {
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            if (type === "cover") {
+                setGamePhoto(result.assets[0].uri);
+            } else {
+                setBannerPhoto(result.assets[0].uri);
+            }
         }
     }
 
@@ -60,7 +65,8 @@ export default function NewGame() {
             !year ||
             !genres ||
             !description ||
-            !image
+            !gamePhoto ||
+            !bannerPhoto
         ) {
             Alert.alert(
                 "Campos obrigatórios",
@@ -90,7 +96,8 @@ export default function NewGame() {
                 gameName: title,
                 genres: normalizedGenres,
                 description,
-                gamePhoto: image,
+                gamePhoto,
+                bannerPhoto,
                 releaseDate: `${year}-01-01`,
             });
 
@@ -165,7 +172,7 @@ export default function NewGame() {
                 style={{
                     color: "#fff",
                     fontFamily: Fonts.body,
-                    fontSize: 16,
+                    fontSize: 17,
                     marginBottom: 14,
                     marginLeft: 8,
                 }}
@@ -173,7 +180,21 @@ export default function NewGame() {
                 Selecionar imagem
             </Text>
 
-            <Pressable onPress={pickImage}
+            {/* imagem capa */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 15,
+                    marginBottom: 14,
+                    marginLeft: 8,
+                }}
+            >
+                Capa:
+            </Text>
+                
+            <Pressable 
+                onPress={() => pickImage("cover")}
                 style={{
                     height: 160,
                     backgroundColor: "#170b2e",
@@ -187,9 +208,55 @@ export default function NewGame() {
                     borderColor: "#6F57D2",
                 }}
             >
-                {image ? (
+                {gamePhoto ? (
                     <Image
-                        source={{ uri: image }}
+                        source={{ uri: gamePhoto }}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                        }}
+                        resizeMode="cover"
+                    />
+                ) : (
+                    <Feather
+                        name="plus-circle"
+                        size={32}
+                        color="rgba(255,255,255,0.5)"
+                    />
+                )}
+            </Pressable>
+
+            {/* imagem banner */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 15,
+                    marginBottom: 14,
+                    marginLeft: 8,
+                }}
+            >
+                Banner:
+            </Text>
+
+            <Pressable 
+                onPress={() => pickImage("banner")}
+                style={{
+                    height: 160,
+                    backgroundColor: "#170b2e",
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: 36,
+                    marginBottom: 30,
+                    overflow: "hidden",
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                }}
+            >
+                {bannerPhoto ? (
+                    <Image
+                        source={{ uri: bannerPhoto }}
                         style={{
                             width: "100%",
                             height: "100%",
@@ -362,7 +429,7 @@ export default function NewGame() {
                         },
                         shadowOpacity: 0.25,
                         shadowRadius: 8,
-                        elevation: 8,
+                        elevation: 5,
                     }}
                 >
                     <Text
@@ -394,7 +461,7 @@ export default function NewGame() {
                         },
                         shadowOpacity: 0.25,
                         shadowRadius: 8,
-                        elevation: 8,
+                        elevation: 5,
                     }}
                 >
                     <Text

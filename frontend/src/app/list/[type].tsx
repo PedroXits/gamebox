@@ -1,14 +1,45 @@
 //tela única, lista dinâmica dos jogos (jogados, favoritos e desejos)
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Pressable, Image, ScrollView, } from "react-native";
 
 import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 
+import { AuthContext } from "@/context/AuthContext";
+import { getWishlistByProfileId } from "@/services/WishlistService";
+import { WishlistSearchResponse } from "@/models/wishlist/WishlistSearchResponse";
+
 export default function GameList() {
     //parâmetro da rota (/list/played ou /list/favorites)
     const { type } = useLocalSearchParams<{ type: string }>();
+    
+    //integração backend
+
+    //usuario
+    const { user } = useContext(AuthContext);
+
+    //wishlist
+    const [wishlistGames, setWishlistGames] = useState<WishlistSearchResponse[]>([]);
+
+    useEffect(() => {
+        async function loadList() {
+            if (!user?.profileId) return;
+
+            try {
+                if (type === "wishlist") {
+                    const response =
+                        await getWishlistByProfileId(user.profileId);
+
+                    setWishlistGames(response);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadList();
+    }, [type, user?.profileId]);
 
     //título dinâmico
     const title =
@@ -16,6 +47,8 @@ export default function GameList() {
             ? "Jogados"
             : type === "favorites"
             ? "Favoritos"
+            : type === "wishlist"
+            ? "Lista de desejos"
             : "Lista";
     
     //mock de jogos jogados
@@ -100,10 +133,13 @@ export default function GameList() {
 
     //define qual lista será exibida
     const games =
-        type === "played"
-            ? playedGames
-            : type === "favorites"
-            ? favoriteGames
+        type === "wishlist"
+            ? wishlistGames.map((item) => ({
+                id: String(item.gameId),
+                title: item.gameName,
+                image: item.gamePhoto,
+                rating: 0,
+            }))
             : [];
 
     return (
@@ -151,6 +187,19 @@ export default function GameList() {
                     paddingBottom: 40,
                 }}
             >
+                {games.length === 0 && (
+                    <Text
+                        style={{
+                            color: "#B8A9D6",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                            textAlign: "center",
+                            marginTop: 40,
+                        }}
+                    >
+                        Nenhum jogo encontrado nessa lista.
+                    </Text>
+                )}
                 <View
                     style={{
                         flexDirection: "row",
@@ -160,8 +209,9 @@ export default function GameList() {
                     }}
                 >
                     {games.map((game) => (
-                        <View
+                        <Pressable
                             key={game.id}
+                            onPress={() => router.push(`/game/${game.id}`)}
                             style={{
                                 width: "48%",
                             }}
@@ -241,7 +291,7 @@ export default function GameList() {
                                 </View>
                             )}
                             
-                        </View>
+                        </Pressable>
                     ))}
                 </View>
             </ScrollView>

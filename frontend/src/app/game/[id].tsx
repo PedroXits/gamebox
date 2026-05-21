@@ -1,5 +1,5 @@
 //game overview dinâmico
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Image, Pressable, ScrollView, Dimensions } from "react-native";
 import { getGameById } from "@/services/GameService";
 import { GameResponse } from "@/models/game/GameResponse";
@@ -8,24 +8,56 @@ import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 import { useGames } from "@/context/GamesContext";
 import ReviewModal from "@/components/ReviewModal";
+import { addToWishlist, removeFromWishlist, getWishlistByProfileId } from "@/services/WishlistService";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
     
     const [game, setGame] = useState<GameResponse | null>(null);
     const [loading, setLoading] = useState(true);
-    const { playedGames, favoriteGames, wishlistGames, togglePlayed, toggleFavorite, toggleWishlist, saveReview, getReview } = useGames();
+    const { playedGames, favoriteGames, togglePlayed, toggleFavorite, saveReview, getReview } = useGames();
     const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
-    const isInWishlist = wishlistGames.includes(id as string);
+    // const isInWishlist = wishlistGames.includes(id as string);
     const savedReview = getReview(id as string);
     const rating = savedReview?.rating ?? 0;
     const review = savedReview?.review ?? "";
     const { width } = Dimensions.get("window");
 
+    // elementos de integração com o back
+    //usuario
+    const { user } = useContext(AuthContext);
+
+    //wishlist
+    const [wishlistItemId, setWishlistItemId] = useState<number | null>(null);
+    const isInWishlist = wishlistItemId !== null;
+
+
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
     const [tempRating, setTempRating] = useState<number>(0);
     const [tempReview, setTempReview] = useState("");
+
+    useEffect(() => {
+        async function loadWishlistStatus() {
+            if (!user?.profileId || !id) return;
+
+            try {
+                const wishlist =
+                    await getWishlistByProfileId(user.profileId);
+
+                const item = wishlist.find(
+                    (w) => w.gameId === Number(id)
+                );
+
+                setWishlistItemId(item?.wishlistId ?? null);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadWishlistStatus();
+    }, [user?.profileId, id]);
 
     useEffect(() => {
         async function loadGame() {
@@ -66,6 +98,33 @@ export default function GameOverview() {
                 </Text>
             </View>
         );
+    }
+
+    async function handleWishlist() {
+        if (!user?.profileId || !game) return;
+
+        try {
+            if (wishlistItemId) {
+            await removeFromWishlist(wishlistItemId);
+            setWishlistItemId(null);
+            } else {
+            await addToWishlist({
+                profileId: user.profileId,
+                gameId: game.id,
+            });
+
+            const wishlist =
+                await getWishlistByProfileId(user.profileId);
+
+            const item = wishlist.find(
+                (w) => w.gameId === game.id
+            );
+
+            setWishlistItemId(item?.wishlistId ?? null);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -287,7 +346,7 @@ export default function GameOverview() {
                             elevation: 8,
                         }}
                     >
-                        <Pressable onPress={() => toggleWishlist(id as string)}>
+                        <Pressable onPress={handleWishlist}>
                             <FontAwesome
                                 name={isInWishlist ? "bookmark" : "bookmark-o"}
                                 size={38}

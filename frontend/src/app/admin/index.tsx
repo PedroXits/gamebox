@@ -294,7 +294,7 @@ export default function Admin() {
                     <Pressable 
                         onPress={(event) => event.stopPropagation()}
                         style={{
-                            width: "68%",
+                            width: "62%",
                             height: "100%",
                             backgroundColor: "#321961",
                             paddingTop: 70,

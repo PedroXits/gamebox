@@ -241,7 +241,7 @@ export default function GameList() {
                                 {game.title}
                             </Text>
 
-                            {/* estrelas (se houver avaliação) */}
+                            {/* estrelas (se houver avaliação) --*/}
                             {game.rating > 0 && (
                                 <View
                                     style={{

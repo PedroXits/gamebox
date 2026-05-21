@@ -17,7 +17,8 @@ export default function EditGame() {
     const [year, setYear] = useState("");
     const [genres, setGenres] = useState("");
     const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
+    const [gamePhoto, setGamePhoto] = useState("");
+    const [bannerPhoto, setBannerPhoto] = useState("");
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -29,7 +30,8 @@ export default function EditGame() {
                 setYear(data.releaseDate.substring(0, 4));
                 setGenres(data.genres.join(", "));
                 setDescription(data.description);
-                setImage(data.gamePhoto);
+                setGamePhoto(data.gamePhoto);
+                setBannerPhoto(data.bannerPhoto);
             } catch (error) {
                 console.log(error);
                 Alert.alert("Erro", "Não foi possível carregar o jogo.");
@@ -47,8 +49,8 @@ export default function EditGame() {
     }
 
 
-    //abre a galeria para selecionar uma imagem
-    async function pickImage() {
+    //abre a galeria para selecionar uma imagem da capa e do banner
+    async function pickImage(type: "cover" | "banner") {
         const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
         //se o usuário negou o acesso
@@ -78,24 +80,42 @@ export default function EditGame() {
         });
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            if (type === "cover") {
+                setGamePhoto(result.assets[0].uri);
+            } else {
+                setBannerPhoto(result.assets[0].uri);
+            }
         }
     }
 
     // atualiza o jogo no backend
     async function handleUpdateGame() {
-        if (!title || !year || !genres || !description || !image) {
-            Alert.alert("Campos obrigatórios", "Preencha todos os campos.");
+        if (
+            !title || 
+            !year || 
+            !genres || 
+            !description || 
+            !gamePhoto || 
+            !bannerPhoto 
+        ) {
+            Alert.alert(
+                "Campos obrigatórios",
+                "Preencha todos os campos.");
             return;
         }
 
         const normalizedGenres = genres
             .split(",")
-            .map((genre) => genreMap[genre.trim().toLowerCase()])
+            .map((genre) => 
+                genreMap[genre.trim().toLowerCase()]
+            )
             .filter(Boolean);
 
         if (normalizedGenres.length === 0) {
-            Alert.alert("Gênero inválido", "Digite gêneros válidos.");
+            Alert.alert(
+                "Gênero inválido",
+                "Digite gêneros válidos."
+            );
             return;
         }
 
@@ -104,17 +124,19 @@ export default function EditGame() {
                 gameName: title,
                 genres: normalizedGenres,
                 description,
-                gamePhoto: image,
+                gamePhoto,
+                bannerPhoto,
                 releaseDate: `${year}-01-01`,
             });
         
             router.replace("/admin");
           } catch (error) {
             console.log(error);
-            Alert.alert("Erro", "Não foi possível atualizar o jogo.");
+            Alert.alert(
+                "Erro",
+                "Não foi possível atualizar o jogo."
+            );
         }
-
-
     }
 
     return (
@@ -175,7 +197,7 @@ export default function EditGame() {
                 style={{
                     color: "#fff",
                     fontFamily: Fonts.body,
-                    fontSize: 16,
+                    fontSize: 17,
                     marginBottom: 14,
                     marginLeft: 8,
                 }}
@@ -183,7 +205,21 @@ export default function EditGame() {
                 Selecionar imagem
             </Text>
 
-            <Pressable onPress={pickImage}
+            {/* imagem capa */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 15,
+                    marginBottom: 14,
+                    marginLeft: 8,
+                }}
+            >
+                Capa:
+            </Text>
+
+            <Pressable 
+                onPress={() => pickImage("cover")}
                 style={{
                     height: 160,
                     backgroundColor: "#170b2e",
@@ -198,9 +234,73 @@ export default function EditGame() {
                     position: "relative",
                 }}
             >
-                {image ? ( <>
+                {gamePhoto ? ( <>
                     <Image
-                        source={{ uri: image }}
+                        source={{ uri: gamePhoto }}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            opacity: 0.3,
+                        }}
+                        resizeMode="cover"
+                    />
+
+                    {/* ícone centralizado sobre a imagem */}
+                    <View
+                        style={{
+                            position: "absolute",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Feather
+                            name="plus-circle"
+                            size={32}
+                            color="rgba(255,255,255,0.75)"
+                        />
+                    </View>
+                    </>
+                ) : (
+                    <Feather
+                        name="plus-circle"
+                        size={32}
+                        color="rgba(255,255,255,0.5)"
+                    />
+                )}
+            </Pressable>
+
+            {/* imagem banner */}
+            <Text
+                style={{
+                    color: "#fff",
+                    fontFamily: Fonts.body,
+                    fontSize: 15,
+                    marginBottom: 14,
+                    marginLeft: 8,
+                }}
+            >
+                Banner:
+            </Text>
+
+            <Pressable 
+                onPress={() => pickImage("banner")}
+                style={{
+                    height: 160,
+                    backgroundColor: "#170b2e",
+                    borderRadius: 8,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginHorizontal: 36,
+                    marginBottom: 30,
+                    overflow: "hidden",
+                    borderWidth: 1,
+                    borderColor: "#6F57D2",
+                    position: "relative",
+                }}
+            >
+                {bannerPhoto ? ( <>
+                    <Image
+                        source={{ uri: bannerPhoto }}
                         style={{
                             width: "100%",
                             height: "100%",
@@ -390,7 +490,7 @@ export default function EditGame() {
                         },
                         shadowOpacity: 0.25,
                         shadowRadius: 8,
-                        elevation: 8,
+                        elevation: 5,
                     }}
                 >
                     <Text
@@ -422,7 +522,7 @@ export default function EditGame() {
                         },
                         shadowOpacity: 0.25,
                         shadowRadius: 8,
-                        elevation: 8,
+                        elevation: 5,
                     }}
                 >
                     <Text

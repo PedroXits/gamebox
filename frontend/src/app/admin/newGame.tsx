@@ -91,7 +91,6 @@ export default function NewGame() {
         }
 
         try {
-
             await createGame({
                 gameName: title,
                 genres: normalizedGenres,
@@ -102,11 +101,8 @@ export default function NewGame() {
             });
 
             router.replace("/admin");
-
         } catch (error) {
-
             console.log(error);
-
             Alert.alert(
                 "Erro",
                 "Não foi possível cadastrar o jogo."

@@ -75,7 +75,7 @@ export default function GameOverview() {
                 backgroundColor: "#1F103C",
             }}
         >
-            {/* banner */}
+            {/* banner + dimensions*/}
             <View>
                 <View
                     style={{
@@ -99,14 +99,23 @@ export default function GameOverview() {
                     onPress={() => router.back()}
                     style={{
                         position: "absolute",
-                        top: 60,
+                        top: 50,
                         left: 20,
+                        width: 40,
+                        height: 40,
+                        borderRadius: 21,
+                        backgroundColor: "rgba(0, 0, 0, 0.45)",
+                        justifyContent: "center",
+                        alignItems: "center",
                     }}
                 >
                     <Ionicons
                         name="chevron-back"
                         size={28}
                         color="#fff"
+                        style={{
+                            marginRight: 2,
+                        }}
                     />
                 </Pressable>
             </View>

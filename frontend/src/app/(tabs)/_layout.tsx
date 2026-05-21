@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -7,9 +8,8 @@ export default function Layout() {
     <Tabs 
       screenOptions={{ 
         headerShown: false,
-
-        //tira o nome da barra
-        // tabBarShowLabel: false,
+        //remove os nomes abaixo dos ícones da barra de navegação
+        tabBarShowLabel: false,
 
         tabBarStyle: {
           backgroundColor: "#000",
@@ -28,7 +28,25 @@ export default function Layout() {
           title: "Home",
           href: "/home",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? "home" : "home-outline"} size={26} color={color} />
+            <View style={{ alignItems: "center" }}>
+              <Ionicons 
+                name={focused ? "home" : "home-outline"} 
+                size={26} 
+                color={color} 
+              />
+
+              {focused && (
+                <View
+                  style={{
+                    width: 24,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: "#fff",
+                    marginTop: 4,
+                  }}
+                />
+              )}
+            </View>
           ),
         }}
       />
@@ -38,7 +56,25 @@ export default function Layout() {
         options={{
           title: "Search",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? "search" : "search-outline"} size={26} color={color} />
+            <View style={{ alignItems: "center" }}>
+              <Ionicons 
+                name={focused ? "search" : "search-outline"} 
+                size={26} 
+                color={color}
+              />
+
+              {focused && (
+                <View
+                  style={{
+                    width: 24,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: "#fff",
+                    marginTop: 4,
+                  }}
+                />
+              )}
+            </View>
           ),
         }}
       />
@@ -48,7 +84,25 @@ export default function Layout() {
         options={{
           title: "Wishlist",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? "bookmark" : "bookmark-outline"} size={26} color={color} />
+            <View style={{ alignItems: "center" }}>
+              <Ionicons 
+                name={focused ? "bookmark" : "bookmark-outline"} 
+                size={26} 
+                color={color} 
+              />
+
+              {focused && (
+                <View
+                  style={{
+                    width: 24,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: "#fff",
+                    marginTop: 4,
+                  }}
+                />
+              )}
+            </View>
           ),
         }}
       />
@@ -58,7 +112,25 @@ export default function Layout() {
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? "person" : "person-outline"} size={26} color={color} />
+            <View style={{ alignItems: "center" }}>
+              <Ionicons 
+                name={focused ? "person" : "person-outline"} 
+                size={26} 
+                color={color} 
+              />
+
+              {focused && (
+                <View
+                  style={{
+                    width: 24,
+                    height: 3,
+                    borderRadius: 2,
+                    backgroundColor: "#fff",
+                    marginTop: 4,
+                  }}
+                />
+              )}
+            </View>
           ),
         }}
       />

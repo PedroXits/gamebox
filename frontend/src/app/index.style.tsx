@@ -4,9 +4,10 @@ import { Fonts } from "@/constants/fonts";
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,
     display:"flex",
     flexDirection: "column",
-    // gap: 80,
+    gap: 80,
     paddingVertical: 60,
     paddingHorizontal: 30,
     backgroundColor: Colors.white 
@@ -16,7 +17,7 @@ export const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20
+    marginTop: 25
   },
 
   logo: {
@@ -34,7 +35,8 @@ export const styles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 58,
     fontFamily: Fonts.title,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    marginTop: -14
   },
 
   message: {

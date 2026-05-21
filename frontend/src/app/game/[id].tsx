@@ -1,6 +1,6 @@
 //game overview dinâmico
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, Pressable, ScrollView, } from "react-native";
+import { View, Text, Image, Pressable, ScrollView, Dimensions } from "react-native";
 import { getGameById } from "@/services/GameService";
 import { GameResponse } from "@/models/game/GameResponse";
 import { router, useLocalSearchParams } from "expo-router";
@@ -21,6 +21,7 @@ export default function GameOverview() {
     const savedReview = getReview(id as string);
     const rating = savedReview?.rating ?? 0;
     const review = savedReview?.review ?? "";
+    const { width } = Dimensions.get("window");
 
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
     const [tempRating, setTempRating] = useState<number>(0);
@@ -76,15 +77,23 @@ export default function GameOverview() {
         >
             {/* banner */}
             <View>
-                <Image
-                    source={{ uri: game.bannerPhoto }}
+                <View
                     style={{
                         width: "100%",
-                        height: 250,
+                        height: Math.min(width * 0.55, 300),
+                        backgroundColor: "#000",
                     }}
-                    resizeMode="cover"
-                />
-                
+                >
+                    <Image
+                        source={{ uri: game.bannerPhoto }}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                        }}
+                        resizeMode="cover"
+                    />
+                </View>
+
                 {/* botão voltar */}
                 <Pressable
                     onPress={() => router.back()}

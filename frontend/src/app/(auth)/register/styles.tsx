@@ -140,5 +140,12 @@ export const styles = StyleSheet.create({
 
   login: {
     color: Colors.primary 
+  },
+
+  errorText: {
+    color: "#FF4F4D",
+    fontSize: 13,
+    marginTop: -14,
+    marginLeft: 20,
   }
 })

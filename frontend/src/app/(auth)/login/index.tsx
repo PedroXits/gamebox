@@ -9,6 +9,8 @@ import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
 
+  //test
+
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +19,6 @@ export default function Login() {
 
   async function handleLogin() {
     
-    //validação front
     setEmailError("");
     setPasswordError("");
 

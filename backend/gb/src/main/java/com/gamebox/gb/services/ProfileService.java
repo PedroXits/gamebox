@@ -1,6 +1,7 @@
 package com.gamebox.gb.services;
 
 import com.gamebox.gb.datasource.repositories.*;
+import com.gamebox.gb.domain.dtos.favorite.FavoriteResponse;
 import com.gamebox.gb.domain.dtos.favorite.FavoriteSearchResponse;
 import com.gamebox.gb.domain.dtos.played.PlayedResponse;
 import com.gamebox.gb.domain.dtos.profile.CreateProfileRequest;
@@ -116,9 +117,15 @@ public class ProfileService {
                         .toList(),
 
                 favorites.stream()
-                        .map(f -> new FavoriteSearchResponse(
+                        .map(f -> new FavoriteResponse(
+                                f.getId(),
+                                f.getProfile().getId(),
+                                f.getProfile().getProfileName(),
+                                f.getGame().getId(),
                                 f.getGame().getGameName(),
-                                f.getGame().getGamePhoto()
+                                f.getGame().getGamePhoto(),
+                                f.getGame().getBannerPhoto(),
+                                f.getCreatedAt()
                         ))
                         .toList(),
 

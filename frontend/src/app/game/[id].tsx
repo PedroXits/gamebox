@@ -6,20 +6,18 @@ import { GameResponse } from "@/models/game/GameResponse";
 import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
-import { useGames } from "@/context/GamesContext";
 import ReviewModal from "@/components/ReviewModal";
 import { addToWishlist, removeFromWishlist, getWishlistByProfileId } from "@/services/WishlistService";
 import { AuthContext } from "@/context/AuthContext";
 import { addToPlayed, removeFromPlayed, getPlayedByProfileId } from "@/services/PlayedService";
 import { createReview, updateReview, getReviewsByProfileId, deleteReview } from "@/services/ReviewService";
+import { addToFavorite, removeFromFavorite, getFavoritesByProfileId } from "@/services/FavoriteService";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
     
     const [game, setGame] = useState<GameResponse | null>(null);
     const [loading, setLoading] = useState(true);
-    const { favoriteGames, toggleFavorite } = useGames();
-    const isFavorite = favoriteGames.includes(id as string);
     const { width } = Dimensions.get("window");
 
     // elementos de integração com o back
@@ -39,10 +37,14 @@ export default function GameOverview() {
     const [rating, setRating] = useState(0);
     const [review, setReview] = useState("");
 
-
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
     const [tempRating, setTempRating] = useState<number>(0);
     const [tempReview, setTempReview] = useState("");
+
+    // review
+    //favorite
+    const [favoriteItemId, setFavoriteItemId] = useState<number | null>(null);
+    const isFavorite = favoriteItemId !== null;
 
     useEffect(() => {
         async function loadWishlistStatus() {
@@ -179,6 +181,54 @@ export default function GameOverview() {
 
         loadPlayedStatus();
     }, [user?.profileId, id]);
+
+    useEffect(() => {
+        async function loadFavoriteStatus() {
+            if (!user?.profileId || !id) return;
+
+            try {
+                const favorites =
+                    await getFavoritesByProfileId(user.profileId);
+
+                const item = favorites.find(
+                    (f) => f.gameId === Number(id)
+                );
+
+                setFavoriteItemId(item?.favoriteId ?? null);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadFavoriteStatus();
+    }, [user?.profileId, id]);
+
+    async function handleFavorite() {
+        if (!user?.profileId || !game) return;
+
+        try {
+            if (favoriteItemId) {
+                await removeFromFavorite(favoriteItemId);
+                setFavoriteItemId(null);
+            } else {
+                await addToFavorite({
+                    profileId: user.profileId,
+                    gameId: game.id,
+                });
+
+                const favorites =
+                    await getFavoritesByProfileId(user.profileId);
+
+                const item = favorites.find(
+                    (f) => f.gameId === game.id
+                );
+
+                setFavoriteItemId(item?.favoriteId ?? null);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     if (loading) {
         return null;
@@ -451,8 +501,7 @@ export default function GameOverview() {
                             elevation: 8,
                         }}
                     >
-                        {/* coração preenche ao clicar e adiciona em favoriteGames, clicando novamente remove e despreenche */}
-                        <Pressable onPress={() => toggleFavorite(id as string)}>
+                        <Pressable onPress={handleFavorite}>
                             <FontAwesome
                                 name={isFavorite ? "heart" : "heart-o"}
                                 size={38}
@@ -563,7 +612,7 @@ export default function GameOverview() {
                 }}
                 onChangeRating={setTempRating}
                 onChangeReview={setTempReview}
-                onSubmit= {handleSubmitReview}
+                onSubmit={handleSubmitReview}
             />
             
         </ScrollView>

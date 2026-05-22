@@ -117,6 +117,8 @@ export default function Login() {
               </Text>
             ) : null}
 
+            {/* abc */}
+
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>
           <Pressable style={styles.loginButton} onPress={handleLogin}> 

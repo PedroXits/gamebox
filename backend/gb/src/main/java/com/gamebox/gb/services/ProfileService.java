@@ -109,6 +109,8 @@ public class ProfileService {
                                 p.getProfile().getProfileName(),
                                 p.getGame().getId(),
                                 p.getGame().getGameName(),
+                                p.getGame().getGamePhoto(),
+                                p.getGame().getBannerPhoto(),
                                 p.getCreatedAt()
                         ))
                         .toList(),

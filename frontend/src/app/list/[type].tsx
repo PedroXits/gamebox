@@ -9,6 +9,7 @@ import { Fonts } from "@/constants/fonts";
 import { AuthContext } from "@/context/AuthContext";
 import { getPlayedByProfileId } from "@/services/PlayedService";
 import { getFavoritesByProfileId } from "@/services/FavoriteService";
+import { getReviewsByProfileId } from "@/services/ReviewService";
 
 export default function GameList() {
 
@@ -41,18 +42,27 @@ export default function GameList() {
                 if (!user?.profileId) return;
 
                 try {
+                    const reviews =
+                        await getReviewsByProfileId(user.profileId);
+
                     if (type === "played") {
                         const response =
                             await getPlayedByProfileId(user.profileId);
 
                         setGames(
-                            response.map((game) => ({
-                                id: String(game.playedId),
-                                gameId: game.gameId,
-                                title: game.gameName,
-                                image: game.bannerPhoto,
-                                rating: 0,
-                            }))
+                            response.map((game) => {
+                                const review = reviews.find(
+                                    (r) => r.gameId === game.gameId
+                                );
+
+                                return {
+                                    id: String(game.playedId),
+                                    gameId: game.gameId,
+                                    title: game.gameName,
+                                    image: game.bannerPhoto,
+                                    rating: review?.rating ?? 0,
+                                };
+                            })
                         );
                     }
 
@@ -61,13 +71,19 @@ export default function GameList() {
                             await getFavoritesByProfileId(user.profileId);
 
                         setGames(
-                            response.map((game) => ({
-                                id: String(game.favoriteId),
-                                gameId: game.gameId,
-                                title: game.gameName,
-                                image: game.bannerPhoto,
-                                rating: 0,
-                            }))
+                            response.map((game) => {
+                                const review = reviews.find(
+                                    (r) => r.gameId === game.gameId
+                                );
+
+                                return {
+                                    id: String(game.favoriteId),
+                                    gameId: game.gameId,
+                                    title: game.gameName,
+                                    image: game.bannerPhoto,
+                                    rating: review?.rating ?? 0,
+                                };
+                            })
                         );
                     }
                 } catch (error) {

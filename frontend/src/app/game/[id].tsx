@@ -18,9 +18,7 @@ export default function GameOverview() {
     const [game, setGame] = useState<GameResponse | null>(null);
     const [loading, setLoading] = useState(true);
     const { favoriteGames, toggleFavorite, saveReview, getReview } = useGames();
-    // const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
-    // const isInWishlist = wishlistGames.includes(id as string);
     const savedReview = getReview(id as string);
     const rating = savedReview?.rating ?? 0;
     const review = savedReview?.review ?? "";

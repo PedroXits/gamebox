@@ -97,6 +97,8 @@ public class ReviewService {
 
         return reviews.stream()
                 .map(review -> new ReviewSearchResponse(
+                        review.getId(),
+                        review.getGame().getId(),
                         review.getProfile().getProfileName(),
                         review.getRating(),
                         review.getComment()
@@ -113,6 +115,8 @@ public class ReviewService {
 
         return reviews.stream()
                 .map(review -> new ReviewSearchResponse(
+                        review.getId(),
+                        review.getGame().getId(),
                         review.getProfile().getProfileName(),
                         review.getRating(),
                         review.getComment()

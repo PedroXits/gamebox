@@ -2,13 +2,16 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, ScrollView, Pressable, Image, Alert, Linking, } from "react-native";
 import { AuthContext } from "@/context/AuthContext";
-import { getProfileById, updateProfile } from "@/services/ProfileService";
+import { updateProfile, getProfileDashboard } from "@/services/ProfileService";
 import { ProfileResponse } from "@/models/profile/ProfileResponse";
-import { router } from "expo-router";
+import { router, useFocusEffect  } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons, AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import EditProfileModal from "@/components/EditProfileModal";
+import { PlayedResponse } from "@/models/played/PlayedResponse";
+import { FavoriteResponse } from "@/models/favorite/FavoriteResponse";
+
 
 export default function Profile() {
     //imagem de perfil selecionada pelo usuário
@@ -19,26 +22,38 @@ export default function Profile() {
     const [profileImage, setProfileImage] = useState("");
     const [profileName, setProfileName] = useState("");
     const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
+    const [playedGames, setPlayedGames] = useState<PlayedResponse[]>([]);
+    const [favoriteGames, setFavoriteGames] = useState<FavoriteResponse[]>([]);
 
-    useEffect(() => {
-        async function loadProfile() {
-            if(!user?.profileId) return;
+    useFocusEffect(
+        React.useCallback(() => {
+            async function loadProfile() {
+                if (!user?.profileId) return;
 
-            try {
-                const data = await getProfileById(user.profileId);
+                try {
+                    const data = await getProfileDashboard(user.profileId);
 
-                setProfile(data);
-                setProfileName(data.profileName);
-                setProfileImage(data.profilePhoto ?? "");
+                    console.log("DASHBOARD:", data);
 
-                console.log("PROFILE DATA:", data);
-            } catch (error) {
-                console.log(error)
+                    setProfile(data.profile);
+                    setProfileName(data.profile.profileName);
+                    setProfileImage(data.profile.profilePhoto ?? "");
+
+                    setPlayedGames(data.playedGames ?? []);
+                    setFavoriteGames(data.favorites ?? []);
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
 
-        loadProfile();
-    }, [user]);
+            loadProfile();
+        }, [user?.profileId])
+    );
+
+    async function handleLogout() {
+        await logout();
+        router.replace("/login");
+    }
 
 
     //abre a galeria para selecionar uma foto de perfil
@@ -75,61 +90,6 @@ export default function Profile() {
             setProfileImage(result.assets[0].uri);
         }
     }
-
-    //mock de jogos
-    const playedGames = [
-        {
-            id: "1",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobg1j.jpg",
-        },
-        {
-            id: "2",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaarl.jpg",
-        },
-        {
-            id: "3",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobebu.jpg",
-        },
-        {
-            id: "4",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9dh.jpg",
-        },
-        {
-            id: "5",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.jpg",
-        },
-        {
-            id: "6",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co62ao.jpg",
-        },
-    ];
-
-    const favoriteGames = [
-        {
-            id: "1",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1rbu.jpg",
-        },
-        {
-            id: "2",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg",
-        },
-        {
-            id: "3",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1ir3.jpg",
-        },
-        {
-            id: "4",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaih8.jpg",
-        },
-        {
-            id: "5",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co9gam.jpg",
-        },
-        {
-            id: "6",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1q1f.jpg",
-        },
-    ];
 
     return (
         <ScrollView
@@ -300,7 +260,7 @@ export default function Profile() {
                         <View
                             style={{
                                 flexDirection: "row",
-                                justifyContent: "space-between",
+                                justifyContent: "flex-start",
                                 marginBottom: 8,
                                 gap: 9,
                                 marginLeft: -5,
@@ -309,8 +269,8 @@ export default function Profile() {
                             {/* com jogos jogados */}
                             {playedGames.slice(0, 4).map((game) => (
                                 <Image
-                                    key={game.id}
-                                    source={{ uri: game.image }}
+                                    key={game.playedId}
+                                    source={{ uri: game.gamePhoto }}
                                     style={{
                                         width: 87,
                                         height: 128,
@@ -377,7 +337,7 @@ export default function Profile() {
                         <View
                             style={{
                                 flexDirection: "row",
-                                justifyContent: "space-between",
+                                justifyContent: "flex-start",
                                 marginBottom: 8,
                                 gap: 9,
                                 marginLeft: -5,
@@ -386,8 +346,8 @@ export default function Profile() {
                             {/* com jogos favoritados */}
                             {favoriteGames.slice(0, 4).map((game) => (
                                 <Image
-                                    key={game.id}
-                                    source={{ uri: game.image }}
+                                    key={game.favoriteId}
+                                    source={{ uri: game.gamePhoto }}
                                     style={{
                                         width: 87,
                                         height: 128,
@@ -431,7 +391,7 @@ export default function Profile() {
 
             {/* botão sair do perfil */}
             <Pressable
-                onPress={logout}
+                onPress={handleLogout}
                 style={{
                     backgroundColor: "#8f1b1b",
                     borderRadius: 13,

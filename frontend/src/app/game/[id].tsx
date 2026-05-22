@@ -10,14 +10,15 @@ import { useGames } from "@/context/GamesContext";
 import ReviewModal from "@/components/ReviewModal";
 import { addToWishlist, removeFromWishlist, getWishlistByProfileId } from "@/services/WishlistService";
 import { AuthContext } from "@/context/AuthContext";
+import { addToPlayed, removeFromPlayed, getPlayedByProfileId } from "@/services/PlayedService";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
     
     const [game, setGame] = useState<GameResponse | null>(null);
     const [loading, setLoading] = useState(true);
-    const { playedGames, favoriteGames, togglePlayed, toggleFavorite, saveReview, getReview } = useGames();
-    const isPlayed = playedGames.includes(id as string);
+    const { favoriteGames, toggleFavorite, saveReview, getReview } = useGames();
+    // const isPlayed = playedGames.includes(id as string);
     const isFavorite = favoriteGames.includes(id as string);
     // const isInWishlist = wishlistGames.includes(id as string);
     const savedReview = getReview(id as string);
@@ -33,6 +34,10 @@ export default function GameOverview() {
     const [wishlistItemId, setWishlistItemId] = useState<number | null>(null);
     const isInWishlist = wishlistItemId !== null;
 
+    //played
+    const [playedItemId, setPlayedItemId] = useState<number | null>(null);
+
+    const isPlayed = playedItemId !== null;
 
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
     const [tempRating, setTempRating] = useState<number>(0);
@@ -79,6 +84,27 @@ export default function GameOverview() {
         loadGame();
     }, [id]);
 
+    useEffect(() => {
+        async function loadPlayedStatus() {
+            if (!user?.profileId || !id) return;
+
+            try {
+                const played =
+                    await getPlayedByProfileId(user.profileId);
+
+                const item = played.find(
+                    (p) => p.gameId === Number(id)
+                );
+
+                setPlayedItemId(item?.playedId ?? null);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadPlayedStatus();
+    }, [user?.profileId, id]);
+
     if (loading) {
         return null;
     }
@@ -121,6 +147,33 @@ export default function GameOverview() {
             );
 
             setWishlistItemId(item?.wishlistId ?? null);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handlePlayed() {
+        if (!user?.profileId || !game) return;
+
+        try {
+            if (playedItemId) {
+                await removeFromPlayed(playedItemId);
+                setPlayedItemId(null);
+            } else {
+                await addToPlayed({
+                    profileId: user.profileId,
+                    gameId: game.id,
+                });
+
+                const played =
+                    await getPlayedByProfileId(user.profileId);
+
+                const item = played.find(
+                    (p) => p.gameId === game.id
+                );
+
+                setPlayedItemId(item?.playedId ?? null);
             }
         } catch (error) {
             console.log(error);
@@ -283,7 +336,7 @@ export default function GameOverview() {
                             elevation: 8,
                         }}
                     >
-                        <Pressable onPress={() => togglePlayed(id as string)}>
+                        <Pressable onPress={handlePlayed}>
                             <Ionicons
                                 name={isPlayed ? "game-controller" : "game-controller-outline"}
                                 size={38}

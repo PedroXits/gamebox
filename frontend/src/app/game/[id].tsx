@@ -23,7 +23,7 @@ export default function GameOverview() {
     const { width } = Dimensions.get("window");
 
     // elementos de integração com o back
-    //usuario
+    //user
     const { user } = useContext(AuthContext);
 
     //wishlist

@@ -125,7 +125,8 @@ public class ProfileService {
                                 w.getId(),
                                 w.getGame().getId(),
                                 w.getGame().getGameName(),
-                                w.getGame().getGamePhoto()
+                                w.getGame().getGamePhoto(),
+                                w.getGame().getBannerPhoto()
                         ))
                         .toList(),
 

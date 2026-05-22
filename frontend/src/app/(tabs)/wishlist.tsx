@@ -1,50 +1,48 @@
 //lista de desejos
-import React from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, Image, ScrollView, Pressable } from "react-native";
+import { router } from "expo-router";
+import { useFocusEffect } from "expo-router";
+import { AuthContext } from "@/context/AuthContext";
+import { getWishlistByProfileId } from "@/services/WishlistService";
+import { WishlistSearchResponse } from "@/models/wishlist/WishlistSearchResponse";
 
-import { Fonts } from "@/constants/fonts";
+import { Fonts } from "@/constants/fonts"; 
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function Wishlist() {
-    //mock lista de desejos
-    const wishlistGames = [
-        {
-            id: "1",
-            title: "Mixtape",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2582320/95bbf1097b6f66f39b56f6388250c97a2f43b59e/header.jpg?t=1778541597",
-            rating: 0,
-        },
-        {
-            id: "2",
-            title: "Pragmata",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3357650/e32e168b25ed68a0cf6264c220c07e96c2abfb56/header.jpg?t=1777351016",
-            rating: 0,
-        },
-        {
-            id: "3",
-            title: "Forza Horizon 6",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2483190/27abb1584a118d50d0e3950fd48d557c51981db7/header.jpg?t=1778870245",
-            rating: 0,
-        },
-        {
-            id: "4",
-            title: "Subnautica 2",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1962700/header.jpg?t=1778777511",
-            rating: 0,
-        },
-        {
-            id: "5",
-            title: "Dead as Disco",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3404260/ae0f4b71735adf4f2494ecb7914fcbafee215277/header.jpg?t=1778694984",
-            rating: 0,
-        },
-        {
-            id: "6",
-            title: "Retro Rewind - Video Store Simulator",
-            image: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3552140/5be699540829c76a0d5f7ac5db4bbaf23fa76013/header.jpg?t=1777437290",
-            rating: 0,
-        },
-    ]
+    
+    //conexão do back 
+
+    //usuario
+    const { user } = useContext(AuthContext);
+
+    //wishlist
+    const [wishlistGames, setWishlistGames] = useState<WishlistSearchResponse[]>([]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            async function loadWishlist() {
+                if (!user?.profileId) return;
+
+                try {
+                    const response =
+                        await getWishlistByProfileId(user.profileId);
+
+                    setWishlistGames(response);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            loadWishlist();
+        }, [user?.profileId])
+    );
+
+    const games = wishlistGames.map((game) => ({
+        ...game,
+        rating: 0,
+    }));
 
     return(
         <View
@@ -75,6 +73,20 @@ export default function Wishlist() {
                     paddingBottom: 40,
                 }}
             >
+                {games.length === 0 && (
+                    <Text
+                        style={{
+                        color: "#B8A9D6",
+                        fontFamily: Fonts.body,
+                        fontSize: 16,
+                        textAlign: "center",
+                        marginTop: 40,
+                        }}
+                    >
+                        Sua lista de desejos está vazia.
+                    </Text>
+                )}
+
                 <View
                     style={{
                         flexDirection: "row",
@@ -83,16 +95,17 @@ export default function Wishlist() {
                         rowGap: 24,
                     }}
                 >
-                    {wishlistGames.map((game) => (
-                        <View
-                            key={game.id}
+                    {games.map((game) => (
+                        <Pressable
+                            key={game.wishlistId}
+                            onPress={() => router.push(`/game/${game.gameId}`)}
                             style={{
                                 width: "48%",
                             }}
                         >
                             {/* imagem horizontal */}
                             <Image
-                                source={{ uri: game.image }}
+                                source={{ uri: game.bannerPhoto }}
                                 style={{
                                     width: "100%",
                                     height: 103,
@@ -112,7 +125,7 @@ export default function Wishlist() {
                                 }}
                                 numberOfLines={1}
                             >
-                                {game.title}
+                                {game.gameName}
                             </Text>
 
                             {/* estrelas (se houver avaliação) */}
@@ -165,7 +178,7 @@ export default function Wishlist() {
                                 </View>
                             )}
                             
-                        </View>
+                        </Pressable>
                     ))}
                 </View>
             </ScrollView>

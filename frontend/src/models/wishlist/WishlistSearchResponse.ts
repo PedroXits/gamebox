@@ -3,4 +3,5 @@ export type WishlistSearchResponse = {
   gameId: number;
   gameName: string;
   gamePhoto: string;
+  bannerPhoto: string;
 };

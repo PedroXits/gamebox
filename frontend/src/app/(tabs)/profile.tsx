@@ -33,8 +33,6 @@ export default function Profile() {
                 try {
                     const data = await getProfileDashboard(user.profileId);
 
-                    console.log("DASHBOARD:", data);
-
                     setProfile(data.profile);
                     setProfileName(data.profile.profileName);
                     setProfileImage(data.profile.profilePhoto ?? "");
@@ -268,16 +266,20 @@ export default function Profile() {
                         >
                             {/* com jogos jogados */}
                             {playedGames.slice(0, 4).map((game) => (
-                                <Image
+                                <Pressable
                                     key={game.playedId}
-                                    source={{ uri: game.gamePhoto }}
-                                    style={{
-                                        width: 87,
-                                        height: 128,
-                                        borderRadius: 8,
-                                    }}
-                                    resizeMode="cover"
-                                />
+                                    onPress={() => router.push(`/game/${game.gameId}`)}
+                                >
+                                    <Image
+                                        source={{ uri: game.gamePhoto }}
+                                        style={{
+                                            width: 87,
+                                            height: 128,
+                                            borderRadius: 8,
+                                        }}
+                                        resizeMode="cover"
+                                    />
+                                </Pressable>
                             ))}
                         </View>
 
@@ -345,16 +347,20 @@ export default function Profile() {
                         >
                             {/* com jogos favoritados */}
                             {favoriteGames.slice(0, 4).map((game) => (
-                                <Image
+                                <Pressable
                                     key={game.favoriteId}
-                                    source={{ uri: game.gamePhoto }}
-                                    style={{
-                                        width: 87,
-                                        height: 128,
-                                        borderRadius: 8,
-                                    }}
-                                    resizeMode="cover"
-                                />
+                                    onPress={() => router.push(`/game/${game.gameId}`)}
+                                >
+                                    <Image
+                                        source={{ uri: game.gamePhoto }}
+                                        style={{
+                                            width: 87,
+                                            height: 128,
+                                            borderRadius: 8,
+                                        }}
+                                        resizeMode="cover"
+                                    />
+                                </Pressable>
                             ))}
                         </View>
 

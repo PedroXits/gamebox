@@ -145,5 +145,12 @@ export const styles = StyleSheet.create({
 
   singUp: {
     color: Colors.primary 
+  },
+
+  errorText: {
+    color: "#FF4F4D",
+    fontSize: 12,
+    marginTop: -14,
+    marginLeft: 20,
   }
 })

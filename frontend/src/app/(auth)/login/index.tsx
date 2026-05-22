@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, TextInput, View, Image } from "react-native";
+import { Pressable, Text, TextInput, View, Image, Alert } from "react-native";
 import { styles } from "./styles";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,23 +10,64 @@ import { AuthContext } from "@/context/AuthContext";
 export default function Login() {
 
   const { login } = useContext(AuthContext);
-
   const [email, setEmail] = useState("");
-
-  const [ password, setPassword ] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   async function handleLogin() {
     
+    //validação front
+    setEmailError("");
+    setPasswordError("");
+
+    if (!email.trim()) {
+      setEmailError("Digite seu e-mail.");
+      return;
+    }
+
+    if (!email.trim()) {
+      setPasswordError("Digite sua senha.");
+      return;
+    }
+
+    if (!email.includes("@") ||
+        !email.includes(".")
+      ) {
+        setEmailError("Digite um  e-mail válido.");
+        return;
+      }
+
     try {
-      const response = await login({ email, password });
+      const response = await login({ 
+        email, 
+        password 
+      });
 
       if (response.role === "ADMIN") {
         router.replace("/admin");
       } else {
         router.replace("/(tabs)/home");
       }
-    } catch (error) {
+
+    } catch (error: any) {
+      
       console.log(error);
+
+      //credenciais inválidas
+      if (error?.response?.status === 401) {
+        Alert.alert(
+          "Login inválido",
+          "E-mail ou senha inválidos."
+        );
+        return;
+      }
+
+      //erro genérico
+      Alert.alert(
+        "Erro",
+        "Não foi possível realizar o login."
+      )
     }
   }
 
@@ -47,21 +88,35 @@ export default function Login() {
           <View style={styles.inputsContainer}>
             <TextInput 
               style={styles.input} 
-              placeholder="E-mail" 
-              placeholderTextColor="rgba(128, 128, 128, 0.7)"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
+                placeholder="E-mail" 
+                placeholderTextColor="rgba(128, 128, 128, 0.7)"
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+                autoCapitalize="none"
             />
+
+            {emailError ? (
+              <Text style={styles.errorText}>
+                {emailError}
+              </Text>
+            ) : null}
+            
             <TextInput 
               style={styles.input} 
-              placeholder="Senha" 
-              placeholderTextColor="rgba(128, 128, 128, 0.7)"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
+                placeholder="Senha" 
+                placeholderTextColor="rgba(128, 128, 128, 0.7)"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
             />
+
+            {passwordError ? (
+              <Text style={styles.errorText}>
+                {passwordError}
+              </Text>
+            ) : null}
+
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>
           <Pressable style={styles.loginButton} onPress={handleLogin}> 

@@ -4,6 +4,8 @@
     <option name="MigrateToGradleLocalJavaHome">
       <set>
         <option value="$PROJECT_DIR$/frontend/node_modules/react-native-safe-area-context/android" />
+        <option value="$PROJECT_DIR$/frontend/node_modules/expo-modules-core/expo-module-gradle-plugin" />
+        <option value="$PROJECT_DIR$/frontend/node_modules/@react-native/gradle-plugin" />
       </set>
     </option>
   </component>

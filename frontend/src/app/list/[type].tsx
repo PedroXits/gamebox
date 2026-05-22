@@ -1,12 +1,29 @@
 //tela única, lista dinâmica dos jogos (jogados, favoritos e desejos)
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Pressable, Image, ScrollView, } from "react-native";
 
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useFocusEffect  } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
 
+import { AuthContext } from "@/context/AuthContext";
+import { getPlayedByProfileId } from "@/services/PlayedService";
+import { getFavoritesByProfileId } from "@/services/FavoriteService";
+
 export default function GameList() {
+
+    const { user } = useContext(AuthContext);
+
+    const [games, setGames] = useState<
+        {
+            id: string;
+            gameId: number;
+            title: string;
+            image: string;
+            rating: number;
+        }[]
+    >([]);
+
     //parâmetro da rota (/list/played ou /list/favorites)
     const { type } = useLocalSearchParams<{ type: string }>();
 
@@ -18,93 +35,49 @@ export default function GameList() {
             ? "Favoritos"
             : "Lista";
     
-    //mock de jogos jogados
-    const playedGames = [
-        {
-            id: "1",
-            title: "Spider-Man: Miles Morales",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobg1j.jpg",
-            rating: 5,
-        },
-        {
-            id: "2",
-            title: "The Witcher 3: Wild Hunt", 
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaarl.jpg",
-            rating: 4,
-        },
-        {
-            id: "3",
-            title: "Hollow Knight: Silksong",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobebu.jpg",
-            rating: 0,
-        },
-        {
-            id: "4",
-            title: "Celeste",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9dh.jpg",
-            rating: 3.5,
-        },
-        {
-            id: "5",
-            title: "Hades",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.jpg",
-            rating: 3,
-        },
-        {
-            id: "6",
-            title: "Cuphead",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co62ao.jpg",
-            rating: 0,
-        },
-    ]
+    useFocusEffect(
+        React.useCallback(() => {
+            async function loadGames() {
+                if (!user?.profileId) return;
 
-    //mock jogos favoritos
-    const favoriteGames = [
-        {
-            id: "1",
-            title: "Tomb Raider",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1rbu.jpg",
-            rating: 4.5,
-        },
-        {
-            id: "2",
-            title: "The Last of Us Part II Remastered",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg",
-            rating: 5,
-        },
-        {
-            id: "3",
-            title: "Resident Evil 2",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1ir3.jpg",
-            rating: 0,
-        },
-        {
-            id: "4",
-            title: "Cyberpunk 2077",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaih8.jpg",
-            rating: 4,
-        },
-        {
-            id: "5",
-            title: "Clair Obscur: Expedition 33",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co9gam.jpg",
-            rating: 5,
-        },
-        {
-            id: "6",
-            title: "Red Dead Redemptin 2",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1q1f.jpg",
-            rating: 4,
-        },
-    ];
+                try {
+                    if (type === "played") {
+                        const response =
+                            await getPlayedByProfileId(user.profileId);
 
-    //define qual lista será exibida
-    const games =
-        type === "played"
-            ? playedGames
-            : type === "favorites"
-            ? favoriteGames
-            : [];
+                        setGames(
+                            response.map((game) => ({
+                                id: String(game.playedId),
+                                gameId: game.gameId,
+                                title: game.gameName,
+                                image: game.bannerPhoto,
+                                rating: 0,
+                            }))
+                        );
+                    }
+
+                    if (type === "favorites") {
+                        const response =
+                            await getFavoritesByProfileId(user.profileId);
+
+                        setGames(
+                            response.map((game) => ({
+                                id: String(game.favoriteId),
+                                gameId: game.gameId,
+                                title: game.gameName,
+                                image: game.bannerPhoto,
+                                rating: 0,
+                            }))
+                        );
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            loadGames();
+        }, [type, user?.profileId])
+    );
 
     return (
         <View
@@ -151,6 +124,19 @@ export default function GameList() {
                     paddingBottom: 40,
                 }}
             >
+                {games.length === 0 && (
+                    <Text
+                        style={{
+                            color: "#726292",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                            textAlign: "center",
+                            marginTop: 40,
+                        }}
+                    >
+                        Nenhum jogo encontrado.
+                    </Text>
+                )}
                 <View
                     style={{
                         flexDirection: "row",
@@ -160,8 +146,9 @@ export default function GameList() {
                     }}
                 >
                     {games.map((game) => (
-                        <View
+                        <Pressable
                             key={game.id}
+                            onPress={() => router.push(`/game/${game.gameId}`)}
                             style={{
                                 width: "48%",
                             }}
@@ -171,7 +158,7 @@ export default function GameList() {
                                 source={{ uri: game.image }}
                                 style={{
                                     width: "100%",
-                                    height: 103,
+                                    height: 100,
                                     borderRadius: 8,
                                     marginBottom: 6,
                                 }}
@@ -241,7 +228,7 @@ export default function GameList() {
                                 </View>
                             )}
                             
-                        </View>
+                        </Pressable>
                     ))}
                 </View>
             </ScrollView>

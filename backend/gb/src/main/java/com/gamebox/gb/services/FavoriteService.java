@@ -63,6 +63,8 @@ public class FavoriteService {
                 saved.getProfile().getProfileName(),
                 saved.getGame().getId(),
                 saved.getGame().getGameName(),
+                saved.getGame().getGamePhoto(),
+                saved.getGame().getBannerPhoto(),
                 saved.getCreatedAt()
         );
     }
@@ -81,6 +83,8 @@ public class FavoriteService {
                         f.getProfile().getProfileName(),
                         f.getGame().getId(),
                         f.getGame().getGameName(),
+                        f.getGame().getGamePhoto(),
+                        f.getGame().getBannerPhoto(),
                         f.getCreatedAt()
                 ))
                 .toList();

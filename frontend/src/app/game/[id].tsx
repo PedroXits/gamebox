@@ -32,7 +32,6 @@ export default function GameOverview() {
 
     //played
     const [playedItemId, setPlayedItemId] = useState<number | null>(null);
-
     const isPlayed = playedItemId !== null;
 
     //review

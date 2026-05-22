@@ -17,7 +17,6 @@ export default function Login() {
 
   async function handleLogin() {
     
-    //validação front
     setEmailError("");
     setPasswordError("");
 

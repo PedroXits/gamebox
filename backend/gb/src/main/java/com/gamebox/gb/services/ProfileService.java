@@ -134,6 +134,8 @@ public class ProfileService {
 
                 reviews.stream()
                         .map(r -> new ReviewSearchResponse(
+                                r.getId(),
+                                r.getGame().getId(),
                                 r.getProfile().getProfileName(),
                                 r.getRating(),
                                 r.getComment()

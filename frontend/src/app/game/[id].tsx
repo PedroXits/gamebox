@@ -11,17 +11,15 @@ import ReviewModal from "@/components/ReviewModal";
 import { addToWishlist, removeFromWishlist, getWishlistByProfileId } from "@/services/WishlistService";
 import { AuthContext } from "@/context/AuthContext";
 import { addToPlayed, removeFromPlayed, getPlayedByProfileId } from "@/services/PlayedService";
+import { createReview, updateReview, getReviewsByProfileId, deleteReview } from "@/services/ReviewService";
 
 export default function GameOverview() {
     const { id } = useLocalSearchParams();
     
     const [game, setGame] = useState<GameResponse | null>(null);
     const [loading, setLoading] = useState(true);
-    const { favoriteGames, toggleFavorite, saveReview, getReview } = useGames();
+    const { favoriteGames, toggleFavorite } = useGames();
     const isFavorite = favoriteGames.includes(id as string);
-    const savedReview = getReview(id as string);
-    const rating = savedReview?.rating ?? 0;
-    const review = savedReview?.review ?? "";
     const { width } = Dimensions.get("window");
 
     // elementos de integração com o back
@@ -36,6 +34,12 @@ export default function GameOverview() {
     const [playedItemId, setPlayedItemId] = useState<number | null>(null);
 
     const isPlayed = playedItemId !== null;
+
+    //review
+    const [reviewId, setReviewId] = useState<number | null>(null);
+    const [rating, setRating] = useState(0);
+    const [review, setReview] = useState("");
+
 
     const [isReviewModalVisible, setIsReviewModalVisible] = useState(false);
     const [tempRating, setTempRating] = useState<number>(0);
@@ -81,6 +85,80 @@ export default function GameOverview() {
 
         loadGame();
     }, [id]);
+
+    useEffect(() => {
+        async function loadReviewStatus() {
+            if (!user?.profileId || !id) return;
+
+            try {
+                const reviews =
+                    await getReviewsByProfileId(user.profileId);
+
+                const item = reviews.find(
+                    (r) => r.gameId === Number(id)
+                );
+
+                if (item) {
+                    setReviewId(item.reviewId);
+                    setRating(item.rating);
+                    setReview(item.comment);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        loadReviewStatus();
+    }, [user?.profileId, id]);
+
+    async function handleSubmitReview() {
+        if (!user?.profileId || !game) return;
+
+        try {
+            if (reviewId) {
+                const updated = await updateReview(reviewId, {
+                    rating: tempRating,
+                    comment: tempReview,
+                });
+
+                setRating(updated.rating);
+                setReview(updated.comment);
+            } else {
+
+                if (!playedItemId) {
+                    await addToPlayed({
+                        profileId: user.profileId,
+                        gameId: game.id,
+                    });
+
+                    const played =
+                        await getPlayedByProfileId(user.profileId);
+
+                    const playedItem = played.find(
+                        (p) => p.gameId === game.id
+                    );
+
+                    setPlayedItemId(playedItem?.playedId ?? null);
+                }
+
+                const created = await createReview({
+                    profileId: user.profileId,
+                    gameId: game.id,
+                    rating: tempRating,
+                    comment: tempReview,
+                });
+
+                setReviewId(created.id);
+                setRating(created.rating);
+                setReview(created.comment);
+            }
+
+            setIsReviewModalVisible(false);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     useEffect(() => {
         async function loadPlayedStatus() {
@@ -156,8 +234,17 @@ export default function GameOverview() {
 
         try {
             if (playedItemId) {
-                await removeFromPlayed(playedItemId);
-                setPlayedItemId(null);
+                if (reviewId) {
+                await deleteReview(reviewId);
+
+                setReviewId(null);
+                setRating(0);
+                setReview("");
+            }
+
+            await removeFromPlayed(playedItemId);
+
+            setPlayedItemId(null);
             } else {
                 await addToPlayed({
                     profileId: user.profileId,
@@ -477,10 +564,7 @@ export default function GameOverview() {
                 }}
                 onChangeRating={setTempRating}
                 onChangeReview={setTempReview}
-                onSubmit={() => {
-                    saveReview(id as string, tempRating, tempReview);
-                    setIsReviewModalVisible(false);
-                }}
+                onSubmit= {handleSubmitReview}
             />
             
         </ScrollView>

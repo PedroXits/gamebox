@@ -66,6 +66,8 @@ public class PlayedService {
                 savedPlayed.getProfile().getProfileName(),
                 savedPlayed.getGame().getId(),
                 savedPlayed.getGame().getGameName(),
+                savedPlayed.getGame().getGamePhoto(),
+                savedPlayed.getGame().getBannerPhoto(),
                 savedPlayed.getCreatedAt()
         );
     }
@@ -84,6 +86,8 @@ public class PlayedService {
                         p.getProfile().getProfileName(),
                         p.getGame().getId(),
                         p.getGame().getGameName(),
+                        p.getGame().getGamePhoto(),
+                        p.getGame().getBannerPhoto(),
                         p.getCreatedAt()
                 ))
                 .toList();

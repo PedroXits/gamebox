@@ -106,10 +106,10 @@ export default function DeleteModal({
                         {/* excluir */}
                         <Pressable onPress={onConfirm}
                             style={{
-                                backgroundColor: "#381D6C",
+                                backgroundColor: "#a81919",
                                 borderRadius: 13,
                                 borderWidth: 1,
-                                borderColor: "#6F57D2",
+                                borderColor: "#a81919",
                                 alignItems: "center",
                                 paddingVertical: 16,
                                 

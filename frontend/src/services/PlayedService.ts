@@ -2,6 +2,8 @@ import { api } from "@/services/api";
 import { CreatePlayedRequest } from "@/models/played/CreatePlayedRequest";
 import { PlayedResponse } from "@/models/played/PlayedResponse";
 
+// Played
+
 export async function addToPlayed(data: CreatePlayedRequest): Promise<void> {
   await api.post("/played", data);
 }

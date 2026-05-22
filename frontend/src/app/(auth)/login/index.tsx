@@ -26,7 +26,7 @@ export default function Login() {
       return;
     }
 
-    if (!email.trim()) {
+    if (!password.trim()) {
       setPasswordError("Digite sua senha.");
       return;
     }
@@ -34,7 +34,7 @@ export default function Login() {
     if (!email.includes("@") ||
         !email.includes(".")
       ) {
-        setEmailError("Digite um  e-mail válido.");
+        setEmailError("Digite um e-mail válido.");
         return;
       }
 
@@ -63,10 +63,10 @@ export default function Login() {
         return;
       }
 
-      //erro genérico
+      //erro genérico (back desligado/sem internet etc)
       Alert.alert(
-        "Erro",
-        "Não foi possível realizar o login."
+        "Erro de conexão",
+        "Verifique sua internet e tente novamente."
       )
     }
   }
@@ -116,8 +116,6 @@ export default function Login() {
                 {passwordError}
               </Text>
             ) : null}
-
-            {/* abc */}
 
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
           </View>

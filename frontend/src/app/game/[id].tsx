@@ -149,7 +149,7 @@ export default function GameOverview() {
                     comment: tempReview,
                 });
 
-                setReviewId(created.id);
+                setReviewId(created.reviewId);
                 setRating(created.rating);
                 setReview(created.comment);
             }

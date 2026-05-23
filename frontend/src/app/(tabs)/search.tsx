@@ -68,6 +68,7 @@ export default function Search() {
                         borderColor: "#6F57D2",
                         paddingHorizontal: 12,
                         marginBottom: 20,
+                        zIndex: 10,
                     }}
                 >
                     <Ionicons

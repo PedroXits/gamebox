@@ -221,7 +221,16 @@ export default function GameList() {
                     {games.map((game) => (
                         <Pressable
                             key={game.id}
-                            onPress={() => router.push(`/game/${game.gameId}`)}
+                            onPress={() => {
+                                if (type === "reviews") {
+                                    router.push({
+                                        pathname: "/reviews",
+                                        params: { gameId: game.gameId },
+                                    });
+                                } else {
+                                    router.push(`/game/${game.gameId}`);
+                                }
+                            }}
                             style={{
                                 width: "48%",
                             }}

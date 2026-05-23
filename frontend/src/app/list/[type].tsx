@@ -1,5 +1,5 @@
 //tela única, lista dinâmica dos jogos (jogados, favoritos e desejos)
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, Pressable, Image, ScrollView, } from "react-native";
 
 import { router, useLocalSearchParams, useFocusEffect  } from "expo-router";
@@ -10,10 +10,13 @@ import { AuthContext } from "@/context/AuthContext";
 import { getPlayedByProfileId } from "@/services/PlayedService";
 import { getFavoritesByProfileId } from "@/services/FavoriteService";
 import { getReviewsByProfileId } from "@/services/ReviewService";
+import { findByGameGenre } from "@/services/GameService";
 
 export default function GameList() {
 
     const { user } = useContext(AuthContext);
+
+    const [loading, setLoading] = useState(true);
 
     const [games, setGames] = useState<
         {
@@ -26,7 +29,10 @@ export default function GameList() {
     >([]);
 
     //parâmetro da rota (/list/played ou /list/favorites)
-    const { type } = useLocalSearchParams<{ type: string }>();
+    const { type, genre } = useLocalSearchParams<{
+        type: string;
+        genre?: string;
+    }>();
 
     //título dinâmico
     const title =
@@ -34,14 +40,35 @@ export default function GameList() {
             ? "Jogados"
             : type === "favorites"
             ? "Favoritos"
+            : type === "genre"
+            ? String(genre)
             : "Lista";
     
     useFocusEffect(
         React.useCallback(() => {
             async function loadGames() {
-                if (!user?.profileId) return;
-
                 try {
+                    setLoading(true);
+                    setGames([]);   
+
+                    if (type === "genre" && genre) {
+                        const response = await findByGameGenre(String(genre));
+
+                        setGames(
+                            response.map((game) => ({
+                                id: String(game.id),
+                                gameId: game.id,
+                                title: game.gameName,
+                                image: game.bannerPhoto || game.gamePhoto,
+                                rating: 0,
+                            }))
+                        );
+
+                        return;
+                    }
+
+                    if (!user?.profileId) return;
+
                     const reviews =
                         await getReviewsByProfileId(user.profileId);
 
@@ -86,13 +113,18 @@ export default function GameList() {
                             })
                         );
                     }
+
                 } catch (error) {
                     console.log(error);
+                }
+
+                finally {
+                    setLoading(false);
                 }
             }
 
             loadGames();
-        }, [type, user?.profileId])
+        }, [type, genre, user?.profileId])
     );
 
     return (
@@ -140,7 +172,7 @@ export default function GameList() {
                     paddingBottom: 40,
                 }}
             >
-                {games.length === 0 && (
+                {!loading && games.length === 0 && (
                     <Text
                         style={{
                             color: "#726292",

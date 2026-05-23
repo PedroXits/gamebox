@@ -242,35 +242,32 @@ export default function Home() {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ paddingRight: 20 }}
             >
-                <GenreCard
-                    title="Ação"
-                    image={require("@/assets/images/genero.png")}
-                />
+                <Pressable onPress={() => router.push("/list/genre?genre=ACTION")}>
+                    <GenreCard
+                        title="Ação"
+                        image={require("@/assets/images/genero.png")}
+                    />
+                </Pressable>
 
-                <GenreCard
-                    title="Aventura"
-                    image={require("@/assets/images/genero.png")}
-                />
+                <Pressable onPress={() => router.push("/list/genre?genre=ADVENTURE")}>
+                    <GenreCard title="Aventura" image={require("@/assets/images/genero.png")} />
+                </Pressable>
 
-                <GenreCard
-                    title="Corrida"
-                    image={require("@/assets/images/genero.png")}
-                />
+                <Pressable onPress={() => router.push("/list/genre?genre=RACING")}>
+                    <GenreCard title="Corrida" image={require("@/assets/images/genero.png")} />
+                </Pressable>
 
-                <GenreCard
-                    title="Esporte"
-                    image={require("@/assets/images/genero.png")}
-                />
+                <Pressable onPress={() => router.push("/list/genre?genre=SPORTS")}>
+                    <GenreCard title="Esporte" image={require("@/assets/images/genero.png")} />
+                </Pressable>
 
-                <GenreCard
-                    title="Survival Horror"
-                    image={require("@/assets/images/genero.png")}
-                />
+                <Pressable onPress={() => router.push("/list/genre?genre=HORROR")}>
+                    <GenreCard title="Survival Horror" image={require("@/assets/images/genero.png")} />
+                </Pressable>
 
-                <GenreCard
-                    title="RPG"
-                    image={require("@/assets/images/genero.png")}
-                />
+                <Pressable onPress={() => router.push("/list/genre?genre=RPG")}>
+                    <GenreCard title="RPG" image={require("@/assets/images/genero.png")} />
+                </Pressable>
             </ScrollView>
                 
                 <GameList title="Aventura" games={adventureGames}/>

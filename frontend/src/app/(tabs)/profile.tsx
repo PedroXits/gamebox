@@ -413,9 +413,68 @@ export default function Profile() {
                         marginLeft: -5,
                     }}
                 >
-                    
+                    {[
+                        {
+                            id: "1",
+                            gameId: "1",
+                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1r8e.jpg"
+                        },
+                        {
+                            id: "2",
+                            gameId: "2",
+                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co3p2d.jpg"
+                        },
+                        {
+                            id: "3",
+                            gameId: "3",
+                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg"
+                        },
+                        {
+                            id: "4",
+                            gameId: "4",
+                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1izy.jpg"
+                        },
+                        {
+                            id: "5",
+                            gameId: "5",
+                            gamePhoto: "http://images.igdb.com/igdb/image/upload/t_cover_big_2x/coat49.jpg"
+                        },
+                    ]
+                        .slice(0, 4).map((review) => (
+                            <Pressable
+                                key={review.id}
+                                onPress={() => router.push(`/game/${review.gameId}`)}
+                            >
+                                <Image
+                                    source={{ uri: review.gamePhoto }}
+                                    style={{
+                                        width: 87,
+                                        height: 128,
+                                        borderRadius: 8,
+                                    }}
+                                    resizeMode="cover"
+                                />
+                            </Pressable>
+                        ))}
                 </View>
 
+                {/* botão Ver mais */}
+                <Pressable
+                    onPress={() => router.push("/reviews")}
+                    style={{
+                        alignSelf: "flex-end"
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: "#fff",
+                            fontFamily: Fonts.body,
+                            fontSize: 15
+                        }}
+                    >
+                        Ver mais
+                    </Text>
+                </Pressable>
             </View>
 
 

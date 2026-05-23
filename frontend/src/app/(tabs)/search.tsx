@@ -1,13 +1,19 @@
 //busca de jogos
-import React, { useState, useCallback } from "react";
-import { View, Text, TextInput, Pressable, Image, ScrollView } from "react-native";
+import React, { useState, useCallback, useEffect } from "react";
+import { View, Text, TextInput, Pressable, Image, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 
 import { Fonts } from "@/constants/fonts";
 import { Ionicons } from "@expo/vector-icons";
 import { router, useFocusEffect } from "expo-router";
 
+import { findGameByName } from "@/services/GameService";
+import { GameSearchResponse } from "@/models/game/GameSearchResponse";
+
 export default function Search() {
     const [search, setSearch] = useState("");
+
+    const [games, setGames] = useState<GameSearchResponse[]>([]);
+    const [loading, setLoading] = useState(false);
 
     //limpa a pesquisa ao retornar para a tela search
     useFocusEffect(
@@ -16,204 +22,198 @@ export default function Search() {
         }, [])
     );
 
-    //mock de jogos
-    const games = [
-        {
-            id: "1",
-            title: "The Last of Us Part II Remastered",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg",
-        },
-        {
-            id: "2",
-            title: "Cyberpunk 2077",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coaih8.jpg",
-        },
-        {
-            id: "3",
-            title: "Clair Obscur: Expedition 33",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co9gam.jpg",
-        },
-        {
-            id: "4",
-            title: "Spider-Man: Miles Morales",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cobg1j.jpg",
-        },
-        {
-            id: "5",
-            title: "Resident Evil 2",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1ir3.jpg",
-        },
-        {
-            id: "6",
-            title: "Hades",
-            image: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/cob9kr.jpg",
-        },
-    ];
+    useEffect(() => {
+        async function searchGames() {
+            if (search.trim() === "") {
+                setGames([]);
+                return;
+            }
 
-    //filtra os jogos conforme o texto digitado
-    const filteredGames = games.filter((game) => 
-        game.title.toLowerCase().includes(search.toLowerCase())
-    );
+            try {
+                setLoading(true);
+
+                const response = await findGameByName(search);
+                setGames(response);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        searchGames();
+    }, [search]);
 
     return (
-        <View
-            style={{
-                flex: 1,
-                backgroundColor: "#1F103C",
-                paddingTop: 80,
-                paddingHorizontal: 10,
-            }}
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
         >
-            {/* campo buscar jogos */}
             <View
                 style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    backgroundColor: "#321961",
-                    borderRadius: 8,
-                    borderWidth: 1,
-                    borderColor: "#6F57D2",
-                    paddingHorizontal: 12,
-                    marginBottom: 20,
+                    flex: 1,
+                    backgroundColor: "#1F103C",
+                    paddingTop: 80,
+                    paddingHorizontal: 10,
                 }}
             >
-                <Ionicons
-                    name="search"
-                    size={22}
-                    color="#726292"
-                />
-
-                <TextInput
-                    value={search}
-                    onChangeText={setSearch}
-                    placeholder="Buscar jogos"
-                    placeholderTextColor="#726292"
-                    style={{
-                        flex: 1,
-                        color: "#fff",
-                        fontFamily: Fonts.body,
-                        fontSize: 16,
-                        paddingVertical: 12,
-                        marginLeft: 8,
-                    }}
-                />
-            </View>
-
-            {/* logo de fundo (somente quando nada foi digitado) */}
-            {search.trim() === "" && (
+                {/* campo buscar jogos */}
                 <View
                     style={{
-                        flex: 1,
-                        justifyContent: "center",
+                        flexDirection: "row",
                         alignItems: "center",
-                        marginTop: -80,
+                        backgroundColor: "#321961",
+                        borderRadius: 8,
+                        borderWidth: 1,
+                        borderColor: "#6F57D2",
+                        paddingHorizontal: 12,
+                        marginBottom: 20,
+                        zIndex: 10,
+                        elevation: 10,
                     }}
                 >
-                    <Image
-                        source={require("../../assets/images/logo.png")}
+                    <Ionicons
+                        name="search"
+                        size={22}
+                        color="#726292"
+                    />
+
+                    <TextInput
+                        value={search}
+                        onChangeText={setSearch}
+                        placeholder="Buscar jogos"
+                        placeholderTextColor="#726292"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        editable={true}
+                        pointerEvents="auto"
                         style={{
-                            width: 300,
-                            height: 300,
-                            opacity: 0.20,
+                            flex: 1,
+                            color: "#fff",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                            paddingVertical: 12,
+                            marginLeft: 8,
                         }}
-                        resizeMode="contain"
                     />
                 </View>
-            )}
-            
-            {/* resultados (somente após digitar algo) */}
-            {search.trim() !== "" && (
-                <ScrollView
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{
-                        paddingBottom:  40,
-                    }}
-                >
-                    {filteredGames.length  === 0 ? (
-                        <Text
+
+                {/* logo de fundo (somente quando nada foi digitado) */}
+                {search.trim() === "" && (
+                    <View
+                        style={{
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: -80,
+                        }}
+                    >
+                        <Image
+                            source={require("../../assets/images/logo.png")}
                             style={{
-                                color: "#726292",
-                                fontFamily: Fonts.body,
-                                fontSize: 16,
-                                textAlign: "center",
-                                marginTop: 20,
+                                width: 300,
+                                height: 300,
+                                opacity: 0.20,
                             }}
-                        >
-                            Nenhum jogo encontrado
-                        </Text>
-                    ) : (
-                        filteredGames.map((game, index) => (
-                            <View key={game.id}>
-                                {/* botão que direciona para a tela game overview */}
-                                <Pressable
-                                    onPress={() => router.push("/game/[id].tsx")}
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        marginBottom: 14,
-                                        paddingHorizontal: 6,
-                                    }}
-                                >
-                                    {/* sombra da capa do jogo */}
-                                    <View
+                            resizeMode="contain"
+                        />
+                    </View>
+                )}
+                
+                {/* resultados (somente após digitar algo) */}
+                {search.trim() !== "" && (
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{
+                            paddingBottom:  40,
+                        }}
+                    >
+                        {!loading && games.length === 0 ? (
+                            <Text
+                                style={{
+                                    color: "#726292",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 16,
+                                    textAlign: "center",
+                                    marginTop: 20,
+                                }}
+                            >
+                                Nenhum jogo encontrado
+                            </Text>
+                        ) : (
+                            games.map((game, index) => (
+                                <View key={game.id}>
+                                    {/* botão que direciona para a tela game overview */}
+                                    <Pressable
+                                        onPress={() => router.push(`/game/${game.id}`)}
                                         style={{
-                                            marginRight: 14,
-                                            borderRadius: 8,
-
-                                            //sombra iOS
-                                            shadowColor: "#000",
-                                            shadowOffset: {
-                                                width: 0,
-                                                height: 4,
-                                            },
-                                            shadowOpacity: 0.25,
-                                            shadowRadius: 8,
-
-                                            //sombra Android
-                                            elevation: 8,
-                                        }}
-                                    >
-                                        {/* capa */}
-                                        <Image
-                                            source={{ uri: game.image}}
-                                            style={{
-                                                width: 70,
-                                                height: 95,
-                                                borderRadius: 8,
-                                            }}
-                                            resizeMode="cover"
-                                        />
-                                    </View>
-
-                                    {/* título */}
-                                    <Text
-                                        style={{
-                                            flex: 1,
-                                            color: "#fff",
-                                            fontFamily: Fonts.body,
-                                            fontSize: 16,
-                                        }}
-                                    >
-                                        {game.title}
-                                    </Text>
-                                </Pressable>
-
-                                {/* linha divisória */}
-                                {index < filteredGames.length -  1 && (
-                                    <View
-                                        style={{
-                                            height: 1,
-                                            backgroundColor: "rgba(255,255,255,0.08)",
+                                            flexDirection: "row",
+                                            alignItems: "center",
                                             marginBottom: 14,
-                                            marginHorizontal: 6,
+                                            paddingHorizontal: 6,
                                         }}
-                                    />
-                                )}
-                            </View>
-                        ))
-                    )}
-                </ScrollView>
-            )}
-        </View>
+                                    >
+                                        {/* sombra da capa do jogo */}
+                                        <View
+                                            style={{
+                                                marginRight: 14,
+                                                borderRadius: 8,
+
+                                                //sombra iOS
+                                                shadowColor: "#000",
+                                                shadowOffset: {
+                                                    width: 0,
+                                                    height: 4,
+                                                },
+                                                shadowOpacity: 0.25,
+                                                shadowRadius: 8,
+
+                                                //sombra Android
+                                                elevation: 8,
+                                            }}
+                                        >
+                                            {/* capa */}
+                                            <Image
+                                                source={{ uri: game.gamePhoto }}
+                                                style={{
+                                                    width: 70,
+                                                    height: 95,
+                                                    borderRadius: 8,
+                                                }}
+                                                resizeMode="cover"
+                                            />
+                                        </View>
+
+                                        {/* título */}
+                                        <Text
+                                            style={{
+                                                flex: 1,
+                                                color: "#fff",
+                                                fontFamily: Fonts.body,
+                                                fontSize: 16,
+                                            }}
+                                        >
+                                            {game.gameName}
+                                        </Text>
+                                    </Pressable>
+
+                                    {/* linha divisória */}
+                                    {index < games.length - 1 && (
+                                        <View
+                                            style={{
+                                                height: 1,
+                                                backgroundColor: "rgba(255,255,255,0.08)",
+                                                marginBottom: 14,
+                                                marginHorizontal: 6,
+                                            }}
+                                        />
+                                    )}
+                                </View>
+                            ))
+                        )}
+                    </ScrollView>
+                )}
+            </View>
+        </KeyboardAvoidingView>
     );
 }

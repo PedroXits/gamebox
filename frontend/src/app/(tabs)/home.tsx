@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect }from "react";
-import { ScrollView, View, Image, Text, FlatList, Dimensions } from "react-native";
+import { router } from "expo-router";
+import { ScrollView, View, Image, Text, FlatList, Dimensions, Pressable } from "react-native";
 import { GameList } from "@/components/GameList";
 import { Fonts } from "@/constants/fonts";
 import { GenreCard } from "@/components/GenreCard";
@@ -76,17 +77,21 @@ export default function Home() {
         }));
 
     // banners / lista de imagens do carrossel
-    const banners = 
+    const banners =
         recentGames.length > 0
-            ? recentGames
-                .slice(0, 3)
-                .map((game) => game.bannerPhoto)
+            ? recentGames.slice(0, 3).map((game) => ({
+                id: String(game.id),
+                image: game.bannerPhoto,
+            }))
             : [
-                "https://via.placeholder.com/800x400"
+                {
+                    id: "fallback",
+                    image: "https://via.placeholder.com/800x400",
+                },
             ];
 
     const [currentIndex, setCurrentIndex] = useState(0);
-    const flatListRef = useRef<FlatList<string>>(null);
+    const flatListRef = useRef<FlatList<{ id: string; image: string }>>(null);
 
     //autoplay
     useEffect(() => {
@@ -144,22 +149,27 @@ export default function Home() {
                         }}
 
                         renderItem={({ item }) => (
-                            <View
+                            <Pressable
+                                onPress={() => {
+                                    if (item.id !== "fallback") {
+                                        router.push(`/game/${item.id}`);
+                                    }
+                                }}
                                 style={{
                                     width,
                                     height: Math.min(width * 0.5, 260),
                                     backgroundColor: "#000",
                                 }}
-                                >
+                            >
                                 <Image
-                                    source={{ uri: item }}
+                                    source={{ uri: item.image }}
                                     style={{
-                                    width: "100%",
-                                    height: "100%",
+                                        width: "100%",
+                                        height: "100%",
                                     }}
                                     resizeMode="cover"
                                 />
-                            </View>
+                            </Pressable>
                         )}
                     />
 

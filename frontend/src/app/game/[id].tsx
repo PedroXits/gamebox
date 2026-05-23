@@ -314,6 +314,15 @@ export default function GameOverview() {
         }
     }
 
+    const genreNames: Record<string, string> = {
+        ACTION: "Ação",
+        ADVENTURE: "Aventura",
+        HORROR: "Terror",
+        RACING: "Corrida",
+        RPG: "RPG",
+        SPORTS: "Esporte",
+    };
+
     return (
         <ScrollView
             style={{
@@ -582,7 +591,9 @@ export default function GameOverview() {
                             fontFamily: Fonts.body,
                         }}
                     >
-                        {game.releaseDate.substring(0, 4)} • {game.genres.join(", ")}
+                        {game.releaseDate.substring(0, 4)} • {
+                            game.genres.map((genre) => 
+                                genreNames[genre] || genre).join(", ")}
                     </Text>
 
                     {/* descrição */}

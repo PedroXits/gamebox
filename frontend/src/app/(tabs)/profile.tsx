@@ -385,6 +385,40 @@ export default function Profile() {
                 )}
             </View>
 
+            {/* seção Reviews */}
+            <View
+                style={{
+                    marginTop: 30,
+                }}
+            >
+                {/* título */}
+                <Text
+                    style={{
+                        color: "#fff",
+                        fontFamily: Fonts.body,
+                        fontSize: 18,
+                        marginBottom: 12,
+                    }}
+                >
+                    Reviews
+                </Text>
+
+                {/* mock reviews perfil */}
+                <View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        marginBottom: 8,
+                        gap: 9,
+                        marginLeft: -5,
+                    }}
+                >
+                    
+                </View>
+
+            </View>
+
+
             {/* linha divisória */}
             <View
                 style={{

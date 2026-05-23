@@ -243,10 +243,7 @@ export default function Home() {
                 contentContainerStyle={{ paddingRight: 20 }}
             >
                 <Pressable onPress={() => router.push("/list/genre?genre=ACTION")}>
-                    <GenreCard
-                        title="Ação"
-                        image={require("@/assets/images/genero.png")}
-                    />
+                    <GenreCard title="Ação" image={require("@/assets/images/genero.png")}/>
                 </Pressable>
 
                 <Pressable onPress={() => router.push("/list/genre?genre=ADVENTURE")}>
@@ -261,13 +258,14 @@ export default function Home() {
                     <GenreCard title="Esporte" image={require("@/assets/images/genero.png")} />
                 </Pressable>
 
-                <Pressable onPress={() => router.push("/list/genre?genre=HORROR")}>
-                    <GenreCard title="Survival Horror" image={require("@/assets/images/genero.png")} />
-                </Pressable>
-
                 <Pressable onPress={() => router.push("/list/genre?genre=RPG")}>
                     <GenreCard title="RPG" image={require("@/assets/images/genero.png")} />
                 </Pressable>
+
+                <Pressable onPress={() => router.push("/list/genre?genre=HORROR")}>
+                    <GenreCard title="Terror" image={require("@/assets/images/genero.png")} />
+                </Pressable>
+
             </ScrollView>
                 
                 <GameList title="Aventura" games={adventureGames}/>

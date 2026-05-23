@@ -40,6 +40,8 @@ export default function GameList() {
             ? "Jogados"
             : type === "favorites"
             ? "Favoritos"
+            : type === "reviews"
+            ? "Reviews"
             : type === "genre"
             ? String(genre)
             : "Lista";
@@ -112,6 +114,20 @@ export default function GameList() {
                                 };
                             })
                         );
+                    }
+
+                    if (type === "reviews") {
+                        setGames(
+                            reviews.map((review) => ({
+                                id: String(review.reviewId),
+                                gameId: review.gameId,
+                                title: review.gameName,
+                                image: review.bannerPhoto || review.gamePhoto,
+                                rating: review.rating ?? 0,
+                            }))
+                        );
+
+                        return;
                     }
 
                 } catch (error) {

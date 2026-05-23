@@ -446,7 +446,7 @@ export default function Profile() {
                         </View>
 
                         <Pressable
-                            onPress={() => router.push("/reviews")}
+                            onPress={() => router.push("/list/reviews")}
                             style={{
                                 alignSelf: "flex-end"
                             }}

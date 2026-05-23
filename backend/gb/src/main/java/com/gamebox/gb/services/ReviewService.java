@@ -83,6 +83,8 @@ public class ReviewService {
                 savedReview.getProfile().getProfileName(),
                 savedReview.getGame().getId(),
                 savedReview.getGame().getGameName(),
+                savedReview.getGame().getGamePhoto(),
+                savedReview.getGame().getBannerPhoto(),
                 savedReview.getRating(),
                 savedReview.getComment()
         );
@@ -100,6 +102,9 @@ public class ReviewService {
                         review.getId(),
                         review.getGame().getId(),
                         review.getProfile().getProfileName(),
+                        review.getGame().getGameName(),
+                        review.getGame().getGamePhoto(),
+                        review.getGame().getBannerPhoto(),
                         review.getRating(),
                         review.getComment()
                 ))
@@ -118,6 +123,9 @@ public class ReviewService {
                         review.getId(),
                         review.getGame().getId(),
                         review.getProfile().getProfileName(),
+                        review.getGame().getGameName(),
+                        review.getGame().getGamePhoto(),
+                        review.getGame().getBannerPhoto(),
                         review.getRating(),
                         review.getComment()
                 ))
@@ -156,6 +164,8 @@ public class ReviewService {
                 updated.getProfile().getProfileName(),
                 updated.getGame().getId(),
                 updated.getGame().getGameName(),
+                updated.getGame().getGamePhoto(),
+                updated.getGame().getBannerPhoto(),
                 updated.getRating(),
                 updated.getComment()
         );

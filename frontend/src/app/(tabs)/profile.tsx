@@ -11,7 +11,7 @@ import * as ImagePicker from "expo-image-picker";
 import EditProfileModal from "@/components/EditProfileModal";
 import { PlayedResponse } from "@/models/played/PlayedResponse";
 import { FavoriteResponse } from "@/models/favorite/FavoriteResponse";
-
+import { ReviewSearchResponse } from "@/models/review/ReviewSearchResponse";
 
 export default function Profile() {
     //imagem de perfil selecionada pelo usuário
@@ -24,6 +24,7 @@ export default function Profile() {
     const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
     const [playedGames, setPlayedGames] = useState<PlayedResponse[]>([]);
     const [favoriteGames, setFavoriteGames] = useState<FavoriteResponse[]>([]);
+    const [reviews, setReviews] = useState<ReviewSearchResponse[]>([]);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -39,6 +40,7 @@ export default function Profile() {
 
                     setPlayedGames(data.playedGames ?? []);
                     setFavoriteGames(data.favorites ?? []);
+                    setReviews(data.reviews ?? []);
                 } catch (error) {
                     console.log(error);
                 }
@@ -404,77 +406,63 @@ export default function Profile() {
                 </Text>
 
                 {/* mock reviews perfil */}
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "flex-start",
-                        marginBottom: 8,
-                        gap: 9,
-                        marginLeft: -5,
-                    }}
-                >
-                    {[
-                        {
-                            id: "1",
-                            gameId: "1",
-                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1r8e.jpg"
-                        },
-                        {
-                            id: "2",
-                            gameId: "2",
-                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co3p2d.jpg"
-                        },
-                        {
-                            id: "3",
-                            gameId: "3",
-                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg"
-                        },
-                        {
-                            id: "4",
-                            gameId: "4",
-                            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1izy.jpg"
-                        },
-                        {
-                            id: "5",
-                            gameId: "5",
-                            gamePhoto: "http://images.igdb.com/igdb/image/upload/t_cover_big_2x/coat49.jpg"
-                        },
-                    ]
-                        .slice(0, 4).map((review) => (
-                            <Pressable
-                                key={review.id}
-                                onPress={() => router.push(`/game/${review.gameId}`)}
-                            >
-                                <Image
-                                    source={{ uri: review.gamePhoto }}
-                                    style={{
-                                        width: 87,
-                                        height: 128,
-                                        borderRadius: 8,
-                                    }}
-                                    resizeMode="cover"
-                                />
-                            </Pressable>
-                        ))}
-                </View>
-
-                {/* botão Ver mais */}
-                <Pressable
-                    onPress={() => router.push("/reviews")}
-                    style={{
-                        alignSelf: "flex-end"
-                    }}
-                >
+                {reviews.length === 0 ? (
                     <Text
                         style={{
-                            color: "#fff",
+                            color: "#726292",
                             fontFamily: Fonts.body,
-                            fontSize: 15
+                            fontSize: 16,
                         }}
                     >
-                        Ver mais
+                        Nenhuma review ainda
                     </Text>
-                </Pressable>
+                ) : (
+                    <>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "flex-start",
+                                marginBottom: 8,
+                                gap: 9,
+                                marginLeft: -5,
+                            }}
+                        >
+                            {reviews.slice(0, 4).map((review) => (
+                                <Pressable
+                                    key={review.reviewId}
+                                    onPress={() => router.push(`/game/${review.gameId}`)}
+                                >
+                                    <Image
+                                        source={{ uri: review.gamePhoto }}
+                                        style={{
+                                            width: 87,
+                                            height: 128,
+                                            borderRadius: 8,
+                                        }}
+                                        resizeMode="cover"
+                                    />
+                                </Pressable>
+                            ))}
+                        </View>
+
+                        <Pressable
+                            onPress={() => router.push("/reviews")}
+                            style={{
+                                alignSelf: "flex-end"
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: "#fff",
+                                    fontFamily: Fonts.body,
+                                    fontSize: 15
+                                }}
+                            >
+                                Ver mais
+                            </Text>
+                        </Pressable>
+                    </>
+                )}
             </View>
 
 

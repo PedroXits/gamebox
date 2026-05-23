@@ -144,6 +144,9 @@ public class ProfileService {
                                 r.getId(),
                                 r.getGame().getId(),
                                 r.getProfile().getProfileName(),
+                                r.getGame().getGameName(),
+                                r.getGame().getGamePhoto(),
+                                r.getGame().getBannerPhoto(),
                                 r.getRating(),
                                 r.getComment()
                         ))

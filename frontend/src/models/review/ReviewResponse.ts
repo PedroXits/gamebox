@@ -1,9 +1,11 @@
 export type ReviewResponse = {
-  id: number;
-  profileId: number;
-  profileName: string;
-  gameId: number;
-  gameName: string;
-  rating: number;
-  comment: string;
+    reviewId: number;
+    profileId: number;
+    profileName: string;
+    gameId: number;
+    gameName: string;
+    gamePhoto: string;
+    bannerPhoto: string;
+    rating: number;
+    comment: string;
 };

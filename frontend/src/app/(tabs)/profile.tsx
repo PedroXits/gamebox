@@ -430,7 +430,12 @@ export default function Profile() {
                             {reviews.slice(0, 4).map((review) => (
                                 <Pressable
                                     key={review.reviewId}
-                                    onPress={() => router.push(`/game/${review.gameId}`)}
+                                    onPress={() =>
+                                        router.push({
+                                            pathname: "/reviews",
+                                            params: { gameId: review.gameId }
+                                        })
+                                    }
                                 >
                                     <Image
                                         source={{ uri: review.gamePhoto }}

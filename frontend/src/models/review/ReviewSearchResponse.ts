@@ -5,6 +5,8 @@ export type ReviewSearchResponse = {
     gameName: string;
     gamePhoto: string;
     bannerPhoto: string;
+    releaseYear: number;
+    isFavorite: boolean;
     rating: number;
     comment: string;
 };

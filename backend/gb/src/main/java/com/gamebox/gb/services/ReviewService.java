@@ -4,6 +4,7 @@ import com.gamebox.gb.datasource.repositories.GameRepository;
 import com.gamebox.gb.datasource.repositories.PlayedRepository;
 import com.gamebox.gb.datasource.repositories.ProfileRepository;
 import com.gamebox.gb.datasource.repositories.ReviewRepository;
+import com.gamebox.gb.datasource.repositories.FavoriteRepository;
 import com.gamebox.gb.domain.dtos.review.CreateReviewRequest;
 import com.gamebox.gb.domain.dtos.review.ReviewResponse;
 import com.gamebox.gb.domain.dtos.review.ReviewSearchResponse;
@@ -25,12 +26,20 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final PlayedRepository playedRepository;
     private final ProfileRepository profileRepository;
+    private final FavoriteRepository favoriteRepository;
 
-    public ReviewService(GameRepository gameRepository, ReviewRepository reviewRepository, PlayedRepository playedRepository, ProfileRepository profileRepository) {
+    public ReviewService(
+                        GameRepository gameRepository,
+                        ReviewRepository reviewRepository,
+                        PlayedRepository playedRepository,
+                        ProfileRepository profileRepository,
+                        FavoriteRepository favoriteRepository
+    ) {
         this.gameRepository = gameRepository;
         this.reviewRepository = reviewRepository;
         this.playedRepository = playedRepository;
         this.profileRepository = profileRepository;
+        this.favoriteRepository = favoriteRepository;
     }
 
     public ReviewResponse createReview(CreateReviewRequest request) {
@@ -105,6 +114,11 @@ public class ReviewService {
                         review.getGame().getGameName(),
                         review.getGame().getGamePhoto(),
                         review.getGame().getBannerPhoto(),
+                        review.getGame().getReleaseDate().getYear(),
+                        favoriteRepository.existsByProfileIdAndGameId(
+                                review.getProfile().getId(),
+                                review.getGame().getId()
+                        ),
                         review.getRating(),
                         review.getComment()
                 ))
@@ -126,6 +140,11 @@ public class ReviewService {
                         review.getGame().getGameName(),
                         review.getGame().getGamePhoto(),
                         review.getGame().getBannerPhoto(),
+                        review.getGame().getReleaseDate().getYear(),
+                        favoriteRepository.existsByProfileIdAndGameId(
+                                review.getProfile().getId(),
+                                review.getGame().getId()
+                        ),
                         review.getRating(),
                         review.getComment()
                 ))

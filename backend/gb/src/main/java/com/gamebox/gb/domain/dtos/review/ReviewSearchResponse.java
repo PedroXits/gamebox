@@ -7,6 +7,8 @@ public record ReviewSearchResponse(
         String gameName,
         String gamePhoto,
         String bannerPhoto,
+        Integer releaseYear,
+        Boolean isFavorite,
         Double rating,
         String comment
 ) {

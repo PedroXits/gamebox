@@ -147,6 +147,11 @@ public class ProfileService {
                                 r.getGame().getGameName(),
                                 r.getGame().getGamePhoto(),
                                 r.getGame().getBannerPhoto(),
+                                r.getGame().getReleaseDate().getYear(),
+                                favoriteRepository.existsByProfileIdAndGameId(
+                                        r.getProfile().getId(),
+                                        r.getGame().getId()
+                                ),
                                 r.getRating(),
                                 r.getComment()
                         ))

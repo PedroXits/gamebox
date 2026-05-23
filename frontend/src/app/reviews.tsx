@@ -1,43 +1,48 @@
-//tela de avaliações
-import React from "react";
-import { View, Text, Image, ScrollView, Pressable, } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, Image, ScrollView, Pressable } from "react-native";
 
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { Fonts } from "@/constants/fonts";
+
+import { AuthContext } from "@/context/AuthContext";
+import { getReviewsByProfileId } from "@/services/ReviewService";
+import { ReviewSearchResponse } from "@/models/review/ReviewSearchResponse";
 
 export default function Reviews() {
 
     //mock reviews
-    const reviews = [
-        {
-            id: "1",
-            gameName: "Life is Strange Remastered",
-            year: "2015",
-            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co1r8e.jpg",
-            rating: 4.5,
-            comment: "Fiquei muito gag jogando... piriririririripiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjhdjhvsririrpororororororororasdkjaskdjaksjdapiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjhdjhvsksdjksasjhdjhs",
-            isFavorite: true,
-        },
-        {
-            id: "2",
-            gameName: "The Legend of Zelda: Breath of the Wild",
-            year: "2020",
-            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/co3p2d.jpg",
-            rating: 5,
-            comment: "Fiquei muito gag jogando... piririririririririrpororororororororasdkjaskdjaksjdapiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjhdjhvsksdjksasjhdjhs",
-            isFavorite: true,
-        },
-        {
-            id: "3",
-            gameName: "The Last of Us Part II Remastered",
-            year: "2024",
-            gamePhoto: "https://images.igdb.com/igdb/image/upload/t_cover_big_2x/coa1gr.jpg",
-            rating: 4,
-            comment: "Fiquei muito gag jogando... piririririririririrpororororororororasdkjaskdjaksjdaksdjksasjpiririririririririrpororororovrorororasdkjaskdjaksjdaksdjksasjhdjhvsvhdjhvvvspiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjpiririririririririrpororororovrorororasdkjaskdjaksjdaksdjksasjhdjhvsvhdjhvvvspiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjpiririririririririrpororororovrorororasdkjaskdjaksjdaksdjksasjhdjhvsvhdjhvvvspiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjpiririririririririrpororororovrorororasdkjaskdjaksjdaksdjksasjhdjhvsvhdjhvvvspiririririririririrpororororororororasdkjaskdjaksjdaksdjksasjpiririririririririrpororororovrorororasdkjaskdjaksjdaksdjksasjhdjhvsvhdjhvvvs",
-            isFavorite: false,
-        },
-    ];
+    const { gameId } = useLocalSearchParams<{ gameId: string }>();
+    const { user } = useContext(AuthContext);
+
+    const [review, setReview] = useState<ReviewSearchResponse | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function loadReview() {
+            if (!user?.profileId || !gameId) return;
+
+            try {
+                const response = await getReviewsByProfileId(user.profileId);
+
+                const item = response.find(
+                    (review) => review.gameId === Number(gameId)
+                );
+
+                setReview(item ?? null);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadReview();
+    }, [user?.profileId, gameId]);
+
+    if (loading) {
+        return null;
+    }
 
     return (
         <View style={{ flex: 1, backgroundColor: "#1F103C" }}>
@@ -89,9 +94,20 @@ export default function Reviews() {
                     paddingBottom: 40,
                 }}
             >
-                {reviews.map((review) => (
+                {!review ? (
+                    <Text
+                        style={{
+                            color: "#726292",
+                            fontFamily: Fonts.body,
+                            fontSize: 16,
+                            textAlign: "center",
+                            marginTop: 40,
+                        }}
+                    >
+                        Review não encontrada.
+                    </Text>
+                ) : (
                     <View
-                        key={review.id}
                         style={{
                             borderBottomWidth: 1,
                             borderBottomColor: "#7474744f",
@@ -138,7 +154,7 @@ export default function Reviews() {
                                             marginRight: 6,
                                         }}
                                     >
-                                        {review.year} •
+                                        {review.releaseYear} •
                                     </Text>
 
                                     {/* estrelas */}
@@ -216,7 +232,7 @@ export default function Reviews() {
                             </View>
                         </View>
                     </View>
-                ))}
+                )}
             </ScrollView>
 
         </View>

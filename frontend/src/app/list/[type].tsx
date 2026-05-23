@@ -34,6 +34,15 @@ export default function GameList() {
         genre?: string;
     }>();
 
+    const genreNames: Record<string, string> = {
+        ACTION: "Ação",
+        ADVENTURE: "Aventura",
+        HORROR: "Terror",
+        RACING: "Corrida",
+        RPG: "RPG",
+        SPORTS: "Esporte",
+    };
+
     //título dinâmico
     const title =
         type === "played"
@@ -43,7 +52,7 @@ export default function GameList() {
             : type === "reviews"
             ? "Reviews"
             : type === "genre"
-            ? String(genre).charAt(0) + String(genre).slice(1).toLowerCase()
+            ? genreNames[String(genre)] || String(genre)
             : "Lista";
     
     useFocusEffect(

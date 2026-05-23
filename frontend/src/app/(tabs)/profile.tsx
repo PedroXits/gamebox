@@ -50,7 +50,7 @@ export default function Profile() {
 
     async function handleLogout() {
         await logout();
-        router.replace("/login");
+        router.replace("/");
     }
 
 

@@ -14,7 +14,7 @@ export default function Admin() {
     const [isMenuVisible, setIsMenuVisible] = useState(false); //abre menu admin para sair (modal) 
     const [selectedGame, setSelectedGame] = useState<GameSearchResponse | null>(null);
     const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
     const [games, setGames] = useState<GameSearchResponse[]>([]);
 
     useEffect(() => {
@@ -56,6 +56,12 @@ export default function Admin() {
         await loadGames();
         setSelectedGame(null);
         setIsDeleteModalVisible(false);
+    }
+
+    async function handleLogout() {
+        await logout();
+        setIsMenuVisible(false);
+        router.replace("/");
     }
 
     return (
@@ -327,10 +333,7 @@ export default function Admin() {
 
                         {/* botão sair */}
                         <Pressable 
-                            onPress={() => {
-                                setIsMenuVisible(false);
-                                router.replace("/");
-                            }}
+                            onPress={handleLogout}
                             style={{
                                 flexDirection: "row",
                                 alignItems: "center",

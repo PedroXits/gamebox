@@ -41,7 +41,7 @@ export default function GameList() {
             : type === "favorites"
             ? "Favoritos"
             : type === "genre"
-            ? String(genre)
+            ? String(genre).charAt(0) + String(genre).slice(1).toLowerCase()
             : "Lista";
     
     useFocusEffect(

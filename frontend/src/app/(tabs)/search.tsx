@@ -68,8 +68,6 @@ export default function Search() {
                         borderColor: "#6F57D2",
                         paddingHorizontal: 12,
                         marginBottom: 20,
-                        zIndex: 10,
-                        elevation: 10,
                     }}
                 >
                     <Ionicons
@@ -113,7 +111,7 @@ export default function Search() {
                             style={{
                                 width: 300,
                                 height: 300,
-                                opacity: 0.20,
+                                opacity: 0.25,
                             }}
                             resizeMode="contain"
                         />
@@ -169,7 +167,7 @@ export default function Search() {
                                                 shadowRadius: 8,
 
                                                 //sombra Android
-                                                elevation: 8,
+                                                elevation: 5,
                                             }}
                                         >
                                             {/* capa */}

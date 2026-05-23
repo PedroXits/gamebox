@@ -133,6 +133,7 @@ export default function ReviewModal({
                         placeholderTextColor="rgba(255,255,255,0.5)"
                         multiline
                         textAlignVertical="top"
+                        maxLength={500}
                         style={{
                             minHeight: 160,
                             maxHeight:  200,
@@ -147,6 +148,20 @@ export default function ReviewModal({
                             borderColor: "#6F57D2",
                         }}
                     />
+
+                    <Text
+                        style={{
+                            color: "#B8A9D6",
+                            fontFamily: Fonts.body,
+                            fontSize: 14,
+                            textAlign: "right",
+                            marginRight: 8,
+                            marginTop: -6,
+                            marginBottom: 24,
+                        }}
+                    >
+                        {review.length}/500
+                    </Text>
 
                     {/* botões */}
                     <View

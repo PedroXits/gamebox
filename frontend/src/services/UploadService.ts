@@ -1,5 +1,8 @@
 import { api } from "@/services/api";
 import { Platform } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export async function uploadGameImage(uri: string): Promise<string> {
     const formData = new FormData();
@@ -19,9 +22,20 @@ export async function uploadGameImage(uri: string): Promise<string> {
         } as any);
     }
 
-    const response = await api.post("/uploads/games", formData, {
-        transformRequest: (data) => data,
+    const token = await AsyncStorage.getItem("token");
+
+    const response = await fetch(`${API_URL}/uploads/games`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: formData,
     });
 
-    return response.data;
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+    }
+
+    return await response.text();
 }

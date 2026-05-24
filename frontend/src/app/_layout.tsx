@@ -1,6 +1,6 @@
 // organiza a navegação
 import React, { useContext } from "react";
-import { Stack, Redirect  } from "expo-router";
+import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { GamesProvider } from "@/context/GamesContext";
 import { AdminGamesProvider } from "@/context/AdminGamesContext";

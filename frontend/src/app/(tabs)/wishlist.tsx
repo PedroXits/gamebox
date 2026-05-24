@@ -1,5 +1,5 @@
 //lista de desejos
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, Image, ScrollView, Pressable } from "react-native";
 import { router } from "expo-router";
 import { useFocusEffect } from "expo-router";

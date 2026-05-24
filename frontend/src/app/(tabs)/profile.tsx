@@ -12,6 +12,7 @@ import EditProfileModal from "@/components/EditProfileModal";
 import { PlayedResponse } from "@/models/played/PlayedResponse";
 import { FavoriteResponse } from "@/models/favorite/FavoriteResponse";
 import { ReviewSearchResponse } from "@/models/review/ReviewSearchResponse";
+import { uploadGameImage } from "@/services/UploadService";
 
 export default function Profile() {
     //imagem de perfil selecionada pelo usuário
@@ -25,6 +26,15 @@ export default function Profile() {
     const [playedGames, setPlayedGames] = useState<PlayedResponse[]>([]);
     const [favoriteGames, setFavoriteGames] = useState<FavoriteResponse[]>([]);
     const [reviews, setReviews] = useState<ReviewSearchResponse[]>([]);
+
+    function isLocalImage(uri: string) {
+    return (
+        uri.startsWith("file:") ||
+        uri.startsWith("blob:") ||
+        uri.startsWith("content:") ||
+        uri.startsWith("data:")
+    );
+}
 
     useFocusEffect(
         React.useCallback(() => {
@@ -523,9 +533,15 @@ export default function Profile() {
                     if (!user?.profileId) return;
 
                     try {
+                        let finalProfileImage = profileImage;
+
+                        if (profileImage && isLocalImage(profileImage)) {
+                            finalProfileImage = await uploadGameImage(profileImage);
+                        }
+
                         const updatedProfile = await updateProfile(user.profileId, {
-                        profileName: newName,
-                        profilePhoto: profileImage || null,
+                            profileName: newName,
+                            profilePhoto: finalProfileImage || null,
                         });
 
                         setProfileName(updatedProfile.profileName);

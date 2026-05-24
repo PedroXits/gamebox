@@ -54,6 +54,22 @@ public class DataSeeder implements CommandLineRunner {
                 ),
 
                 createGame(
+                        "Life is Strange Remastered",
+                        List.of(Genre.ADVENTURE),
+                        "Aventura narrativa baseada em escolhas e viagem no tempo.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1265920/library_600x900.jpg",
+                        LocalDate.of(2022, 2, 1)
+                ),
+
+                createGame(
+                        "Lost Records: Bloom & Rage",
+                        List.of(Genre.ADVENTURE),
+                        "Aventura narrativa focada em amizade, mistério e escolhas.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1902960/library_600x900.jpg",
+                        LocalDate.of(2025, 2, 18)
+                ),
+
+                createGame(
                         "Hollow Knight",
                         List.of(Genre.ADVENTURE, Genre.SURVIVAL),
                         "Metroidvania indie em Hallownest.",
@@ -75,6 +91,14 @@ public class DataSeeder implements CommandLineRunner {
                         "Remake moderno do clássico survival horror.",
                         "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2050650/library_600x900.jpg",
                         LocalDate.of(2023, 3, 24)
+                ),
+
+                createGame(
+                        "Age of Empires IV: Anniversary Edition",
+                        List.of(Genre.RPG),
+                        "Experiência estratégica histórica com múltiplas civilizações.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1466860/library_600x900.jpg",
+                        LocalDate.of(2022, 10, 25)
                 ),
 
                 createGame(
@@ -118,6 +142,22 @@ public class DataSeeder implements CommandLineRunner {
                 ),
 
                 createGame(
+                        "Retrowave",
+                        List.of(Genre.RACING, Genre.SPORTS),
+                        "Corrida arcade inspirada na estética synthwave dos anos 80.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1239690/library_600x900.jpg",
+                        LocalDate.of(2022, 5, 6)
+                ),
+
+                createGame(
+                        "Hellblade: Senua's Sacrifice",
+                        List.of(Genre.ACTION, Genre.ADVENTURE),
+                        "Aventura psicológica inspirada na mitologia nórdica.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/414340/library_600x900.jpg",
+                        LocalDate.of(2017, 8, 8)
+                ),
+
+                createGame(
                         "Elden Ring",
                         List.of(Genre.RPG, Genre.ACTION),
                         "RPG de ação da FromSoftware.",
@@ -131,6 +171,14 @@ public class DataSeeder implements CommandLineRunner {
                         "Simulador indie de fazenda.",
                         "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
                         LocalDate.of(2016, 2, 26)
+                ),
+
+                createGame(
+                        "Stray",
+                        List.of(Genre.ADVENTURE),
+                        "Aventura de exploração protagonizada por um gato em uma cidade cyberpunk.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1332010/library_600x900.jpg",
+                        LocalDate.of(2022, 7, 19)
                 ),
 
                 createGame(
@@ -166,11 +214,27 @@ public class DataSeeder implements CommandLineRunner {
                 ),
 
                 createGame(
+                        "The Forest",
+                        List.of(Genre.SURVIVAL, Genre.HORROR),
+                        "Jogo de sobrevivência em uma floresta habitada por criaturas mutantes.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/242760/library_600x900.jpg",
+                        LocalDate.of(2018, 4, 30)
+                ),
+
+                createGame(
                         "It Takes Two",
                         List.of(Genre.ADVENTURE, Genre.FAMILY),
                         "Aventura cooperativa premiada.",
                         "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1426210/library_600x900.jpg",
                         LocalDate.of(2021, 3, 26)
+                ),
+
+                createGame(
+                        "Riders Republic",
+                        List.of(Genre.SPORTS, Genre.RACING),
+                        "Jogo de esportes radicais com bicicleta, snowboard, esqui e wingsuit.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2290180/library_600x900.jpg",
+                        LocalDate.of(2023, 6, 8)
                 ),
 
                 createGame(
@@ -187,6 +251,78 @@ public class DataSeeder implements CommandLineRunner {
                         "Simulador moderno de futebol.",
                         "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2669320/library_600x900.jpg",
                         LocalDate.of(2024, 9, 20)
+                ),
+
+                createGame(
+                        "Little Nightmares",
+                        List.of(Genre.HORROR, Genre.ADVENTURE),
+                        "Aventura de terror com atmosfera sombria e puzzles.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/424840/library_600x900.jpg",
+                        LocalDate.of(2017, 4, 28)
+                ),
+
+                createGame(
+                        "Little Nightmares II",
+                        List.of(Genre.HORROR, Genre.ADVENTURE),
+                        "Continuação da aventura de terror com novos desafios e criaturas.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/860510/library_600x900.jpg",
+                        LocalDate.of(2021, 2, 11)
+                ),
+
+                createGame(
+                        "Sally Face",
+                        List.of(Genre.HORROR, Genre.ADVENTURE),
+                        "Aventura de terror psicológico com narrativa episódica.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/541570/library_600x900.jpg",
+                        LocalDate.of(2016, 12, 14)
+                ),
+
+                createGame(
+                        "Jusant",
+                        List.of(Genre.ADVENTURE),
+                        "Aventura de escalada com exploração e narrativa ambiental.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1977170/library_600x900.jpg",
+                        LocalDate.of(2023, 10, 31)
+                ),
+
+                createGame(
+                        "Detroit: Become Human",
+                        List.of(Genre.ADVENTURE),
+                        "Aventura narrativa futurista focada em escolhas e consequências.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1222140/library_600x900.jpg",
+                        LocalDate.of(2020, 6, 18)
+                ),
+
+                createGame(
+                        "Black Desert",
+                        List.of(Genre.RPG),
+                        "MMORPG de mundo aberto com combate em tempo real e ampla personalização.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/582660/library_600x900.jpg",
+                        LocalDate.of(2017, 5, 24)
+                ),
+
+                createGame(
+                        "Tony Hawk's Pro Skater 1 + 2",
+                        List.of(Genre.SPORTS),
+                        "Remake dos clássicos jogos de skate da franquia Tony Hawk.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2395210/library_600x900.jpg",
+                        LocalDate.of(2023, 10, 3)
+                ),
+
+                createGame(
+                        "Fishing Planet",
+                        List.of(Genre.SPORTS),
+                        "Simulador de pesca online com diversas espécies e ambientes realistas.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/380600/library_600x900.jpg",
+                        LocalDate.of(2015, 8, 11)
+                ),
+
+                createGame(
+                        "Backrooms: Escape Together",
+                        List.of(Genre.HORROR, Genre.SURVIVAL),
+                        "Jogo cooperativo de terror inspirado no universo das Backrooms.",
+                        "https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/2141730/library_600x900.jpg",
+                        LocalDate.of(2022, 10, 18)
                 )
         ));
     }

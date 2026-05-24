@@ -9,6 +9,7 @@ import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { createGame } from "@/services/GameService";
+import { uploadGameImage } from "@/services/UploadService";
 
 export default function NewGame() {
 
@@ -91,12 +92,19 @@ export default function NewGame() {
         }
 
         try {
+
+            const uploadedGamePhoto = await uploadGameImage(gamePhoto);
+            console.log("UPLOAD CAPA:", uploadedGamePhoto);
+
+            const uploadedBannerPhoto = await uploadGameImage(bannerPhoto);
+            console.log("UPLOAD BANNER:", uploadedBannerPhoto);
+            
             await createGame({
                 gameName: title,
                 genres: normalizedGenres,
                 description,
-                gamePhoto,
-                bannerPhoto,
+                gamePhoto: uploadedGamePhoto,
+                bannerPhoto: uploadedBannerPhoto,
                 releaseDate: `${year}-01-01`,
             });
 

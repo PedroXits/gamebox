@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/gameboxd.iml" filepath="$PROJECT_DIR$/.idea/gameboxd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/gb/uploads/uploads.iml" filepath="$PROJECT_DIR$/backend/gb/uploads/uploads.iml" />
     </modules>
   </component>
 </project>

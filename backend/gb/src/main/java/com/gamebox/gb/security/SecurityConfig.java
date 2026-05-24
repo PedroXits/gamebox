@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/profile/**").authenticated()
                         .requestMatchers("/profiles/**").authenticated()
                         .requestMatchers("/reviews/**").authenticated()
+                        .requestMatchers("/uploads/**").permitAll()
 
                         .anyRequest().authenticated()
                 )

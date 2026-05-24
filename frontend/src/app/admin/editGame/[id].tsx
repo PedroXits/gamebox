@@ -8,6 +8,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Fonts } from "@/constants/fonts";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { uploadGameImage } from "@/services/UploadService";
 
 export default function EditGame() {
     const { id } = useLocalSearchParams();
@@ -88,6 +89,10 @@ export default function EditGame() {
         }
     }
 
+    function isLocalImage(uri: string) {
+        return uri.startsWith("file:") || uri.startsWith("blob:") || uri.startsWith("content:");
+    }
+
     // atualiza o jogo no backend
     async function handleUpdateGame() {
         if (
@@ -120,12 +125,23 @@ export default function EditGame() {
         }
 
         try {
+            let finalGamePhoto = gamePhoto;
+            let finalBannerPhoto = bannerPhoto;
+
+            if (isLocalImage(gamePhoto)) {
+                finalGamePhoto = await uploadGameImage(gamePhoto);
+            }
+
+            if (isLocalImage(bannerPhoto)) {
+                finalBannerPhoto = await uploadGameImage(bannerPhoto);
+            }
+
             await updateGame(Number(id), {
                 gameName: title,
                 genres: normalizedGenres,
                 description,
-                gamePhoto,
-                bannerPhoto,
+                gamePhoto: finalGamePhoto,
+                bannerPhoto: finalBannerPhoto,
                 releaseDate: `${year}-01-01`,
             });
         

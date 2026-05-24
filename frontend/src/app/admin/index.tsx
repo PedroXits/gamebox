@@ -33,13 +33,17 @@ export default function Admin() {
     }
 
     useEffect(() => {
-        if (user && user.role !== "ADMIN") {
+        if (!user) {
+            router.replace("/");   
+        }
+
+        else if (user && user.role !== "ADMIN") {
             router.replace("/(tabs)/home");
         }
     }, [user]);
 
     if (!user || user.role !== "ADMIN") {
-        return null;    
+        return null;
     }
 
     //cria a lista filtrada, faz busca em tempo real

@@ -1,13 +1,13 @@
 // organiza a navegação
 import React, { useContext } from "react";
-import { Stack } from "expo-router";
+import { Stack, Redirect  } from "expo-router";
 import { useFonts } from "expo-font";
 import { GamesProvider } from "@/context/GamesContext";
 import { AdminGamesProvider } from "@/context/AdminGamesContext";
 import { AuthContext, AuthProvider } from "@/context/AuthContext";
 
 function Routes() {
-  const { signed, loading } = useContext(AuthContext);
+  const { signed, loading, user } = useContext(AuthContext);
 
   // enquanto carrega o auth
   if (loading) {
@@ -16,18 +16,21 @@ function Routes() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      { signed ? (
-          // usuário logado
+      {signed ? (
+        <>
           <Stack.Screen name="(tabs)" />
-        ) : (
-          // usuário não logado
+          {user?.role === "ADMIN" && (
+            <Stack.Screen name="admin" />
+          )}
+        </>
+      ) : (
+        <>
           <Stack.Screen name="(auth)" />
-        )
-      }
+        </>
+      )}
     </Stack>
   );
 }
-
 export default function Layout() {
   const [fontsLoaded] = useFonts({
     Koulen: require("../assets/fonts/Koulen-Regular.ttf"),

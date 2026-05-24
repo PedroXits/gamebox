@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
-import { Tabs } from "expo-router";
+import { Tabs, Redirect } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Layout() {
+
+  const { signed, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return null;
+  }
+
+  if (!signed) {
+    return <Redirect href="/" />;
+  }
+
   return (
     <Tabs 
       screenOptions={{ 

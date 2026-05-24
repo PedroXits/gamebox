@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/uploads")
-public class UpdateController {
+public class UploadController {
     @PostMapping("/games")
     public ResponseEntity<String> uploadGameImage(@RequestParam("file") MultipartFile file) {
         try {

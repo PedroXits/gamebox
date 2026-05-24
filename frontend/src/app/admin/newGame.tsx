@@ -46,7 +46,7 @@ export default function NewGame() {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             allowsEditing: true,
-            aspect: [16, 9],
+            aspect: type === "cover" ? [2, 3] : [16, 9],
             quality: 1,
         });
 
@@ -200,16 +200,18 @@ export default function NewGame() {
             <Pressable 
                 onPress={() => pickImage("cover")}
                 style={{
-                    height: 160,
-                    backgroundColor: "#170b2e",
-                    borderRadius: 8,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginHorizontal: 36,
-                    marginBottom: 30,
-                    overflow: "hidden",
-                    borderWidth: 1,
-                    borderColor: "#6F57D2",
+                        width: 150,
+                        height: 220,
+                        backgroundColor: "#170b2e",
+                        borderRadius: 8,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        alignSelf: "center",
+                        marginHorizontal: 36,
+                        marginBottom: 30,
+                        overflow: "hidden",
+                        borderWidth: 1,
+                        borderColor: "#6F57D2",
                 }}
             >
                 {gamePhoto ? (

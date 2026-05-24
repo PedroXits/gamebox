@@ -76,7 +76,7 @@ export default function EditGame() {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             allowsEditing: true,
-            aspect: [16, 9],
+            aspect: type === "cover" ? [2, 3] : [16, 9],
             quality: 1,
         });
 
@@ -237,12 +237,13 @@ export default function EditGame() {
             <Pressable 
                 onPress={() => pickImage("cover")}
                 style={{
-                    height: 160,
+                    width: 150,
+                    height: 220,
                     backgroundColor: "#170b2e",
                     borderRadius: 8,
                     justifyContent: "center",
                     alignItems: "center",
-                    marginHorizontal: 36,
+                    alignSelf: "center",
                     marginBottom: 30,
                     overflow: "hidden",
                     borderWidth: 1,

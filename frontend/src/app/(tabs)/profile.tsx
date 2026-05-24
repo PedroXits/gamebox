@@ -405,7 +405,6 @@ export default function Profile() {
                     Reviews
                 </Text>
 
-                {/* mock reviews perfil */}
                 {reviews.length === 0 ? (
                     <Text
                         style={{

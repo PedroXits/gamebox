@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, TextInput, View, Image, Alert } from "react-native";
+import { Pressable, Text, TextInput, View, Image} from "react-native";
 import { styles } from "./styles";
 import { Link, router } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,11 +14,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   async function handleLogin() {
     
     setEmailError("");
     setPasswordError("");
+    setErrorMessage("");
 
     if (!email.trim()) {
       setEmailError("Digite seu e-mail.");
@@ -50,23 +52,14 @@ export default function Login() {
       }
 
     } catch (error: any) {
-      
       console.log(error);
 
-      //credenciais inválidas
       if (error?.response?.status === 401) {
-        Alert.alert(
-          "Login inválido",
-          "E-mail ou senha inválidos."
-        );
+        setErrorMessage("E-mail ou senha inválidos.");
         return;
       }
 
-      //erro genérico (back desligado/sem internet etc)
-      Alert.alert(
-        "Erro de conexão",
-        "Verifique sua internet e tente novamente."
-      )
+      setErrorMessage("Verifique sua internet e tente novamente.");
     }
   }
 
@@ -117,6 +110,12 @@ export default function Login() {
             ) : null}
 
             <Text style={styles.forgotPass}>Esqueceu sua senha?</Text>
+
+            {errorMessage ? (
+              <Text style={styles.errorText}>
+                {errorMessage}
+              </Text>
+            ) : null}
           </View>
           <Pressable style={styles.loginButton} onPress={handleLogin}> 
             <Text style={styles.loginButtonText}>Entrar</Text>
